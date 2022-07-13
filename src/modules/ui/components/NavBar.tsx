@@ -27,6 +27,8 @@ import {
   Tooltip,
   Dialog,
   Box,
+  Menu,
+  MenuItem,
 } from '@material-ui/core'
 import {
   Menu as MenuIcon,
@@ -36,6 +38,13 @@ import {
 import { grey } from '@material-ui/core/colors'
 import { NavMenu, NavItem } from '@mui-treasury/components/menu/navigation'
 import { useLineNavigationMenuStyles } from '@mui-treasury/styles/navigationMenu/line'
+
+import {
+  usePopupState,
+  bindHover,
+  bindMenu,
+} from 'material-ui-popup-state/hooks'
+import HoverMenu from 'material-ui-popup-state/HoverMenu'
 
 import * as uiActions from 'modules/ui/actions'
 import * as userActions from 'modules/user/actions'
@@ -269,10 +278,27 @@ export default function NavBar(props: NavigationBarProps) {
       url: `${PATH}`,
       notification: 0,
     },
-    { id: 1, title: 'เข้าเรียน', url: `${PATH}/learn`, notification: 0 },
+    {
+      id: 1,
+      title: 'ค้นหาการรับรองคุณวุฒิหลักสูตร',
+      url: `${PATH}/learn`,
+      notification: 0,
+    },
     {
       id: 2,
-      title: 'ช่วยเหลือ',
+      title: 'สถาบันการศึกษาในต่างประเทศ',
+      url: `${PATH}/support`,
+      notification: UNREAD_NOTIFICATION_COUNT,
+    },
+    {
+      id: 3,
+      title: 'เอกสารดาวน์โหลด/หนังสือเวียน',
+      url: `${PATH}/support`,
+      notification: UNREAD_NOTIFICATION_COUNT,
+    },
+    {
+      id: 4,
+      title: 'คำถามที่พบบ่อย',
       url: `${PATH}/support`,
       notification: UNREAD_NOTIFICATION_COUNT,
     },
@@ -281,7 +307,7 @@ export default function NavBar(props: NavigationBarProps) {
   const isUserCurrentlyInLearn = pathname.includes(`${PATH}/learn/courses`)
 
   const linkToHome = () => {
-    handleMenuClose()
+    handleProfileMenuClose()
     if (!isUserCurrentlyInLearn) {
       history.push(`${PATH}`)
     } else {
@@ -290,7 +316,7 @@ export default function NavBar(props: NavigationBarProps) {
   }
 
   const linkToLogin = () => {
-    handleMenuClose()
+    handleProfileMenuClose()
     if (!isUserCurrentlyInLearn) {
       history.push(`${PATH}/login`)
     } else {
@@ -299,7 +325,7 @@ export default function NavBar(props: NavigationBarProps) {
   }
 
   const linkToProfile = () => {
-    handleMenuClose()
+    handleProfileMenuClose()
     if (!isUserCurrentlyInLearn) {
       history.push(`${PATH}/me`)
     } else {
@@ -308,7 +334,7 @@ export default function NavBar(props: NavigationBarProps) {
   }
 
   const linkToPrintCertificate = () => {
-    handleMenuClose()
+    handleProfileMenuClose()
     if (!isUserCurrentlyInLearn) {
       history.push(`${PATH}/me/certificate`)
     } else {
@@ -317,22 +343,22 @@ export default function NavBar(props: NavigationBarProps) {
   }
 
   const linkToCertificate = () => {
-    handleMenuClose()
+    handleProfileMenuClose()
     window.open(`${process.env.REACT_APP_PORTAL_URL}history`, '_blank')
   }
 
   const linkToEditProfile = () => {
-    handleMenuClose()
+    handleProfileMenuClose()
     window.open(`${process.env.REACT_APP_PORTAL_URL}edit`, '_blank')
   }
 
   const linkToChangePassword = () => {
-    handleMenuClose()
+    handleProfileMenuClose()
     window.open(`${process.env.REACT_APP_PORTAL_URL}reset`, '_blank')
   }
 
   const linkToPortal = () => {
-    handleMenuClose()
+    handleProfileMenuClose()
     window.open(`${process.env.REACT_APP_PORTAL_URL}`, '_blank')
   }
 
@@ -345,7 +371,7 @@ export default function NavBar(props: NavigationBarProps) {
   }
 
   const logout = () => {
-    handleMenuClose()
+    handleProfileMenuClose()
     if (!isUserCurrentlyInLearn) {
       eraseCookie('token')
       dispatch(uiActions.setFlashMessage('ออกจากระบบเรียบร้อยแล้ว', 'success'))
@@ -363,16 +389,17 @@ export default function NavBar(props: NavigationBarProps) {
   }
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget)
+    if (anchorEl !== event.currentTarget) {
+      setAnchorEl(event.currentTarget)
+    }
+  }
+
+  const handleProfileMenuClose = () => {
+    setAnchorEl(null)
   }
 
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null)
-  }
-
-  const handleMenuClose = () => {
-    setAnchorEl(null)
-    handleMobileMenuClose()
   }
 
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -389,6 +416,11 @@ export default function NavBar(props: NavigationBarProps) {
   const isLearnModule =
     pathname.includes(`${PATH}/learn/courses`) ||
     pathname.includes(`${PATH}/democontent`)
+
+  const popupState = usePopupState({
+    variant: 'popover',
+    popupId: 'demoMenu',
+  })
 
   return (
     <div className={classes.grow}>
@@ -407,39 +439,17 @@ export default function NavBar(props: NavigationBarProps) {
               </IconButton>
             </Hidden>
             {/* SITE LOGO */}
-            <img
+            {/* <img
               src={LogoImage}
               alt='OCSC Logo'
               className={classes.logo}
               onClick={linkToHome}
-            />
-            <Hidden mdDown implementation='css'>
-              <Typography
-                color='textPrimary'
-                variant='h6'
-                noWrap
-                className={classes.title}
-                onClick={linkToHome}
-              >
-                Learning Space
-              </Typography>
-            </Hidden>
-            {/* SEARCH */}
-            <div className={classes.sectionDesktop}>
-              <div className={classes.search}>
-                <div className={classes.searchIcon}>
-                  <SearchIcon />
-                </div>
-                <InputBase
-                  placeholder='ค้นหา'
-                  classes={{
-                    root: classes.inputRoot,
-                    input: classes.inputInput,
-                  }}
-                  inputProps={{ 'aria-label': 'search' }}
-                  onChange={(e) => setSearchValue(e?.target?.value ?? null)}
-                />
-              </div>
+            /> */}
+            <div
+              className={classes.logo}
+              style={{ color: '#000', fontWeight: 600, fontSize: 20 }}
+            >
+              โลโก้
             </div>
             <div className={classes.grow} />
             {/* DESKTOP NAVIGATION */}
@@ -467,63 +477,19 @@ export default function NavBar(props: NavigationBarProps) {
                         }
                       }}
                     >
-                      {login() && item.notification !== 0 ? (
-                        <Badge
-                          className={classes.badge}
-                          variant='dot'
-                          color='error'
-                        >
-                          <Typography noWrap>{item.title}</Typography>
-                        </Badge>
-                      ) : (
-                        <Typography noWrap>{item.title}</Typography>
-                      )}
+                      <Typography noWrap>{item.title}</Typography>
                     </NavItem>
                   ))}
+                  <NavItem
+                    className={classes.navItem}
+                    {...bindHover(popupState)}
+                  >
+                    <Typography noWrap>อื่นๆ </Typography>
+                    <ArrowDownIcon style={{ marginLeft: 8 }} />
+                  </NavItem>
                 </NavMenu>
               </ThemeProvider>
             </Hidden>
-            {/* DESKTOP DROPDOWN */}
-            <div className={classes.sectionDesktop}>
-              <Divider orientation='vertical' className={classes.divider} />
-              <Tooltip title={login() ? 'ดูโปรไฟล์' : ''}>
-                <Button
-                  color='primary'
-                  onClick={login() ? linkToProfile : linkToLogin}
-                  size='small'
-                  style={{
-                    borderRadius: 50,
-                    padding: '10px 10px',
-                    margin: '6px 0',
-                  }}
-                  startIcon={
-                    <Avatar
-                      className={login() ? classes.loggedIn : classes.small}
-                    />
-                  }
-                >
-                  <Typography
-                    color='textPrimary'
-                    className={classes.bold}
-                    noWrap
-                  >
-                    {login() ? users.firstname : 'เข้าสู่ระบบ'}
-                  </Typography>
-                </Button>
-              </Tooltip>
-              <IconButton
-                color='primary'
-                edge='end'
-                aria-label='Toggle user dropdown menu'
-                aria-controls={menuId}
-                onClick={handleProfileMenuOpen}
-                style={{
-                  margin: '6px 0',
-                }}
-              >
-                <ArrowDownIcon />
-              </IconButton>
-            </div>
             {/* MOBILE DROPDOWN */}
             <Hidden only={['xs', 'lg', 'md', 'xl']}>
               <div className={classes.grow} />
@@ -562,7 +528,26 @@ export default function NavBar(props: NavigationBarProps) {
         linkToEditProfile={linkToEditProfile}
         linkToChangePassword={linkToChangePassword}
       />
-      <NavDropdownDesktop
+      <HoverMenu
+        {...bindMenu(popupState)}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'right',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        PaperProps={{
+          style: {
+            marginTop: '36px',
+          },
+        }}
+      >
+        <MenuItem onClick={popupState.close}>เมนูเพิ่มเติม 1</MenuItem>
+        <MenuItem onClick={popupState.close}>เมนูเพิ่มเติม 2</MenuItem>
+      </HoverMenu>
+      {/* <NavDropdownDesktop
         login={login}
         logout={logout}
         users={users}
@@ -575,8 +560,8 @@ export default function NavBar(props: NavigationBarProps) {
         anchorEl={anchorEl}
         menuId={menuId}
         isMenuOpen={isMenuOpen}
-        handleMenuClose={handleMenuClose}
-      />
+        handleProfileMenuClose={handleProfileMenuClose}
+      /> */}
       <NavDrawer
         mobileOpen={mobileOpen}
         handleDrawerToggle={handleDrawerToggle}

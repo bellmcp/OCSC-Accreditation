@@ -36,7 +36,10 @@ export default function Routes() {
         <LoginRoutes />
       </Route>
       <Route exact path={`${PATH}`}>
-        <HomeRoutes />
+        {/* <HomeRoutes /> */}
+        <div style={{ height: 1000 }}>
+          <></>
+        </div>
       </Route>
       <Route>
         <NotFound />
