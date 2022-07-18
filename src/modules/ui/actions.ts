@@ -37,9 +37,7 @@ function loadFooterInfo() {
   return async (dispatch: any) => {
     dispatch({ type: LOAD_FOOTER_INFO_REQUEST })
     try {
-      var { data } = await axios.get('constants/phonenumber', {
-        baseURL: `${process.env.REACT_APP_PORTAL_API_URL}`,
-      })
+      var { data } = await axios.get('constants/footer')
       if (data.length === 0) {
         data = []
       }

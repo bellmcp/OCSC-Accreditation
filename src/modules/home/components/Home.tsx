@@ -1,8 +1,6 @@
-// @ts-nocheck
-import React, { useEffect } from 'react'
-import queryString from 'query-string'
-import { useDispatch, useSelector } from 'react-redux'
-import { useLocation, useHistory } from 'react-router-dom'
+import React from 'react'
+import { useHistory } from 'react-router-dom'
+
 import {
   createStyles,
   makeStyles,
@@ -15,7 +13,6 @@ import {
   Typography,
   Grid,
   Box,
-  Divider,
   Button,
   Link,
   Avatar,
@@ -24,17 +21,8 @@ import {
   ArrowForwardIos as ArrowForwardIcon,
   Search as SearchIcon,
 } from '@material-ui/icons'
-import CategoryFilter from 'modules/categories/components/CategoryFilter'
-import 'pure-react-carousel/dist/react-carousel.es.css'
 
-import * as pressesActions from 'modules/press/actions'
-import * as coursesActions from 'modules/courses/actions'
-import * as categoriesActions from 'modules/categories/actions'
-import * as curriculumsActions from 'modules/curriculums/actions'
 import Header from 'modules/ui/components/Header'
-import PressCarousel from 'modules/press/components/PressCarousel'
-import CourseCarousel from 'modules/courses/components/CourseCarousel'
-import CurriculumCarousel from 'modules/curriculums/components/CurriculumCarousel'
 
 import Infographic from 'assets/images/infographic.jpeg'
 
@@ -57,15 +45,10 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 )
 
-const TITLE = 'OCSC Learning Space'
-const SUBTITLE =
-  'โลกแห่งการเรียนรู้ ไม่มีวันจบสิ้น ยิ่งเรียนยิ่งรู้ ยิ่งเพิ่มพลังทางปัญญา'
-
 export default function Home() {
   const classes = useStyles()
   const theme = useTheme()
   const matches = useMediaQuery(theme.breakpoints.up('sm'))
-  const dispatch = useDispatch()
   const history = useHistory()
   const PATH = process.env.REACT_APP_BASE_PATH
 
@@ -184,7 +167,7 @@ export default function Home() {
                 <Avatar
                   variant='rounded'
                   src={Infographic}
-                  style={{ width: '100%', height: 'auto' }}
+                  style={{ width: '100%', height: 'auto', borderRadius: 8 }}
                 >
                   test
                 </Avatar>

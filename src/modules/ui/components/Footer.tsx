@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { useEffect } from 'react'
 import { isEmpty } from 'lodash'
 import { useSelector, useDispatch } from 'react-redux'
@@ -38,19 +37,14 @@ const useStyles = makeStyles((theme) => ({
 const OCSC_NAME_TH = 'สำนักงานคณะกรรมการข้าราชการพลเรือน (สำนักงาน ก.พ.)'
 const OCSC_NAME_EN = 'Office of the Civil Service Commission (OCSC)'
 const OCSC_URL = 'https://www.ocsc.go.th/'
-const OCSC_ADDRESS =
-  '47/111 หมู่ 4 ถนนติวานนท์ ตำบลตลาดขวัญ อำเภอเมือง จังหวัดนนทบุรี 11000'
-const OCSC_EMAIL = 'learningspace@ocsc.go.th'
-const OCSC_PHONE =
-  'โทรศัพท์ 02 547 1000 ต่อ 1795, 1807 และ 6942 (ภายในเวลาราชการ)'
 
 export default function Footer() {
   const classes = useStyles()
   const dispatch = useDispatch()
   const isFhdUp = useMediaQuery('(min-width:1080px)')
 
-  const { footerInfo } = useSelector((state) => state.ui)
-  const { value1, value2 } = footerInfo
+  const { footerInfo } = useSelector((state: any) => state.ui)
+  const { value1 = '', value2 = '', value3 = '', value4 = '' } = footerInfo
 
   useEffect(() => {
     if (isEmpty(footerInfo)) {
@@ -73,7 +67,7 @@ export default function Footer() {
         direction='row'
         justify='space-between'
         alignItems='center'
-        wrap='no-wrap'
+        wrap='nowrap'
       >
         <Box>
           <Typography variant='h6' color='inherit' align='left'>
@@ -87,31 +81,8 @@ export default function Footer() {
           </Typography>
         </Box>
         <Box>
-          <Typography variant='body2' color='inherit' align='right'>
-            {OCSC_ADDRESS}
-          </Typography>
-          <Typography
-            variant='body2'
-            color='inherit'
-            align='right'
-            style={{ marginBottom: 8 }}
-          >
-            อีเมล{' '}
-            <Link
-              href={`mailto:${OCSC_EMAIL}`}
-              className={classes.link}
-              underline='none'
-            >
-              {OCSC_EMAIL}
-            </Link>
-          </Typography>
           {value1 && (
-            <Typography
-              component='div'
-              variant='caption'
-              color='inherit'
-              align='right'
-            >
+            <Typography variant='body2' color='inherit' align='right'>
               <div
                 dangerouslySetInnerHTML={{
                   __html: parseLinkToDefaultColor(value1),
@@ -121,6 +92,20 @@ export default function Footer() {
           )}
           {value2 && (
             <Typography
+              variant='body2'
+              color='inherit'
+              align='right'
+              style={{ marginBottom: 8 }}
+            >
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: parseLinkToDefaultColor(value2),
+                }}
+              ></div>
+            </Typography>
+          )}
+          {value3 && (
+            <Typography
               component='div'
               variant='caption'
               color='inherit'
@@ -128,7 +113,21 @@ export default function Footer() {
             >
               <div
                 dangerouslySetInnerHTML={{
-                  __html: parseLinkToDefaultColor(value2),
+                  __html: parseLinkToDefaultColor(value3),
+                }}
+              ></div>
+            </Typography>
+          )}
+          {value4 && (
+            <Typography
+              component='div'
+              variant='caption'
+              color='inherit'
+              align='right'
+            >
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: parseLinkToDefaultColor(value4),
                 }}
               ></div>
             </Typography>
@@ -153,19 +152,6 @@ export default function Footer() {
           </Box>
         </Grid>
         <Grid item>
-          <Box lineHeight={1.2} fontSize={12} textAlign='center' mb={1}>
-            {OCSC_ADDRESS}
-          </Box>
-          <Box lineHeight={1.2} fontSize={12} textAlign='center' mb={2}>
-            อีเมล{' '}
-            <Link
-              href={`mailto:${OCSC_EMAIL}`}
-              className={classes.link}
-              underline='none'
-            >
-              {OCSC_EMAIL}
-            </Link>
-          </Box>
           {value1 && (
             <Box lineHeight={1.2} fontSize={12} textAlign='center' mb={1}>
               <div
@@ -176,10 +162,28 @@ export default function Footer() {
             </Box>
           )}
           {value2 && (
-            <Box lineHeight={1.2} fontSize={12} textAlign='center' mb={1}>
+            <Box lineHeight={1.2} fontSize={12} textAlign='center' mb={2}>
               <div
                 dangerouslySetInnerHTML={{
                   __html: parseLinkToDefaultColor(value2),
+                }}
+              ></div>
+            </Box>
+          )}
+          {value3 && (
+            <Box lineHeight={1.2} fontSize={12} textAlign='center' mb={1}>
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: parseLinkToDefaultColor(value3),
+                }}
+              ></div>
+            </Box>
+          )}
+          {value4 && (
+            <Box lineHeight={1.2} fontSize={12} textAlign='center' mb={1}>
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: parseLinkToDefaultColor(value4),
                 }}
               ></div>
             </Box>
