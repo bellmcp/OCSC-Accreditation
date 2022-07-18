@@ -69,7 +69,7 @@ export default function Home() {
       <Header title='FAQ' subtitle='คำถามที่พบบ่อย' icon={<div />} />
       <Container maxWidth='lg' className={classes.content}>
         <Grid container spacing={10}>
-          <Grid container item xs={12} lg={6} justify='space-between'>
+          <Grid container item xs={12} lg={6}>
             <Box mt={2} mb={4}>
               <Grid container direction='row' alignItems='center'>
                 <Typography
@@ -151,19 +151,19 @@ export default function Home() {
                 และคำแนะนำในการใช้ระบบ
                 เพื่อให้ท่านบรรลุวัตถุประสงค์ในการค้นหาข้อมูลที่ท่านต้องการ
               </Typography>
+              <Grid item style={{ width: '100%' }}>
+                <Button
+                  fullWidth
+                  variant='contained'
+                  color='primary'
+                  disableElevation
+                  startIcon={<SearchIcon />}
+                  onClick={linkToSearchCurriculum}
+                >
+                  ค้นหาการรับรองคุณวุฒิหลักสูตร
+                </Button>
+              </Grid>
             </Box>
-            <Grid item style={{ width: '100%' }}>
-              <Button
-                fullWidth
-                variant='contained'
-                color='primary'
-                disableElevation
-                startIcon={<SearchIcon />}
-                onClick={linkToSearchCurriculum}
-              >
-                ค้นหาการรับรองคุณวุฒิหลักสูตร
-              </Button>
-            </Grid>
           </Grid>
           <Grid item xs={12} lg={6}>
             <Box mt={2} mb={4}>

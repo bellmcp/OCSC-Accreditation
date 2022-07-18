@@ -124,11 +124,17 @@ export default function Download() {
               เอกสารดาวน์โหลด/หนังสือเวียน
             </Typography>
           </Grid>
-          <Paper elevation={0} style={{ borderRadius: 16 }}>
+          <Paper
+            elevation={0}
+            style={{
+              borderRadius: 16,
+              boxShadow: '0 0 20px 0 rgba(0,0,0,0.04)',
+            }}
+          >
             <Tabs
               value={value}
-              indicatorColor='secondary'
-              textColor='secondary'
+              indicatorColor='primary'
+              textColor='primary'
               onChange={handleChange}
               centered
               variant='fullWidth'

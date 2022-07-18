@@ -29,7 +29,7 @@ function loadLetters(category: number) {
       dispatch({ type: LOAD_LETTERS_FAILURE })
       dispatch(
         uiActions.setFlashMessage(
-          `โหลดข้อมูลประชาสัมพันธ์ไม่สำเร็จ เกิดข้อผิดพลาด ${get(
+          `โหลดข้อมูลเอกสารดาวน์โหลด/หนังสือเวียนไม่สำเร็จ เกิดข้อผิดพลาด ${get(
             err,
             'response.status',
             'บางอย่าง'

@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import { get } from 'lodash'
 import { useDispatch, useSelector } from 'react-redux'
-import { useLocation, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import {
   createStyles,
   makeStyles,
@@ -126,12 +126,13 @@ export default function SearchCurriculum() {
             <Grid
               container
               item
-              spacing={3}
+              spacing={2}
               style={{
                 padding: 16,
-                border: '1px solid lightgrey',
                 borderRadius: 8,
                 margin: '16px 0',
+                backgroundColor: 'white',
+                boxShadow: '0 0 20px 0 rgba(0,0,0,0.04)',
               }}
             >
               <Grid container item direction='row' alignItems='center'>
@@ -247,12 +248,13 @@ export default function SearchCurriculum() {
             <Grid
               container
               item
-              spacing={3}
+              spacing={2}
               style={{
                 padding: 16,
-                border: '1px solid lightgrey',
                 borderRadius: 8,
                 margin: '16px 0',
+                backgroundColor: 'white',
+                boxShadow: '0 0 20px 0 rgba(0,0,0,0.04)',
               }}
             >
               <Grid container item direction='row' alignItems='center'>

@@ -16,6 +16,7 @@ import ui from 'modules/ui/reducer'
 
 import search from 'modules/search/reducer'
 import download from 'modules/download/reducer'
+import international from 'modules/edu/international/reducer'
 import faq from 'modules/faq/reducer'
 
 export default (history: any) =>
@@ -36,4 +37,5 @@ export default (history: any) =>
     faq,
     search,
     download,
+    international,
   })
