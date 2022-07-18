@@ -1,25 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { get } from 'lodash'
-import SwipeableViews from 'react-swipeable-views'
 import { useDispatch, useSelector } from 'react-redux'
 
-import {
-  createStyles,
-  makeStyles,
-  Theme,
-  useTheme,
-} from '@material-ui/core/styles'
-import {
-  Container,
-  Typography,
-  Grid,
-  Box,
-  Tabs,
-  Tab,
-  Paper,
-} from '@material-ui/core'
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
+import { Container, Typography, Grid, Box, Paper } from '@material-ui/core'
 
 import Header from 'modules/ui/components/Header'
+import Loading from 'modules/ui/components/Loading'
 import DataTable from './DataTable'
 
 import * as internationalActions from 'modules/edu/international/actions'
@@ -117,9 +104,14 @@ export default function InternationalEdu() {
               padding: 24,
               paddingTop: 12,
               boxShadow: '0 0 20px 0 rgba(0,0,0,0.04)',
+              minHeight: 300,
             }}
           >
-            <DataTable data={tableData} />
+            {!isLoading ? (
+              <DataTable data={tableData} />
+            ) : (
+              <Loading height={200} />
+            )}
           </Paper>
         </Box>
       </Container>
