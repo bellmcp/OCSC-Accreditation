@@ -93,10 +93,10 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     logo: {
       display: 'block',
-      maxWidth: 110,
+      maxWidth: 140,
       marginRight: theme.spacing(3),
       [theme.breakpoints.down('xs')]: {
-        maxWidth: 100,
+        maxWidth: 130,
       },
       '&:hover': {
         cursor: 'pointer',
@@ -211,7 +211,7 @@ export default function NavBar(props: NavigationBarProps) {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     useState<null | HTMLElement>(null)
 
-  const LogoImage = require('assets/images/logo.svg')
+  const LogoImage = require('assets/images/logo.png')
 
   const isMenuOpen = Boolean(anchorEl)
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl)
@@ -281,25 +281,25 @@ export default function NavBar(props: NavigationBarProps) {
     {
       id: 1,
       title: 'ค้นหาการรับรองคุณวุฒิหลักสูตร',
-      url: `${PATH}/learn`,
+      url: `${PATH}/search/curriculum`,
       notification: 0,
     },
     {
       id: 2,
       title: 'สถาบันการศึกษาในต่างประเทศ',
-      url: `${PATH}/support`,
+      url: `${PATH}/edu/international`,
       notification: UNREAD_NOTIFICATION_COUNT,
     },
     {
       id: 3,
       title: 'เอกสารดาวน์โหลด/หนังสือเวียน',
-      url: `${PATH}/support`,
+      url: `${PATH}/download`,
       notification: UNREAD_NOTIFICATION_COUNT,
     },
     {
       id: 4,
       title: 'คำถามที่พบบ่อย',
-      url: `${PATH}/support`,
+      url: `${PATH}/faq`,
       notification: UNREAD_NOTIFICATION_COUNT,
     },
   ]
@@ -439,18 +439,12 @@ export default function NavBar(props: NavigationBarProps) {
               </IconButton>
             </Hidden>
             {/* SITE LOGO */}
-            {/* <img
+            <img
               src={LogoImage}
               alt='OCSC Logo'
               className={classes.logo}
               onClick={linkToHome}
-            /> */}
-            <div
-              className={classes.logo}
-              style={{ color: '#000', fontWeight: 600, fontSize: 20 }}
-            >
-              โลโก้
-            </div>
+            />
             <div className={classes.grow} />
             {/* DESKTOP NAVIGATION */}
             <Hidden xsDown implementation='css'>
@@ -529,6 +523,7 @@ export default function NavBar(props: NavigationBarProps) {
         linkToChangePassword={linkToChangePassword}
       />
       <HoverMenu
+        elevation={0}
         {...bindMenu(popupState)}
         anchorOrigin={{
           vertical: 'bottom',
@@ -541,6 +536,8 @@ export default function NavBar(props: NavigationBarProps) {
         PaperProps={{
           style: {
             marginTop: '36px',
+            borderRadius: 8,
+            boxShadow: 'rgb(0 0 0 / 15%) 0px 0px 10px',
           },
         }}
       >

@@ -55,27 +55,6 @@ export default function Layout() {
     setAnnouncementDialogOpen(false)
   }
 
-  useEffect(() => {
-    const presses_action = pressesActions.loadAnnouncement()
-    dispatch(presses_action)
-  }, [dispatch])
-
-  useEffect(() => {
-    if (!isLogin()) {
-      if (isAnnoucementLoading) {
-        setAnnouncementDialogOpen(false)
-      } else {
-        if (get(announcement, 'mesg') !== '') {
-          setAnnouncementDialogOpen(true)
-        } else {
-          setAnnouncementDialogOpen(false)
-        }
-      }
-    } else {
-      setAnnouncementDialogOpen(false)
-    }
-  }, [announcement, isAnnoucementLoading])
-
   const isLearnModule =
     pathname.includes(`${PATH}/learn/courses`) ||
     pathname.includes(`${PATH}/democontent`)
@@ -99,11 +78,17 @@ export default function Layout() {
         case `${PATH}`:
           setActivePage(0)
           break
-        case `${PATH}/learn`:
+        case `${PATH}/search/curriculum`:
           setActivePage(1)
           break
-        case `${PATH}/support`:
+        case `${PATH}/edu/international`:
           setActivePage(2)
+          break
+        case `${PATH}/download`:
+          setActivePage(3)
+          break
+        case `${PATH}/faq`:
+          setActivePage(4)
           break
         default:
           setActivePage(99)
@@ -125,6 +110,11 @@ export default function Layout() {
       fontFamily: ['Prompt', 'sans-serif'].join(','),
     },
     overrides: {
+      MuiButton: {
+        root: {
+          borderRadius: 24,
+        },
+      },
       MuiToolbar: {
         gutters: {
           [defaultTheme.breakpoints.up('xs')]: {
@@ -195,50 +185,6 @@ export default function Layout() {
       />
       <NavBar active={activePage} setActivePage={setActivePage} />
       <Routes />
-      {/* ANNOUNCEMENT DIALOG */}
-      <Dialog
-        open={announcementDialogOpen}
-        onClose={handleAnnouncementDialogClose}
-      >
-        {isAnnoucementLoading ? (
-          <>
-            <CircularProgress />
-          </>
-        ) : (
-          <>
-            <DialogTitle style={{ margin: '16px 0' }}>
-              <Typography
-                variant='h5'
-                color='secondary'
-                align='center'
-                style={{ fontWeight: 600 }}
-              >
-                ประกาศ
-              </Typography>
-            </DialogTitle>
-            <DialogContent style={{ padding: '0 32px' }}>
-              <Typography variant='body1' align='center' color='textPrimary'>
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: get(announcement, 'mesg', 'ไม่มีข้อความ'),
-                  }}
-                ></div>
-              </Typography>
-            </DialogContent>
-            <DialogActions style={{ margin: '16px 0', marginTop: 24 }}>
-              <div style={{ flex: '1 0 0' }} />
-              <Button
-                variant='contained'
-                color='secondary'
-                onClick={handleAnnouncementDialogClose}
-              >
-                รับทราบ
-              </Button>
-              <div style={{ flex: '1 0 0' }} />
-            </DialogActions>
-          </>
-        )}
-      </Dialog>
       {/* DEBUG DIALOG */}
       <Dialog open={debugDialogOpen} onClose={handleDebugDialogClose}>
         <DialogTitle onClose={handleDebugDialogClose}>เกี่ยวกับ</DialogTitle>

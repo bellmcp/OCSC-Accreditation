@@ -7,17 +7,26 @@ import LearnRoutes from 'modules/learn/components/Routes'
 import SupportRoutes from 'modules/support/components/Routes'
 import LoginRoutes from 'modules/login/components/Routes'
 import MeRoutes from 'modules/me/components/Routes'
-import SearchRoutes from 'modules/search/components/Routes'
+import SearchRoutes from 'modules/search/Routes'
 import DemoContentRoutes from 'modules/democontent/Routes'
 import PrivateRoute from 'modules/routes/PrivateRoute'
 import NotFound from './NotFound'
+
+import FaqRoutes from 'modules/faq/Routes'
 
 const PATH = process.env.REACT_APP_BASE_PATH
 
 export default function Routes() {
   return (
     <Switch>
-      <Route path={`${PATH}/courses`}>
+      <Route path={`${PATH}/search/curriculum`}>
+        <SearchRoutes />
+      </Route>
+      <Route path={`${PATH}/faq`}>
+        <FaqRoutes />
+      </Route>
+
+      {/* <Route path={`${PATH}/courses`}>
         <CourseRoutes />
       </Route>
       <Route path={`${PATH}/curriculums`}>
@@ -34,12 +43,9 @@ export default function Routes() {
       <PrivateRoute component={MeRoutes} path={`${PATH}/me`} />
       <Route path={`${PATH}/login`}>
         <LoginRoutes />
-      </Route>
+      </Route> */}
       <Route exact path={`${PATH}`}>
-        {/* <HomeRoutes /> */}
-        <div style={{ height: 1000 }}>
-          <></>
-        </div>
+        <HomeRoutes />
       </Route>
       <Route>
         <NotFound />

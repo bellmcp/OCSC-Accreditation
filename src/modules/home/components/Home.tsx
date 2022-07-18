@@ -1,14 +1,14 @@
 // @ts-nocheck
-import React, { useEffect } from 'react';
-import queryString from 'query-string';
-import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useHistory } from 'react-router-dom';
+import React, { useEffect } from 'react'
+import queryString from 'query-string'
+import { useDispatch, useSelector } from 'react-redux'
+import { useLocation, useHistory } from 'react-router-dom'
 import {
   createStyles,
   makeStyles,
   Theme,
   useTheme,
-} from '@material-ui/core/styles';
+} from '@material-ui/core/styles'
 import {
   useMediaQuery,
   Container,
@@ -17,19 +17,26 @@ import {
   Box,
   Divider,
   Button,
-} from '@material-ui/core';
-import { ArrowForwardIos as ArrowForwardIcon } from '@material-ui/icons';
-import CategoryFilter from 'modules/categories/components/CategoryFilter';
-import 'pure-react-carousel/dist/react-carousel.es.css';
+  Link,
+  Avatar,
+} from '@material-ui/core'
+import {
+  ArrowForwardIos as ArrowForwardIcon,
+  Search as SearchIcon,
+} from '@material-ui/icons'
+import CategoryFilter from 'modules/categories/components/CategoryFilter'
+import 'pure-react-carousel/dist/react-carousel.es.css'
 
-import * as pressesActions from 'modules/press/actions';
-import * as coursesActions from 'modules/courses/actions';
-import * as categoriesActions from 'modules/categories/actions';
-import * as curriculumsActions from 'modules/curriculums/actions';
-import Header from 'modules/ui/components/Header';
-import PressCarousel from 'modules/press/components/PressCarousel';
-import CourseCarousel from 'modules/courses/components/CourseCarousel';
-import CurriculumCarousel from 'modules/curriculums/components/CurriculumCarousel';
+import * as pressesActions from 'modules/press/actions'
+import * as coursesActions from 'modules/courses/actions'
+import * as categoriesActions from 'modules/categories/actions'
+import * as curriculumsActions from 'modules/curriculums/actions'
+import Header from 'modules/ui/components/Header'
+import PressCarousel from 'modules/press/components/PressCarousel'
+import CourseCarousel from 'modules/courses/components/CourseCarousel'
+import CurriculumCarousel from 'modules/curriculums/components/CurriculumCarousel'
+
+import Infographic from 'assets/images/infographic.jpeg'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -41,186 +48,214 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: '1.7rem',
       fontWeight: 600,
       zIndex: 3,
+      marginBottom: '24px',
     },
     seeAllButton: {
       marginBottom: '0.35em',
       zIndex: 3,
     },
   })
-);
+)
 
-const TITLE = 'OCSC Learning Space';
+const TITLE = 'OCSC Learning Space'
 const SUBTITLE =
-  'โลกแห่งการเรียนรู้ ไม่มีวันจบสิ้น ยิ่งเรียนยิ่งรู้ ยิ่งเพิ่มพลังทางปัญญา';
+  'โลกแห่งการเรียนรู้ ไม่มีวันจบสิ้น ยิ่งเรียนยิ่งรู้ ยิ่งเพิ่มพลังทางปัญญา'
 
 export default function Home() {
-  const classes = useStyles();
-  const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.up('sm'));
-  const dispatch = useDispatch();
-  const history = useHistory();
-  const PATH = process.env.REACT_APP_BASE_PATH;
-  const { search } = useLocation();
-  const { courseCategoryId } = queryString.parse(search);
+  const classes = useStyles()
+  const theme = useTheme()
+  const matches = useMediaQuery(theme.breakpoints.up('sm'))
+  const dispatch = useDispatch()
+  const history = useHistory()
+  const PATH = process.env.REACT_APP_BASE_PATH
 
-  const linkToCourses = () => {
-    history.push(`${PATH}/courses`);
-  };
+  const linkToFaq = () => {
+    history.push(`${PATH}/faq`)
+  }
 
-  const linkToCurriculums = () => {
-    history.push(`${PATH}/curriculums`);
-  };
-
-  const { items: users } = useSelector((state) => state.user);
-  const { isLoading: isPressesLoading, items: presses } = useSelector(
-    (state) => state.press
-  );
-  const { isLoading: isCoursesLoading, items: courses } = useSelector(
-    (state) => state.courses
-  );
-  const { isRecommendedCoursesLoading, recommended: recommendedCourses } =
-    useSelector((state) => state.courses);
-  const { isLoading: isCurriculumsLoading, items: curriculums } = useSelector(
-    (state) => state.curriculums
-  );
-  const { items: categories } = useSelector((state) => state.categories);
-
-  useEffect(() => {
-    const presses_action = pressesActions.loadPresses();
-    dispatch(presses_action);
-  }, [dispatch]);
-
-  useEffect(() => {
-    const courses_action = coursesActions.loadCourses(courseCategoryId);
-    dispatch(courses_action);
-  }, [dispatch, courseCategoryId]);
-
-  useEffect(() => {
-    const recommended_courses_action = coursesActions.loadRecommendedCourses();
-    dispatch(recommended_courses_action);
-  }, [dispatch]);
-
-  useEffect(() => {
-    const categories_action = categoriesActions.loadCategories();
-    dispatch(categories_action);
-  }, [dispatch]);
-
-  useEffect(() => {
-    const curriculums_action = curriculumsActions.loadCurriculums('');
-    dispatch(curriculums_action);
-  }, [dispatch]);
+  const linkToSearchCurriculum = () => {
+    history.push(`${PATH}/search/curriculum`)
+  }
 
   return (
     <>
-      <Header
-        title={users.firstname ? `สวัสดี คุณ${users.firstname}` : TITLE}
-        subtitle={SUBTITLE}
-      />
-      <Container maxWidth="lg" className={classes.content}>
-        <PressCarousel presses={presses} isLoading={isPressesLoading} />
-
-        <Box mt={3} mb={2}>
-          <Divider />
-        </Box>
-
-        <Box my={3}>
-          <Grid
-            container
-            direction="row"
-            justify={matches ? 'space-between' : 'center'}
-            alignItems="center"
-          >
-            <Typography
-              gutterBottom
-              component="h2"
-              variant="h6"
-              className={classes.sectionTitle}
-            >
-              รายการแนะนำ
-            </Typography>
+      <Header title='FAQ' subtitle='คำถามที่พบบ่อย' icon={<div />} />
+      <Container maxWidth='lg' className={classes.content}>
+        <Grid container spacing={10}>
+          <Grid container item xs={6} justify='space-between'>
+            <Box mt={2} mb={4}>
+              <Grid container direction='row' alignItems='center'>
+                <Typography
+                  gutterBottom
+                  component='h2'
+                  variant='h6'
+                  className={classes.sectionTitle}
+                >
+                  การรับรองคุณวุฒิหลักสูตร
+                </Typography>
+              </Grid>
+              <Typography
+                variant='body1'
+                color='textSecondary'
+                style={{ textIndent: '50px', marginBottom: '16px' }}
+              >
+                การรับรองคุณวุฒิบุคคลเพื่อบรรจุเข้ารับราชการ
+                และกำหนดอัตราเงินเดือนที่ควรได้รับ เป็นอำนาจหน้าที่ของ
+                ก.พ.และสำนักงาน ก.พ.ตามนัยมาตรา8(10) และมาตรา13(11)
+                แห่งพระราชบัญญัติระเบียบข้าราชการพลเรือน พ.ศ 2551
+              </Typography>
+              <Typography
+                variant='body1'
+                color='textSecondary'
+                gutterBottom
+                style={{ textIndent: '50px', marginBottom: '16px' }}
+              >
+                การรับรองคุณวุฒิของ ก.พ.
+                จึงมีวัตถุประสงค์เพื่อให้ทางราชการได้บุคคลที่มีความรู้ความสามารถไม่ต่ำกว่ามาตรฐานที่
+                ก.พ. กำหนด มาปฏิบัติราชการ
+                และกำหนดเงินเดือนที่ควรได้รับให้เหมาะสมกับความรู้ความสามารถ ก.พ.
+                จะรับรองคุณวุฒิการศึกษาในระดับต่าง ๆ ตามหลักสูตรการศึกษา
+                ที่สถาบันการศึกษาได้จัดทำขึ้น
+                และได้รับการรับรองมาตรฐานการศึกษาจากกระทรวงศึกษาธิการแล้วหมายถึง
+                ก.พ. รับรองคุณวุฒิ แต่มิได้รับรองวิทยฐานะสถาบันการศึกษาต่าง ๆ
+                ทั้งในประเทศและต่างประเทศ
+              </Typography>
+              <Typography
+                variant='body1'
+                color='textSecondary'
+                gutterBottom
+                style={{ textIndent: '50px', marginBottom: '16px' }}
+              >
+                หลักเกณฑ์การรับรองคุณวุฒิของผู้สำเร็จการศึกษาจากต่างประเทศ
+                เพื่อประโยชน์ในการบรรจุและการแต่งตั้งข้าราชการพลเรือนสามัญ ก.พ.
+                จะรับรองคุณวุฒิที่ได้รับ
+                จากสถาบันการศึกษาที่ได้รับการรับรองวิทยฐานะจากหน่วยงานที่มีอำนาจหน้าที่ตามกฎหมายของประเทศนั้น
+                ๆ ให้บรรจุเข้ารับราชการได้
+              </Typography>
+              <Typography
+                variant='body1'
+                color='textSecondary'
+                gutterBottom
+                style={{ textIndent: '50px', marginBottom: '16px' }}
+              >
+                ระบบการจัดเก็บข้อมูลหลักสูตรและคุณวุฒิที่ ก.พ.รับรอง
+                เป็นการเผยแพร่ข้อมูลหลักสูตรการศึกษาต่างๆ
+                ทั้งในประเทศและต่างประเทศว่ามีหลักสูตรใดบ้างที่
+                ก.พ.รับรองคุณวุฒิ ให้บรรจุเข้ารับราชการได้
+                โดยข้อมูลในระบบฯจะแบ่งเป็น 2 ส่วนใหญ่ๆ คือ
+              </Typography>
+              <Typography
+                variant='body1'
+                color='textSecondary'
+                gutterBottom
+                style={{ marginLeft: '50px', marginBottom: '16px' }}
+              >
+                1. การรับรองคุณวุฒิในประเทศ
+                <br />
+                2. การรับรองคุณวุฒิต่างประเทศ
+              </Typography>
+              <Typography
+                variant='body1'
+                color='textSecondary'
+                gutterBottom
+                style={{ textIndent: '50px', marginBottom: '32px' }}
+              >
+                ซึ่งจะปรากฏข้อมูลที่ผู้ค้นหาควรทราบเบื้องต้น
+                และคำแนะนำในการใช้ระบบ
+                เพื่อให้ท่านบรรลุวัตถุประสงค์ในการค้นหาข้อมูลที่ท่านต้องการ
+              </Typography>
+            </Box>
+            <Grid item style={{ width: '100%' }}>
+              <Button
+                fullWidth
+                variant='contained'
+                color='primary'
+                disableElevation
+                startIcon={<SearchIcon />}
+                onClick={linkToSearchCurriculum}
+              >
+                ค้นหาการรับรองคุณวุฒิหลักสูตร
+              </Button>
+            </Grid>
           </Grid>
-          <CourseCarousel
-            courses={recommendedCourses}
-            categories={categories}
-            isLoading={isRecommendedCoursesLoading}
-          />
-        </Box>
-
-        <Box mt={3} mb={3}>
-          <Divider />
-        </Box>
-
-        <Grid container direction="row" justify="center" alignItems="center">
-          <CategoryFilter categories={categories} />
+          <Grid item xs={6}>
+            <Box mt={2} mb={4}>
+              <Link href={Infographic} target='_blank'>
+                <Avatar
+                  variant='rounded'
+                  src={Infographic}
+                  style={{ width: '100%', height: 'auto' }}
+                >
+                  test
+                </Avatar>
+              </Link>
+            </Box>
+          </Grid>
         </Grid>
-
-        <Box my={3}>
-          <Grid
-            container
-            direction="row"
-            justify="space-between"
-            alignItems="center"
-          >
-            <Typography
-              gutterBottom
-              component="h2"
-              variant="h6"
-              className={classes.sectionTitle}
-            >
-              รายวิชา
-            </Typography>
-            <Button
-              variant="text"
-              color="default"
-              endIcon={<ArrowForwardIcon />}
-              onClick={linkToCourses}
-              className={classes.seeAllButton}
-            >
-              ดูทั้งหมด
-            </Button>
-          </Grid>
-          <CourseCarousel
-            courses={courses}
-            categories={categories}
-            isLoading={isCoursesLoading}
-          />
-        </Box>
-
-        <Box mt={3} mb={2}>
-          <Divider />
-        </Box>
-
-        <Box my={3}>
-          <Grid
-            container
-            direction="row"
-            justify="space-between"
-            alignItems="center"
-          >
-            <Typography
-              gutterBottom
-              component="h2"
-              variant="h6"
-              className={classes.sectionTitle}
-            >
-              หลักสูตร
-            </Typography>
-            <Button
-              variant="text"
-              color="default"
-              endIcon={<ArrowForwardIcon />}
-              onClick={linkToCurriculums}
-              className={classes.seeAllButton}
-            >
-              ดูทั้งหมด
-            </Button>
-          </Grid>
-          <CurriculumCarousel
-            curriculums={curriculums}
-            isLoading={isCurriculumsLoading}
-          />
-        </Box>
       </Container>
+      <div style={{ backgroundColor: '#F2F4F3' }}>
+        <Container maxWidth='lg' className={classes.content}>
+          <Grid
+            container
+            direction='row'
+            justify={matches ? 'space-between' : 'center'}
+            alignItems='center'
+          >
+            <Typography
+              gutterBottom
+              component='h2'
+              variant='h6'
+              className={classes.sectionTitle}
+            >
+              คำถามที่พบบ่อย
+            </Typography>
+            <Button
+              variant='text'
+              color='primary'
+              endIcon={<ArrowForwardIcon />}
+              onClick={linkToFaq}
+              className={classes.seeAllButton}
+            >
+              ดูทั้งหมด
+            </Button>
+          </Grid>
+          <Typography
+            variant='h6'
+            color='textPrimary'
+            style={{ marginBottom: '16px', fontWeight: 600 }}
+          >
+            1. การนำผลการรับรองในระบบรับรองคุณวุฒิด้วยระบบอิเล็กทรอนิกส์ไปใช้
+          </Typography>
+          <Typography
+            variant='body1'
+            color='textSecondary'
+            style={{ textIndent: '50px', marginBottom: '16px' }}
+          >
+            สำนักงาน ก.พ. ขอเรียนว่า ผลการรับรองที่ได้จากระบบอิเล็กทรอนิกส์นี้
+            เป็นเพียงเครื่องมือที่ช่วยค้นหาคุณวุฒิที่ต้องการ
+            ว่าปรากฏอยู่ในหนังสือเวียนฉบับใด ดังนั้น
+            หากประสงค์จะนำไปอ้างอิงในกรณีใด ๆ ก็ตาม
+            ต้องอ้างอิงจากหนังสือเวียนหรือไฟล์หนังสือเวียนที่เป็น PDF เท่านั้น
+            ตรวจสอบหนังสือเวียนได้จาก ที่นี่
+          </Typography>
+          <Typography
+            variant='h6'
+            color='textPrimary'
+            style={{ marginBottom: '16px', fontWeight: 600 }}
+          >
+            2. การสมัครสอบของข้าราชการประเภทอื่น
+          </Typography>
+          <Typography
+            variant='body1'
+            color='textSecondary'
+            style={{ textIndent: '50px', marginBottom: '16px' }}
+          >
+            การสมัครสอบใด ๆ ที่ไม่ใช่ข้าราชการพลเรือนสามัญ
+            หากมีข้อสงสัยเรื่องคุณวุฒิว่าตรงตามคุณสมบัติเฉพาะสำหรับตำแหน่งที่ประกาศรับสมัครกำหนดไว้หรือไม่
+            โปรดติดต่อกับหน่วยงานที่ประกาศรับสมัครนั้น ๆ โดยตรง
+          </Typography>
+        </Container>
+      </div>
     </>
-  );
+  )
 }

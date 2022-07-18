@@ -1,6 +1,6 @@
 import React from 'react'
 import { Route, Switch, useRouteMatch } from 'react-router-dom'
-import Home from './Home'
+import SearchCurriculum from './components/SearchCurriculum'
 
 export default function Routes() {
   const { path } = useRouteMatch()
@@ -8,7 +8,7 @@ export default function Routes() {
   return (
     <Switch>
       <Route path={path}>
-        <Home />
+        <SearchCurriculum />
       </Route>
     </Switch>
   )
