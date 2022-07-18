@@ -60,12 +60,16 @@ export default function Home() {
     history.push(`${PATH}/search/curriculum`)
   }
 
+  const linkToDownload = () => {
+    history.push(`${PATH}/download`)
+  }
+
   return (
     <>
       <Header title='FAQ' subtitle='คำถามที่พบบ่อย' icon={<div />} />
       <Container maxWidth='lg' className={classes.content}>
         <Grid container spacing={10}>
-          <Grid container item xs={6} justify='space-between'>
+          <Grid container item xs={12} lg={6} justify='space-between'>
             <Box mt={2} mb={4}>
               <Grid container direction='row' alignItems='center'>
                 <Typography
@@ -161,7 +165,7 @@ export default function Home() {
               </Button>
             </Grid>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} lg={6}>
             <Box mt={2} mb={4}>
               <Link href={Infographic} target='_blank'>
                 <Avatar
@@ -219,7 +223,14 @@ export default function Home() {
             ว่าปรากฏอยู่ในหนังสือเวียนฉบับใด ดังนั้น
             หากประสงค์จะนำไปอ้างอิงในกรณีใด ๆ ก็ตาม
             ต้องอ้างอิงจากหนังสือเวียนหรือไฟล์หนังสือเวียนที่เป็น PDF เท่านั้น
-            ตรวจสอบหนังสือเวียนได้จาก ที่นี่
+            ตรวจสอบหนังสือเวียนได้จาก{' '}
+            <Link
+              underline='hover'
+              onClick={linkToDownload}
+              style={{ cursor: 'pointer' }}
+            >
+              ที่นี่
+            </Link>
           </Typography>
           <Typography
             variant='h6'

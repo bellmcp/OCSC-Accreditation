@@ -1,10 +1,13 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
+
 import HomeRoutes from 'modules/home/components/Routes'
 import SearchRoutes from 'modules/search/Routes'
-import NotFound from './NotFound'
-import FaqRoutes from 'modules/faq/Routes'
 import EduRoutes from 'modules/edu/Routes'
+import DownloadRoutes from 'modules/download/Routes'
+import FaqRoutes from 'modules/faq/Routes'
+
+import NotFound from './NotFound'
 
 const PATH = process.env.REACT_APP_BASE_PATH
 
@@ -18,7 +21,7 @@ export default function Routes() {
         <EduRoutes />
       </Route>
       <Route path={`${PATH}/download`}>
-        <FaqRoutes />
+        <DownloadRoutes />
       </Route>
       <Route path={`${PATH}/faq`}>
         <FaqRoutes />

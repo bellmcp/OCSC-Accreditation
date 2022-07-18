@@ -14,8 +14,9 @@ import support from 'modules/support/reducer'
 import me from 'modules/me/reducer'
 import ui from 'modules/ui/reducer'
 
-import faq from 'modules/faq/reducer'
 import search from 'modules/search/reducer'
+import download from 'modules/download/reducer'
+import faq from 'modules/faq/reducer'
 
 export default (history: any) =>
   combineReducers({
@@ -34,4 +35,5 @@ export default (history: any) =>
     ui,
     faq,
     search,
+    download,
   })
