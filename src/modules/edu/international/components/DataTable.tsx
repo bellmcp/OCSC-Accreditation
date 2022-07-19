@@ -13,7 +13,7 @@ import {
   Grid,
   Avatar,
 } from '@material-ui/core'
-import { GetApp as GetAppIcon } from '@material-ui/icons'
+import { GetApp as GetAppIcon, Launch as LaunchIcon } from '@material-ui/icons'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -97,7 +97,7 @@ export default function DataTable({ data }: any) {
                         wrap='nowrap'
                       >
                         <Grid item>
-                          <GetAppIcon
+                          <LaunchIcon
                             fontSize='small'
                             style={{ marginBottom: '-6px' }}
                           />

@@ -110,6 +110,13 @@ export default function Layout() {
       fontFamily: ['Prompt', 'sans-serif'].join(','),
     },
     overrides: {
+      MuiAccordion: {
+        root: {
+          '&:before': {
+            backgroundColor: 'transparent',
+          },
+        },
+      },
       MuiButton: {
         root: {
           borderRadius: 24,

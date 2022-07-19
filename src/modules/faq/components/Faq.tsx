@@ -11,10 +11,16 @@ import {
   AccordionSummary,
   AccordionDetails,
 } from '@material-ui/core'
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
+import {
+  createStyles,
+  makeStyles,
+  Theme,
+  useTheme,
+} from '@material-ui/core/styles'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 
 import Header from 'modules/ui/components/Header'
+import DataTable from './DataTable'
 
 import * as faqActions from 'modules/faq/actions'
 
@@ -60,9 +66,24 @@ interface FaqType {
   websiteText: string[]
 }
 
+function createData(
+  documentUrl?: string[],
+  documentText?: string[],
+  websiteUrl?: string[],
+  websiteText?: string[]
+) {
+  return {
+    documentUrl,
+    documentText,
+    websiteUrl,
+    websiteText,
+  }
+}
+
 export default function Faq() {
   const classes = useStyles()
   const dispatch = useDispatch()
+  const theme = useTheme()
 
   const [expanded, setExpanded] = React.useState<string | false>(false)
 
@@ -92,33 +113,56 @@ export default function Faq() {
               คำถามที่พบบ่อย
             </Typography>
           </Grid>
-          {faq.map((item: any, index: number) => (
-            <Accordion
-              elevation={0}
-              style={{
-                padding: '4px 8px',
-                borderRadius: 16,
-                boxShadow: '0 0 20px 0 rgba(0,0,0,0.04)',
-              }}
-              expanded={expanded === get(item, 'id', index + 1)}
-              onChange={handleChange(get(item, 'id', index + 1))}
-            >
-              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography className={classes.heading}>
-                  {get(item, 'question', '')} ?
-                </Typography>
-                <Typography className={classes.secondaryHeading}>
-                  {get(item, 'answer', '')}
-                </Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography>
-                  Nulla facilisi. Phasellus sollicitudin nulla et quam mattis
-                  feugiat. Aliquam eget maximus est, id dignissim quam.
-                </Typography>
-              </AccordionDetails>
-            </Accordion>
-          ))}
+          {faq.map((item: any, index: number) => {
+            const data = createData(
+              item.documentUrl,
+              item.documentText,
+              item.websiteUrl,
+              item.websiteText
+            )
+            return (
+              <Accordion
+                elevation={0}
+                style={{
+                  padding: '4px 8px',
+                  borderRadius: 16,
+                  boxShadow: '0 0 20px 0 rgba(0,0,0,0.04)',
+                }}
+                expanded={expanded === get(item, 'id', index + 1)}
+                onChange={handleChange(get(item, 'id', index + 1))}
+              >
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon color='primary' />}
+                >
+                  <Grid container spacing={0}>
+                    <Grid item xs={12}>
+                      <Typography variant='body1' style={{ fontWeight: 600 }}>
+                        {get(item, 'question', '')} ?
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Typography variant='body1' color='textSecondary'>
+                        <span
+                          style={{
+                            fontWeight: 500,
+                            textDecoration: 'underline',
+                          }}
+                        >
+                          ตอบ
+                        </span>{' '}
+                        {get(item, 'answer', '')}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </AccordionSummary>
+                <AccordionDetails
+                  style={{ borderTop: `1px solid ${theme.palette.divider}` }}
+                >
+                  <DataTable data={data} />
+                </AccordionDetails>
+              </Accordion>
+            )
+          })}
         </Box>
       </Container>
     </>
