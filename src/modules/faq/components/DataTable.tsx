@@ -33,11 +33,11 @@ export default function DataTable({ data }: any) {
 
   return (
     <TableContainer>
-      <Table className={classes.table}>
+      <Table>
         <TableHead>
           <TableRow>
-            <TableCell width={400}>ดาวน์โหลด</TableCell>
-            <TableCell>ลิงก์ไปยังเว็บไซต์ที่เกี่ยวข้อง</TableCell>
+            <TableCell width='50%'>ดาวน์โหลด</TableCell>
+            <TableCell width='50%'>ลิงก์ไปยังเว็บไซต์ที่เกี่ยวข้อง</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

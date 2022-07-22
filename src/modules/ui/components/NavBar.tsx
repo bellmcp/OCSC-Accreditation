@@ -457,24 +457,6 @@ export default function NavBar(props: NavigationBarProps) {
                 </NavMenu>
               </ThemeProvider>
             </Hidden>
-            {/* MOBILE DROPDOWN */}
-            <Hidden only={['xs', 'lg', 'md', 'xl']}>
-              <div className={classes.grow} />
-            </Hidden>
-            <div className={classes.sectionMobile}>
-              <IconButton onClick={toggleSearchBar} color='primary'>
-                <SearchIcon />
-              </IconButton>
-              <IconButton
-                aria-controls={mobileMenuId}
-                onClick={handleMobileMenuOpen}
-                color='inherit'
-              >
-                <Avatar
-                  className={login() ? classes.loggedIn : classes.small}
-                />
-              </IconButton>
-            </div>
           </Toolbar>
         </Container>
       </AppBar>

@@ -1,14 +1,14 @@
 //@ts-nocheck
-import React from 'react';
-import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import React from 'react'
+import { useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
+import CssBaseline from '@material-ui/core/CssBaseline'
 import {
   makeStyles,
   useTheme,
   Theme,
   createStyles,
-} from '@material-ui/core/styles';
+} from '@material-ui/core/styles'
 import {
   Divider,
   Drawer,
@@ -20,26 +20,26 @@ import {
   ListItemText,
   Badge,
   IconButton,
-} from '@material-ui/core';
+} from '@material-ui/core'
 import {
   Home as HomeIcon,
   PlayArrow as LearnIcon,
   Help as HelpIcon,
   CloseRounded as CloseIcon,
-} from '@material-ui/icons';
+} from '@material-ui/icons'
 
-import * as uiActions from 'modules/ui/actions';
+import * as uiActions from 'modules/ui/actions'
 
-const DRAWER_WIDTH = 200;
-const PATH = process.env.REACT_APP_BASE_PATH;
+const DRAWER_WIDTH = '80%'
+const PATH = process.env.REACT_APP_BASE_PATH
 
 interface NavigationDrawerProps {
-  window?: () => Window;
-  handleDrawerToggle: () => void;
-  mobileOpen: boolean;
-  active: number;
-  unreadNotificationCount: number;
-  isUserCurrentlyInLearn: boolean;
+  window?: () => Window
+  handleDrawerToggle: () => void
+  mobileOpen: boolean
+  active: number
+  unreadNotificationCount: number
+  isUserCurrentlyInLearn: boolean
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -98,7 +98,7 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: 0,
     },
   })
-);
+)
 
 export default function NavDrawer({
   window,
@@ -108,49 +108,57 @@ export default function NavDrawer({
   unreadNotificationCount,
   isUserCurrentlyInLearn,
 }: NavigationDrawerProps) {
-  const classes = useStyles();
-  const theme = useTheme();
-  const history = useHistory();
-  const dispatch = useDispatch();
+  const classes = useStyles()
+  const theme = useTheme()
+  const history = useHistory()
+  const dispatch = useDispatch()
   const container =
-    window !== undefined ? () => window().document.body : undefined;
+    window !== undefined ? () => window().document.body : undefined
 
   const navigationItems = [
     {
       id: 0,
       title: 'หน้าหลัก',
       url: `${PATH}`,
-      icon: <HomeIcon />,
-      notification: 0,
     },
     {
       id: 1,
-      title: 'เข้าเรียน',
-      url: `${PATH}/learn`,
-      icon: <LearnIcon />,
-      notification: 0,
+      title: 'ค้นหาการรับรองคุณวุฒิหลักสูตร',
+      url: `${PATH}/search/curriculum`,
     },
     {
       id: 2,
-      title: 'ช่วยเหลือ',
-      url: `${PATH}/support`,
-      icon: <HelpIcon />,
-      notification: unreadNotificationCount,
+      title: 'สถาบันการศึกษาในต่างประเทศ',
+      url: `${PATH}/edu/international`,
     },
-  ];
+    {
+      id: 3,
+      title: 'เอกสารดาวน์โหลด/หนังสือเวียน',
+      url: `${PATH}/download`,
+    },
+    {
+      id: 4,
+      title: 'คำถามที่พบบ่อย',
+      url: `${PATH}/faq`,
+    },
+  ]
 
   function MobileDrawer() {
     return (
       <div>
         <IconButton
-          edge="start"
+          edge='start'
           className={classes.closeButton}
-          aria-label="close drawer"
+          aria-label='close drawer'
           onClick={handleDrawerToggle}
         >
           <CloseIcon />
         </IconButton>
-        <p className={classes.title}>Learning Space</p>
+        <p className={classes.title}>
+          OCSC
+          <br />
+          e-Accredit
+        </p>
         <List>
           {navigationItems.map((navigationItem, index) => (
             <React.Fragment>
@@ -160,24 +168,24 @@ export default function NavDrawer({
                 selected={index === active ? true : false}
                 onClick={() => {
                   if (!isUserCurrentlyInLearn) {
-                    history.push(`${navigationItem.url}`);
-                    handleDrawerToggle();
+                    history.push(`${navigationItem.url}`)
+                    handleDrawerToggle()
                   } else {
-                    dispatch(uiActions.setLearnExitDialog(true));
-                    handleDrawerToggle();
+                    dispatch(uiActions.setLearnExitDialog(true))
+                    handleDrawerToggle()
                   }
                 }}
               >
                 <ListItem className={classes.listItem} key={index} dense>
-                  <ListItemIcon className={classes.listItemIcon}>
+                  {/* <ListItemIcon className={classes.listItemIcon}>
                     {navigationItem.notification !== 0 ? (
-                      <Badge variant="dot" color="error">
+                      <Badge variant='dot' color='error'>
                         {navigationItem.icon}
                       </Badge>
                     ) : (
                       navigationItem.icon
                     )}
-                  </ListItemIcon>
+                  </ListItemIcon> */}
                   <ListItemText primary={navigationItem.title} />
                 </ListItem>
               </MenuItem>
@@ -191,17 +199,17 @@ export default function NavDrawer({
           © {new Date().getFullYear()} สำนักงาน ก.พ.
         </p>
       </div>
-    );
+    )
   }
 
   return (
     <div className={classes.root}>
       <CssBaseline />
       <nav className={classes.drawer}>
-        <Hidden smUp implementation="css">
+        <Hidden smUp implementation='css'>
           <Drawer
             container={container}
-            variant="temporary"
+            variant='temporary'
             anchor={theme.direction === 'rtl' ? 'right' : 'left'}
             open={mobileOpen}
             onClose={handleDrawerToggle}
@@ -217,5 +225,5 @@ export default function NavDrawer({
         </Hidden>
       </nav>
     </div>
-  );
+  )
 }
