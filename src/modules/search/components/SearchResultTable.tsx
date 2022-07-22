@@ -9,7 +9,10 @@ import TableContainer from '@material-ui/core/TableContainer'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Typography from '@material-ui/core/Typography'
-import Paper from '@material-ui/core/Paper'
+import Divider from '@material-ui/core/Paper'
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemText from '@material-ui/core/ListItemText'
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 
@@ -82,33 +85,61 @@ function Row(props: { row: ReturnType<typeof createData> }) {
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout='auto' unmountOnExit>
-            <Box style={{ margin: 16 }}>
-              <Typography variant='h6' gutterBottom component='div'>
-                History
-              </Typography>
-              <Table size='small' aria-label='purchases'>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Date</TableCell>
-                    <TableCell>Customer</TableCell>
-                    <TableCell>Amount</TableCell>
-                    <TableCell>Total price ($)</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {row.history.map((historyRow) => (
-                    <TableRow key={historyRow.date}>
-                      <TableCell component='th' scope='row'>
-                        {historyRow.date}
-                      </TableCell>
-                      <TableCell>{historyRow.customerId}</TableCell>
-                      <TableCell>{historyRow.amount}</TableCell>
-                      <TableCell>xxxx</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </Box>
+            <List>
+              <ListItem divider>
+                <Box style={{ flexBasis: '25%', flexShrink: 0 }}>
+                  <Typography variant='body2' style={{ fontWeight: 600 }}>
+                    ผลการรับรอง
+                  </Typography>
+                </Box>
+                <Box>
+                  <Typography variant='body2' color='textSecondary'>
+                    สาขาวิชาศึกษาศาสตร์
+                    <br />
+                    ทางธุรกิจการศึกษา
+                  </Typography>
+                  <Typography variant='caption' color='primary'>
+                    สำนักงานคณะกรรมการข้าราชการพลเรือน (สำนักงาน ก.พ.)
+                  </Typography>
+                </Box>
+              </ListItem>
+              <ListItem divider>
+                <Box style={{ flexBasis: '25%', flexShrink: 0 }}>
+                  <Typography variant='body2' style={{ fontWeight: 600 }}>
+                    หมายเหตุ
+                  </Typography>
+                </Box>
+                <Box>
+                  <Typography variant='body2' color='textSecondary'>
+                    เอกเดี่ยว
+                  </Typography>
+                </Box>
+              </ListItem>
+              <ListItem divider>
+                <Box style={{ flexBasis: '25%', flexShrink: 0 }}>
+                  <Typography variant='body2' style={{ fontWeight: 600 }}>
+                    เลขที่หนังสือเวียน
+                  </Typography>
+                </Box>
+                <Box>
+                  <Typography variant='body2' color='textSecondary'>
+                    นร 1004.3/ว42
+                  </Typography>
+                </Box>
+              </ListItem>
+              <ListItem>
+                <Box style={{ flexBasis: '25%', flexShrink: 0 }}>
+                  <Typography variant='body2' style={{ fontWeight: 600 }}>
+                    ลงวันที่
+                  </Typography>
+                </Box>
+                <Box>
+                  <Typography variant='body2' color='textSecondary'>
+                    30 กันยายน 2563
+                  </Typography>
+                </Box>
+              </ListItem>
+            </List>
           </Collapse>
         </TableCell>
       </TableRow>
@@ -131,8 +162,8 @@ const rows = [
 
 export default function CollapsibleTable() {
   return (
-    <TableContainer component={Paper}>
-      <Table aria-label='collapsible table'>
+    <TableContainer>
+      <Table>
         <TableHead>
           <TableRow>
             <TableCell />

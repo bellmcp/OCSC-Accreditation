@@ -134,9 +134,11 @@ export default function Faq() {
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon color='primary' />}
                 >
-                  <Grid container spacing={0}>
+                  <Grid container spacing={0} style={{ paddingLeft: 8 }}>
                     <Grid item xs={12}>
                       <Typography variant='body1' style={{ fontWeight: 600 }}>
+                        {get(item, 'id', index + 1)}
+                        {'. '}
                         {get(item, 'question', '')} ?
                       </Typography>
                     </Grid>

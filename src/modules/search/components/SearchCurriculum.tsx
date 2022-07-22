@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { get } from 'lodash'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
+
 import {
   createStyles,
   makeStyles,
@@ -23,16 +24,11 @@ import {
   FormControlLabel,
   FormHelperText,
   FormControl,
-  InputLabel,
+  Paper,
   MenuItem,
   Divider,
 } from '@material-ui/core'
-import {
-  ArrowForwardIos as ArrowForwardIcon,
-  Search as SearchIcon,
-} from '@material-ui/icons'
-import CategoryFilter from 'modules/categories/components/CategoryFilter'
-import 'pure-react-carousel/dist/react-carousel.es.css'
+import { Search as SearchIcon } from '@material-ui/icons'
 
 import * as searchActions from 'modules/search/actions'
 import Header from 'modules/ui/components/Header'
@@ -356,21 +352,6 @@ export default function SearchCurriculum() {
             ค้นหา
           </Button>
         </Box>
-        {/* <Grid
-          container
-          direction='row'
-          justify={matches ? 'space-between' : 'center'}
-          alignItems='center'
-        >
-          <Typography
-            gutterBottom
-            component='h2'
-            variant='h6'
-            className={classes.sectionTitle}
-          >
-            หลักเกณฑ์การรับรองคุณวุฒิ
-          </Typography>
-        </Grid> */}
         <Box mt={8} mb={6}>
           <Divider />
         </Box>
@@ -384,7 +365,18 @@ export default function SearchCurriculum() {
             ผลการค้นหา
           </Typography>
         </Grid>
-        <SearchResultTable />
+        <Paper
+          elevation={0}
+          style={{
+            borderRadius: 16,
+            padding: 24,
+            paddingTop: 12,
+            boxShadow: '0 0 20px 0 rgba(0,0,0,0.04)',
+            minHeight: 300,
+          }}
+        >
+          <SearchResultTable />
+        </Paper>
       </Container>
     </>
   )

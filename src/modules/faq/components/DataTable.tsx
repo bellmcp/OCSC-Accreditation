@@ -11,7 +11,6 @@ import {
   TableRow,
   Link,
   Grid,
-  Avatar,
 } from '@material-ui/core'
 import { GetApp as GetAppIcon, Launch as LaunchIcon } from '@material-ui/icons'
 
@@ -25,8 +24,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function DataTable({ data }: any) {
   const classes = useStyles()
-
-  console.log('data :>> ', data)
 
   const getValue = (data: any, name: any, defaultValue: any) => {
     const value = get(data, name, null)
