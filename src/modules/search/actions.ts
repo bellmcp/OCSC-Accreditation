@@ -3,6 +3,8 @@ import { get } from 'lodash'
 
 import * as uiActions from 'modules/ui/actions'
 
+import { mock } from './mock'
+
 const LOAD_EDUCATION_LEVELS_REQUEST =
   'learning-platform/press/LOAD_EDUCATION_LEVELS_REQUEST'
 const LOAD_EDUCATION_LEVELS_SUCCESS =
@@ -115,6 +117,12 @@ function searchCurriculums({
         },
       })
     } catch (err) {
+      // dispatch({
+      //   type: SEARCH_CURRICULUMS_SUCCESS,
+      //   payload: {
+      //     searchResults: mock,
+      //   },
+      // })
       dispatch({ type: SEARCH_CURRICULUMS_FAILURE })
       dispatch(
         uiActions.setFlashMessage(

@@ -1,6 +1,6 @@
 // @ts-nocheck
 import React, { useEffect, useState } from 'react'
-import { get } from 'lodash'
+import { get, isEmpty } from 'lodash'
 import { useDispatch, useSelector } from 'react-redux'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
@@ -106,12 +106,19 @@ export default function SearchCurriculum() {
   )
 
   const [educationLevels, setEducationLevels] = useState([])
+  const [searchResults, setSearchResults] = useState([])
 
   const {
     educationLevels: initalEducationLevels = [],
     visitor = 0,
     isIncrementing = false,
+    searchResults: initialSearchResults = [],
+    isSearching = false,
   } = useSelector((state: any) => state.search)
+
+  useEffect(() => {
+    setSearchResults(initialSearchResults)
+  }, [initialSearchResults])
 
   useEffect(() => {
     setEducationLevels(initalEducationLevels)
@@ -426,38 +433,44 @@ export default function SearchCurriculum() {
             </Button>
           </Box>
         </form>
-        <Box mt={6} mb={4}>
-          <Divider />
-        </Box>
-        <Grid
-          container
-          direction='row'
-          justify={matches ? 'space-between' : 'center'}
-          alignItems='center'
-        >
-          <Typography
-            gutterBottom
-            component='h2'
-            variant='h6'
-            className={classes.sectionTitle}
-            align={matches ? 'left' : 'center'}
-            style={{ marginBottom: 24 }}
-          >
-            ผลการค้นหา
-          </Typography>
-        </Grid>
-        <Paper
-          elevation={0}
-          style={{
-            borderRadius: 16,
-            padding: 24,
-            paddingTop: 8,
-            boxShadow: '0 0 20px 0 rgba(0,0,0,0.04)',
-            minHeight: 300,
-          }}
-        >
-          <SearchResultTable />
-        </Paper>
+        {!isEmpty(searchResults) ? (
+          <>
+            <Box mt={6} mb={4}>
+              <Divider />
+            </Box>
+            <Grid
+              container
+              direction='row'
+              justify={matches ? 'space-between' : 'center'}
+              alignItems='center'
+            >
+              <Typography
+                gutterBottom
+                component='h2'
+                variant='h6'
+                className={classes.sectionTitle}
+                align={matches ? 'left' : 'center'}
+                style={{ marginBottom: 24 }}
+              >
+                ผลการค้นหา
+              </Typography>
+            </Grid>
+            <Paper
+              elevation={0}
+              style={{
+                borderRadius: 16,
+                padding: 24,
+                paddingTop: 8,
+                boxShadow: '0 0 20px 0 rgba(0,0,0,0.04)',
+                minHeight: 300,
+              }}
+            >
+              <SearchResultTable data={searchResults} />
+            </Paper>
+          </>
+        ) : (
+          <></>
+        )}
       </Container>
     </>
   )

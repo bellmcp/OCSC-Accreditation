@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { useEffect, useState } from 'react'
 import Box from '@material-ui/core/Box'
 import Collapse from '@material-ui/core/Collapse'
 import IconButton from '@material-ui/core/IconButton'
@@ -160,7 +160,19 @@ const rows = [
   ),
 ]
 
-export default function CollapsibleTable() {
+interface SearchResultTableType {
+  data: any
+}
+
+export default function SearchResultTable({ data }: SearchResultTableType) {
+  console.log('data', data)
+
+  const [tableData, setTableData] = useState([])
+
+  useEffect(() => {
+    setTableData(data)
+  }, [data])
+
   return (
     <TableContainer>
       <Table>
