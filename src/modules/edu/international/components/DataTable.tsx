@@ -18,7 +18,11 @@ import {
   Grid,
   Avatar,
 } from '@material-ui/core'
-import { GetApp as GetAppIcon, Launch as LaunchIcon } from '@material-ui/icons'
+import {
+  GetApp as GetAppIcon,
+  Launch as LaunchIcon,
+  Flag as FlagIcon,
+} from '@material-ui/icons'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -90,7 +94,9 @@ export default function DataTable({ data }: any) {
               <TableCell style={{ verticalAlign: 'top' }}>
                 <Grid container alignItems='center' spacing={2} wrap='nowrap'>
                   <Grid item>
-                    <Avatar src={data.flag} style={{ width: 30, height: 30 }} />
+                    <Avatar src={data.flag} style={{ width: 30, height: 30 }}>
+                      <FlagIcon />
+                    </Avatar>
                   </Grid>
                   <Grid item style={{ color: theme.palette.text.secondary }}>
                     {data.country}
