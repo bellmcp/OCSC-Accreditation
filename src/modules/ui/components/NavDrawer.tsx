@@ -1,5 +1,6 @@
 //@ts-nocheck
 import React from 'react'
+import clsx from 'clsx'
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -60,7 +61,11 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     listItem: {
       padding: 0,
-      paddingLeft: 4,
+      paddingLeft: 10,
+    },
+    active: {
+      borderLeft: `6px solid ${theme.palette.primary.main}`,
+      paddingLeft: '4px !important',
     },
     listTitle: {
       marginBlockEnd: 0,
@@ -165,26 +170,43 @@ export default function NavDrawer({
               {navigationItem.id === 0 ? <Divider /> : null}
               <MenuItem
                 button
+                className={clsx({
+                  [classes.listItem]: true,
+                  [classes.active]: index === active,
+                })}
                 selected={index === active ? true : false}
                 onClick={() => {
-                  if (!isUserCurrentlyInLearn) {
-                    history.push(`${navigationItem.url}`)
-                    handleDrawerToggle()
-                  } else {
-                    dispatch(uiActions.setLearnExitDialog(true))
-                    handleDrawerToggle()
-                  }
+                  history.push(`${navigationItem.url}`)
+                  handleDrawerToggle()
                 }}
               >
-                <ListItem className={classes.listItem} key={index} dense>
+                <ListItem key={index} dense>
                   <ListItemText primary={navigationItem.title} />
                 </ListItem>
               </MenuItem>
-              {navigationItem.id === navigationItems.length - 1 ? (
-                <Divider />
-              ) : null}
             </React.Fragment>
           ))}
+          <MenuItem
+            button
+            className={clsx({
+              [classes.listItem]: true,
+            })}
+          >
+            <ListItem key={999} dense>
+              <ListItemText primary='เมนูเพิ่มเติม 1' />
+            </ListItem>
+          </MenuItem>
+          <MenuItem
+            button
+            className={clsx({
+              [classes.listItem]: true,
+            })}
+          >
+            <ListItem key={999} dense>
+              <ListItemText primary='เมนูเพิ่มเติม 2' />
+            </ListItem>
+          </MenuItem>
+          <Divider />
         </List>
         <p className={classes.copyright}>
           © {new Date().getFullYear()} สำนักงาน ก.พ.
