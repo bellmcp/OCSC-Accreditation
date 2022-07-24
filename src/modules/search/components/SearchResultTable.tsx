@@ -167,13 +167,27 @@ export default function CollapsibleTable() {
         <TableHead>
           <TableRow>
             <TableCell />
-            <TableCell>ลำดับที่</TableCell>
-            <TableCell>มหาวิทยาลัย/สถาบันการศึกษา</TableCell>
-            <TableCell>ชื่อปริญญา/ประกาศนียบัตร</TableCell>
-            <TableCell>สาขา/วิชาเอก</TableCell>
-            <TableCell>รัฐ/เอกชน</TableCell>
-            <TableCell>ระดับการศึกษา</TableCell>
-            <TableCell>คณะ/หน่วยงาน</TableCell>
+            <TableCell style={{ verticalAlign: 'top', lineHeight: '1.2' }}>
+              ลำดับที่
+            </TableCell>
+            <TableCell style={{ verticalAlign: 'top', lineHeight: '1.2' }}>
+              มหาวิทยาลัย/สถาบันการศึกษา
+            </TableCell>
+            <TableCell style={{ verticalAlign: 'top', lineHeight: '1.2' }}>
+              ชื่อปริญญา/ประกาศนียบัตร
+            </TableCell>
+            <TableCell style={{ verticalAlign: 'top', lineHeight: '1.2' }}>
+              สาขา/วิชาเอก
+            </TableCell>
+            <TableCell style={{ verticalAlign: 'top', lineHeight: '1.2' }}>
+              รัฐ/เอกชน
+            </TableCell>
+            <TableCell style={{ verticalAlign: 'top', lineHeight: '1.2' }}>
+              ระดับการศึกษา
+            </TableCell>
+            <TableCell style={{ verticalAlign: 'top', lineHeight: '1.2' }}>
+              คณะ/หน่วยงาน
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

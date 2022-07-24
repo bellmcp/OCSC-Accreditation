@@ -36,7 +36,6 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: '1.7rem',
       fontWeight: 600,
       zIndex: 3,
-      marginBottom: '24px',
     },
     seeAllButton: {
       marginBottom: '0.35em',
@@ -68,10 +67,16 @@ export default function Home() {
     <>
       <Header title='FAQ' subtitle='คำถามที่พบบ่อย' icon={<div />} />
       <Container maxWidth='lg' className={classes.content}>
-        <Grid container spacing={10}>
+        <Grid container spacing={matches ? 10 : 2}>
           <Grid container item xs={12} lg={6}>
             <Box mt={2} mb={4}>
-              <Grid container direction='row' alignItems='center'>
+              <Grid
+                container
+                direction='row'
+                justify={matches ? 'space-between' : 'center'}
+                alignItems='center'
+                style={{ marginBottom: 24 }}
+              >
                 <Typography
                   gutterBottom
                   component='h2'
@@ -184,9 +189,11 @@ export default function Home() {
         <Container maxWidth='lg' className={classes.content}>
           <Grid
             container
-            direction='row'
+            direction={matches ? 'row' : 'column'}
             justify={matches ? 'space-between' : 'center'}
             alignItems='center'
+            spacing={2}
+            style={{ marginBottom: 24, marginTop: 12 }}
           >
             <Typography
               gutterBottom
@@ -209,7 +216,7 @@ export default function Home() {
           <Typography
             variant='h6'
             color='textPrimary'
-            style={{ marginBottom: '16px', fontWeight: 600 }}
+            style={{ marginBottom: '16px', fontWeight: 600, lineHeight: '1.3' }}
           >
             1. การนำผลการรับรองในระบบรับรองคุณวุฒิด้วยระบบอิเล็กทรอนิกส์ไปใช้
           </Typography>
@@ -235,7 +242,7 @@ export default function Home() {
           <Typography
             variant='h6'
             color='textPrimary'
-            style={{ marginBottom: '16px', fontWeight: 600 }}
+            style={{ marginBottom: '16px', fontWeight: 600, lineHeight: '1.3' }}
           >
             2. การสมัครสอบของข้าราชการประเภทอื่น
           </Typography>

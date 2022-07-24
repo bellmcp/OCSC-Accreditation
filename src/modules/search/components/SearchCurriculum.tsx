@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react'
 import { get } from 'lodash'
 import { useDispatch, useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
 
 import {
   createStyles,
@@ -53,17 +52,11 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 )
 
-const TITLE = 'OCSC Learning Space'
-const SUBTITLE =
-  'โลกแห่งการเรียนรู้ ไม่มีวันจบสิ้น ยิ่งเรียนยิ่งรู้ ยิ่งเพิ่มพลังทางปัญญา'
-
 export default function SearchCurriculum() {
   const classes = useStyles()
   const theme = useTheme()
   const matches = useMediaQuery(theme.breakpoints.up('sm'))
   const dispatch = useDispatch()
-  const history = useHistory()
-  const PATH = process.env.REACT_APP_BASE_PATH
 
   useEffect(() => {
     dispatch(searchActions.loadEducationlevels())
@@ -108,7 +101,12 @@ export default function SearchCurriculum() {
       <Header title='FAQ' subtitle='คำถามที่พบบ่อย' icon={<div />} />
       <Container maxWidth='lg' className={classes.content}>
         <Box mt={2} mb={4}>
-          <Grid container direction='row' alignItems='center'>
+          <Grid
+            container
+            direction='row'
+            justify={matches ? 'space-between' : 'center'}
+            alignItems='center'
+          >
             <Typography
               gutterBottom
               component='h2'
@@ -118,21 +116,17 @@ export default function SearchCurriculum() {
               ค้นหาการรับรองคุณวุฒิหลักสูตร
             </Typography>
           </Grid>
-          <Grid container direction='column' alignItems='center' spacing={3}>
-            <Grid
-              container
-              item
-              spacing={2}
-              style={{
-                padding: 16,
-                borderRadius: 8,
-                margin: '16px 0',
-                backgroundColor: 'white',
-                boxShadow: '0 0 20px 0 rgba(0,0,0,0.04)',
-              }}
-            >
+          <Paper
+            elevation={0}
+            style={{
+              borderRadius: 16,
+              padding: 24,
+              boxShadow: '0 0 20px 0 rgba(0,0,0,0.04)',
+            }}
+          >
+            <Grid container item spacing={2}>
               <Grid container item direction='row' alignItems='center'>
-                <Grid xs={3}>
+                <Grid xs={12} md={3}>
                   <Typography
                     variant='body1'
                     color='textPrimary'
@@ -141,7 +135,7 @@ export default function SearchCurriculum() {
                     ประเภทหลักสูตร
                   </Typography>
                 </Grid>
-                <Grid xs={9}>
+                <Grid xs={12} md={9}>
                   <RadioGroup row defaultValue='female'>
                     <FormControlLabel
                       value='female'
@@ -158,16 +152,17 @@ export default function SearchCurriculum() {
                 </Grid>
               </Grid>
               <Grid container item direction='row' alignItems='center'>
-                <Grid xs={3}>
+                <Grid xs={12} md={3}>
                   <Typography
                     variant='body1'
                     color='textPrimary'
                     style={{ fontWeight: 600 }}
+                    gutterBottom
                   >
                     ระดับการศึกษา
                   </Typography>
                 </Grid>
-                <Grid xs={9}>
+                <Grid xs={12} md={9}>
                   <FormControl fullWidth size='small'>
                     <Select
                       variant='outlined'
@@ -215,7 +210,7 @@ export default function SearchCurriculum() {
                 </Grid>
               </Grid>
               <Grid container item direction='row' alignItems='center'>
-                <Grid xs={3}>
+                <Grid xs={12} md={3}>
                   <Typography
                     variant='body1'
                     color='textPrimary'
@@ -224,7 +219,7 @@ export default function SearchCurriculum() {
                     สถานะหลักสูตร
                   </Typography>
                 </Grid>
-                <Grid xs={9}>
+                <Grid xs={12} md={9}>
                   <RadioGroup row defaultValue='female'>
                     <FormControlLabel
                       value='female'
@@ -241,18 +236,18 @@ export default function SearchCurriculum() {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid
-              container
-              item
-              spacing={2}
-              style={{
-                padding: 16,
-                borderRadius: 8,
-                margin: '16px 0',
-                backgroundColor: 'white',
-                boxShadow: '0 0 20px 0 rgba(0,0,0,0.04)',
-              }}
-            >
+          </Paper>
+          <Paper
+            elevation={0}
+            style={{
+              borderRadius: 16,
+              padding: 24,
+              boxShadow: '0 0 20px 0 rgba(0,0,0,0.04)',
+              minHeight: 300,
+              marginTop: 24,
+            }}
+          >
+            <Grid container item spacing={2}>
               <Grid container item direction='row' alignItems='center'>
                 <Grid xs={12}>
                   <Typography variant='body2' color='primary'>
@@ -263,16 +258,17 @@ export default function SearchCurriculum() {
                 </Grid>
               </Grid>
               <Grid container item direction='row' alignItems='center'>
-                <Grid xs={3}>
+                <Grid xs={12} md={3}>
                   <Typography
                     variant='body1'
                     color='textPrimary'
                     style={{ fontWeight: 600 }}
+                    gutterBottom
                   >
                     มหาวิทยาลัย/สถาบันการศึกษา{note}
                   </Typography>
                 </Grid>
-                <Grid xs={9}>
+                <Grid xs={12} md={9}>
                   <TextField
                     placeholder='ใส่คำค้นหาได้ไม่เกิน 3 คำ เช่น กกก ขขข คคค หมายถึง ในชื่อต้องมีคำค้นหาทั้งหมดปรากฏอยู่'
                     variant='outlined'
@@ -282,16 +278,17 @@ export default function SearchCurriculum() {
                 </Grid>
               </Grid>
               <Grid container item direction='row' alignItems='center'>
-                <Grid xs={3}>
+                <Grid xs={12} md={3}>
                   <Typography
                     variant='body1'
                     color='textPrimary'
                     style={{ fontWeight: 600 }}
+                    gutterBottom
                   >
                     คณะ/หน่วยงานที่เทียบเท่าคณะ{note}
                   </Typography>
                 </Grid>
-                <Grid xs={9}>
+                <Grid xs={12} md={9}>
                   <TextField
                     placeholder='ใส่คำค้นหาได้ไม่เกิน 3 คำ เช่น กกก ขขข คคค หมายถึง ในชื่อต้องมีคำค้นหาทั้งหมดปรากฏอยู่'
                     variant='outlined'
@@ -301,16 +298,17 @@ export default function SearchCurriculum() {
                 </Grid>
               </Grid>
               <Grid container item direction='row' alignItems='center'>
-                <Grid xs={3}>
+                <Grid xs={12} md={3}>
                   <Typography
                     variant='body1'
                     color='textPrimary'
                     style={{ fontWeight: 600 }}
+                    gutterBottom
                   >
                     ชื่อปริญญา/ประกาศนียบัตร{note}
                   </Typography>
                 </Grid>
-                <Grid xs={9}>
+                <Grid xs={12} md={9}>
                   <TextField
                     placeholder='ใส่คำค้นหาได้ไม่เกิน 3 คำ เช่น กกก ขขข คคค หมายถึง ในชื่อต้องมีคำค้นหาทั้งหมดปรากฏอยู่'
                     variant='outlined'
@@ -320,16 +318,17 @@ export default function SearchCurriculum() {
                 </Grid>
               </Grid>
               <Grid container item direction='row' alignItems='center'>
-                <Grid xs={3}>
+                <Grid xs={12} md={3}>
                   <Typography
                     variant='body1'
                     color='textPrimary'
                     style={{ fontWeight: 600 }}
+                    gutterBottom
                   >
                     สาขาวิชา/วิชาเอก{note}
                   </Typography>
                 </Grid>
-                <Grid xs={9}>
+                <Grid xs={12} md={9}>
                   <TextField
                     placeholder='ใส่คำค้นหาได้ไม่เกิน 3 คำ เช่น กกก ขขข คคค หมายถึง ในชื่อต้องมีคำค้นหาทั้งหมดปรากฏอยู่'
                     variant='outlined'
@@ -339,7 +338,7 @@ export default function SearchCurriculum() {
                 </Grid>
               </Grid>
             </Grid>
-          </Grid>
+          </Paper>
           <Button
             fullWidth
             variant='contained'
@@ -352,10 +351,15 @@ export default function SearchCurriculum() {
             ค้นหา
           </Button>
         </Box>
-        <Box mt={8} mb={6}>
+        <Box mt={6} mb={4}>
           <Divider />
         </Box>
-        <Grid container direction='row' alignItems='center'>
+        <Grid
+          container
+          direction='row'
+          justify={matches ? 'space-between' : 'center'}
+          alignItems='center'
+        >
           <Typography
             gutterBottom
             component='h2'
@@ -370,7 +374,7 @@ export default function SearchCurriculum() {
           style={{
             borderRadius: 16,
             padding: 24,
-            paddingTop: 12,
+            paddingTop: 8,
             boxShadow: '0 0 20px 0 rgba(0,0,0,0.04)',
             minHeight: 300,
           }}
