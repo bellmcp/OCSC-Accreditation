@@ -66,7 +66,7 @@ export default function DataTable({ data }: any) {
               width={300}
               style={{ lineHeight: '1.2', verticalAlign: 'top' }}
             >
-              ลิงก์ไปยังเว็บไซต์ที่เกี่ยวข้อง
+              เว็บไซต์ที่เกี่ยวข้อง
             </TableCell>
             <TableCell style={{ lineHeight: '1.2', verticalAlign: 'top' }}>
               หมายเหตุ
