@@ -2,8 +2,20 @@ import React, { useState, useEffect } from 'react'
 import { get } from 'lodash'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
-import { Container, Typography, Grid, Box, Paper } from '@material-ui/core'
+import {
+  createStyles,
+  makeStyles,
+  Theme,
+  useTheme,
+} from '@material-ui/core/styles'
+import {
+  Container,
+  Typography,
+  Grid,
+  Box,
+  Paper,
+  useMediaQuery,
+} from '@material-ui/core'
 
 import Header from 'modules/ui/components/Header'
 import Loading from 'modules/ui/components/Loading'
@@ -54,6 +66,8 @@ function createData(
 export default function InternationalEdu() {
   const classes = useStyles()
   const dispatch = useDispatch()
+  const theme = useTheme()
+  const matches = useMediaQuery(theme.breakpoints.up('sm'))
 
   const [tableData, setTableData] = useState([])
 
@@ -87,7 +101,12 @@ export default function InternationalEdu() {
       <Header title='FAQ' subtitle='คำถามที่พบบ่อย' icon={<div />} />
       <Container maxWidth='lg' className={classes.content}>
         <Box mt={2} mb={4}>
-          <Grid container direction='row' alignItems='center'>
+          <Grid
+            container
+            direction='row'
+            justify={matches ? 'space-between' : 'center'}
+            alignItems='center'
+          >
             <Typography
               gutterBottom
               component='h2'

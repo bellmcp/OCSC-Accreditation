@@ -36,13 +36,23 @@ export default function DataTable({ data }: any) {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell width='50%'>ดาวน์โหลด</TableCell>
-            <TableCell width='50%'>ลิงก์ไปยังเว็บไซต์ที่เกี่ยวข้อง</TableCell>
+            <TableCell
+              width='50%'
+              style={{ lineHeight: '1.2', verticalAlign: 'top' }}
+            >
+              ดาวน์โหลด
+            </TableCell>
+            <TableCell
+              width='50%'
+              style={{ lineHeight: '1.2', verticalAlign: 'top' }}
+            >
+              ลิงก์ไปยังเว็บไซต์ที่เกี่ยวข้อง
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           <TableRow>
-            <TableCell>
+            <TableCell style={{ verticalAlign: 'top' }}>
               {getValue(data, 'documentText', []).map(
                 (document: string, index: number) => (
                   <Link
@@ -51,7 +61,7 @@ export default function DataTable({ data }: any) {
                   >
                     <Grid
                       container
-                      alignItems='center'
+                      alignItems='flex-start'
                       spacing={2}
                       wrap='nowrap'
                     >
@@ -67,7 +77,7 @@ export default function DataTable({ data }: any) {
                 )
               )}
             </TableCell>
-            <TableCell>
+            <TableCell style={{ verticalAlign: 'top' }}>
               {getValue(data, 'websiteText', []).map(
                 (website: string, index: number) => (
                   <Link
@@ -76,7 +86,7 @@ export default function DataTable({ data }: any) {
                   >
                     <Grid
                       container
-                      alignItems='center'
+                      alignItems='flex-start'
                       spacing={2}
                       wrap='nowrap'
                     >

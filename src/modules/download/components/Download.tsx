@@ -17,7 +17,12 @@ import {
   Tabs,
   Tab,
   Paper,
+  useMediaQuery,
 } from '@material-ui/core'
+import AccountBalanceIcon from '@material-ui/icons/AccountBalance'
+import ApartmentIcon from '@material-ui/icons/Apartment'
+import SchoolIcon from '@material-ui/icons/School'
+import DescriptionIcon from '@material-ui/icons/Description'
 
 import Header from 'modules/ui/components/Header'
 import Loading from 'modules/ui/components/Loading'
@@ -79,6 +84,7 @@ export default function Download() {
   const dispatch = useDispatch()
   const [value, setValue] = useState(0)
   const [tableData, setTableData] = useState([])
+  const matches = useMediaQuery(theme.breakpoints.up('sm'))
 
   const { letters: initialLetters = [], isLoading = false } = useSelector(
     (state: any) => state.download
@@ -114,7 +120,12 @@ export default function Download() {
       <Header title='FAQ' subtitle='คำถามที่พบบ่อย' icon={<div />} />
       <Container maxWidth='lg' className={classes.content}>
         <Box mt={2} mb={4}>
-          <Grid container direction='row' alignItems='center'>
+          <Grid
+            container
+            direction='row'
+            justify={matches ? 'space-between' : 'center'}
+            alignItems='center'
+          >
             <Typography
               gutterBottom
               component='h2'
@@ -144,30 +155,36 @@ export default function Download() {
             >
               <Tab
                 value={0}
+                icon={<AccountBalanceIcon />}
                 label='หนังสือเวียนภาครัฐ'
                 style={{
                   borderTopLeftRadius: 16,
                   lineHeight: '1.2',
-                  padding: '16px 0',
+                  paddingTop: 16,
+                  paddingBottom: 16,
                 }}
               />
               <Tab
                 value={1}
+                icon={<ApartmentIcon />}
                 label='หนังสือเวียนภาคเอกชน'
-                style={{ lineHeight: '1.2', padding: '16px 0' }}
+                style={{ lineHeight: '1.2', paddingTop: 16, paddingBottom: 16 }}
               />
               <Tab
                 value={2}
+                icon={<SchoolIcon />}
                 label='หนังสือเวียนที่เกี่ยวข้องกับการรับรองรายชื่อปริญญาต่าง ๆ'
-                style={{ lineHeight: '1.2', padding: '16px 0' }}
+                style={{ lineHeight: '1.2', paddingTop: 16, paddingBottom: 16 }}
               />
               <Tab
                 value={3}
+                icon={<DescriptionIcon />}
                 label='หนังสือเวียนอื่น ๆ ที่เกี่ยวข้อง'
                 style={{
                   borderTopRightRadius: 16,
                   lineHeight: '1.2',
-                  padding: '16px 0',
+                  paddingTop: 16,
+                  paddingBottom: 16,
                 }}
               />
             </Tabs>

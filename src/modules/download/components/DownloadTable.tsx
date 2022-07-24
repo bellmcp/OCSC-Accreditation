@@ -1,6 +1,11 @@
 import React from 'react'
 
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
+import {
+  createStyles,
+  makeStyles,
+  Theme,
+  useTheme,
+} from '@material-ui/core/styles'
 import {
   Table,
   TableBody,
@@ -23,19 +28,40 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function DownloadTable({ data }: any) {
   const classes = useStyles()
+  const theme = useTheme()
 
   return (
     <TableContainer>
       <Table className={classes.table}>
         <TableHead>
           <TableRow>
-            <TableCell align='center' width={100}>
+            <TableCell
+              align='center'
+              width='10%'
+              style={{ verticalAlign: 'top', lineHeight: '1.2' }}
+            >
               ลำดับ
             </TableCell>
-            <TableCell width={200}>วันที่ออกหนังสือเวียน</TableCell>
-            <TableCell width={200}>เลขที่หนังสือเวียน</TableCell>
-            <TableCell>เรื่อง</TableCell>
-            <TableCell width={100} align='center'>
+            <TableCell
+              width='20%'
+              style={{ verticalAlign: 'top', lineHeight: '1.2' }}
+            >
+              วันที่ออกหนังสือเวียน
+            </TableCell>
+            <TableCell
+              width='20%'
+              style={{ verticalAlign: 'top', lineHeight: '1.2' }}
+            >
+              เลขที่หนังสือเวียน
+            </TableCell>
+            <TableCell style={{ verticalAlign: 'top', lineHeight: '1.2' }}>
+              เรื่อง
+            </TableCell>
+            <TableCell
+              width='10%'
+              align='center'
+              style={{ verticalAlign: 'top' }}
+            >
               ดาวน์โหลด
             </TableCell>
           </TableRow>
@@ -43,13 +69,42 @@ export default function DownloadTable({ data }: any) {
         <TableBody>
           {data.map((data: any) => (
             <TableRow key={data.id}>
-              <TableCell component='th' scope='row' align='center'>
+              <TableCell
+                component='th'
+                scope='row'
+                align='center'
+                style={{
+                  verticalAlign: 'top',
+                  color: theme.palette.text.secondary,
+                }}
+              >
                 {data.id}
               </TableCell>
-              <TableCell>{data.date}</TableCell>
-              <TableCell>{data.no}</TableCell>
-              <TableCell>{data.subject}</TableCell>
-              <TableCell align='center'>
+              <TableCell
+                style={{
+                  verticalAlign: 'top',
+                  color: theme.palette.text.secondary,
+                }}
+              >
+                {data.date}
+              </TableCell>
+              <TableCell
+                style={{
+                  verticalAlign: 'top',
+                  color: theme.palette.text.secondary,
+                }}
+              >
+                {data.no}
+              </TableCell>
+              <TableCell
+                style={{
+                  verticalAlign: 'top',
+                  color: theme.palette.text.secondary,
+                }}
+              >
+                {data.subject}
+              </TableCell>
+              <TableCell align='center' style={{ verticalAlign: 'top' }}>
                 <IconButton
                   size='small'
                   component={Link}

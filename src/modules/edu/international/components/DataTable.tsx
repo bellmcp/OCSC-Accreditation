@@ -1,7 +1,12 @@
 import React from 'react'
 import { get, isNull } from 'lodash'
 
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
+import {
+  createStyles,
+  makeStyles,
+  Theme,
+  useTheme,
+} from '@material-ui/core/styles'
 import {
   Table,
   TableBody,
@@ -25,6 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function DataTable({ data }: any) {
   const classes = useStyles()
+  const theme = useTheme()
 
   const getValue = (data: any, name: any, defaultValue: any) => {
     const value = get(data, name, null)
@@ -37,28 +43,59 @@ export default function DataTable({ data }: any) {
       <Table className={classes.table}>
         <TableHead>
           <TableRow>
-            <TableCell width={100}>ลำดับ</TableCell>
-            <TableCell width={250}>ประเทศ</TableCell>
-            <TableCell width={300}>ดาวน์โหลด</TableCell>
-            <TableCell width={300}>ลิงก์ไปยังเว็บไซต์ที่เกี่ยวข้อง</TableCell>
-            <TableCell>หมายเหตุ</TableCell>
+            <TableCell
+              width={100}
+              style={{ lineHeight: '1.2', verticalAlign: 'top' }}
+            >
+              ลำดับ
+            </TableCell>
+            <TableCell
+              width={250}
+              style={{ lineHeight: '1.2', verticalAlign: 'top' }}
+            >
+              ประเทศ
+            </TableCell>
+            <TableCell
+              width={300}
+              style={{ lineHeight: '1.2', verticalAlign: 'top' }}
+            >
+              ดาวน์โหลด
+            </TableCell>
+            <TableCell
+              width={300}
+              style={{ lineHeight: '1.2', verticalAlign: 'top' }}
+            >
+              ลิงก์ไปยังเว็บไซต์ที่เกี่ยวข้อง
+            </TableCell>
+            <TableCell style={{ lineHeight: '1.2', verticalAlign: 'top' }}>
+              หมายเหตุ
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {data.map((data: any) => (
             <TableRow key={data.id}>
-              <TableCell component='th' scope='row'>
+              <TableCell
+                component='th'
+                scope='row'
+                style={{
+                  color: theme.palette.text.secondary,
+                  verticalAlign: 'top',
+                }}
+              >
                 {data.id}
               </TableCell>
-              <TableCell>
+              <TableCell style={{ verticalAlign: 'top' }}>
                 <Grid container alignItems='center' spacing={2} wrap='nowrap'>
                   <Grid item>
                     <Avatar src={data.flag} style={{ width: 30, height: 30 }} />
                   </Grid>
-                  <Grid item>{data.country}</Grid>
+                  <Grid item style={{ color: theme.palette.text.secondary }}>
+                    {data.country}
+                  </Grid>
                 </Grid>
               </TableCell>
-              <TableCell>
+              <TableCell style={{ verticalAlign: 'top' }}>
                 {getValue(data, 'documentText', []).map(
                   (document: string, index: number) => (
                     <Link
@@ -67,7 +104,7 @@ export default function DataTable({ data }: any) {
                     >
                       <Grid
                         container
-                        alignItems='center'
+                        alignItems='flex-start'
                         spacing={2}
                         wrap='nowrap'
                       >
@@ -83,7 +120,7 @@ export default function DataTable({ data }: any) {
                   )
                 )}
               </TableCell>
-              <TableCell>
+              <TableCell style={{ verticalAlign: 'top' }}>
                 {getValue(data, 'websiteText', []).map(
                   (website: string, index: number) => (
                     <Link
@@ -92,7 +129,7 @@ export default function DataTable({ data }: any) {
                     >
                       <Grid
                         container
-                        alignItems='center'
+                        alignItems='flex-start'
                         spacing={2}
                         wrap='nowrap'
                       >
@@ -108,7 +145,14 @@ export default function DataTable({ data }: any) {
                   )
                 )}
               </TableCell>
-              <TableCell>{data.note}</TableCell>
+              <TableCell
+                style={{
+                  color: theme.palette.text.secondary,
+                  verticalAlign: 'top',
+                }}
+              >
+                {data.note}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

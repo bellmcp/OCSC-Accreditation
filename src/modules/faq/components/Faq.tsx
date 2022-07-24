@@ -10,6 +10,7 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
+  useMediaQuery,
 } from '@material-ui/core'
 import {
   createStyles,
@@ -21,6 +22,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 
 import Header from 'modules/ui/components/Header'
 import DataTable from './DataTable'
+import Loading from 'modules/ui/components/Loading'
 
 import * as faqActions from 'modules/faq/actions'
 
@@ -84,6 +86,7 @@ export default function Faq() {
   const classes = useStyles()
   const dispatch = useDispatch()
   const theme = useTheme()
+  const matches = useMediaQuery(theme.breakpoints.up('sm'))
 
   const [expanded, setExpanded] = React.useState<string | false>(false)
 
@@ -96,23 +99,13 @@ export default function Faq() {
     dispatch(faqActions.loadFaq())
   }, [dispatch])
 
-  const { faq } = useSelector((state: any) => state.faq)
+  const { faq, isLoading = false } = useSelector((state: any) => state.faq)
 
-  return (
-    <>
-      <Header title='FAQ' subtitle='คำถามที่พบบ่อย' icon={<div />} />
-      <Container maxWidth='lg' className={classes.content}>
-        <Box mt={2} mb={4}>
-          <Grid container direction='row' alignItems='center'>
-            <Typography
-              gutterBottom
-              component='h2'
-              variant='h6'
-              className={classes.sectionTitle}
-            >
-              คำถามที่พบบ่อย
-            </Typography>
-          </Grid>
+  const renderContent = () => {
+    if (isLoading) return <Loading height={100} />
+    else
+      return (
+        <>
           {faq.map((item: any, index: number) => {
             const data = createData(
               item.documentUrl,
@@ -136,7 +129,13 @@ export default function Faq() {
                 >
                   <Grid container spacing={0} style={{ paddingLeft: 8 }}>
                     <Grid item xs={12}>
-                      <Typography variant='body1' style={{ fontWeight: 600 }}>
+                      <Typography
+                        variant='body1'
+                        style={{
+                          fontWeight: 600,
+                          marginBottom: 4,
+                        }}
+                      >
                         {get(item, 'id', index + 1)}
                         {'. '}
                         {get(item, 'question', '')} ?
@@ -144,15 +143,31 @@ export default function Faq() {
                     </Grid>
                     <Grid item xs={12}>
                       <Typography variant='body1' color='textSecondary'>
-                        <span
-                          style={{
-                            fontWeight: 500,
-                            textDecoration: 'underline',
-                          }}
+                        <Grid
+                          container
+                          spacing={2}
+                          direction='row'
+                          alignItems='flex-start'
+                          wrap='nowrap'
                         >
-                          ตอบ
-                        </span>{' '}
-                        {get(item, 'answer', '')}
+                          <Grid item>
+                            <span
+                              style={{
+                                fontWeight: 500,
+                                textDecoration: 'underline',
+                              }}
+                            >
+                              ตอบ
+                            </span>
+                          </Grid>
+                          <Grid item>
+                            <div
+                              dangerouslySetInnerHTML={{
+                                __html: get(item, 'answer', ''),
+                              }}
+                            ></div>
+                          </Grid>
+                        </Grid>
                       </Typography>
                     </Grid>
                   </Grid>
@@ -165,6 +180,31 @@ export default function Faq() {
               </Accordion>
             )
           })}
+        </>
+      )
+  }
+
+  return (
+    <>
+      <Header title='FAQ' subtitle='คำถามที่พบบ่อย' icon={<div />} />
+      <Container maxWidth='lg' className={classes.content}>
+        <Box mt={2} mb={4}>
+          <Grid
+            container
+            direction='row'
+            justify={matches ? 'space-between' : 'center'}
+            alignItems='center'
+          >
+            <Typography
+              gutterBottom
+              component='h2'
+              variant='h6'
+              className={classes.sectionTitle}
+            >
+              คำถามที่พบบ่อย
+            </Typography>
+          </Grid>
+          {renderContent()}
         </Box>
       </Container>
     </>
