@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react'
+import { get } from 'lodash'
+
 import Box from '@material-ui/core/Box'
 import Collapse from '@material-ui/core/Collapse'
 import IconButton from '@material-ui/core/IconButton'
@@ -18,36 +20,45 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 
 function createData(
   id: number,
-  name: string,
-  calories: string,
-  fat: string,
-  carbs: string,
-  protein: string,
-  price: string,
-  test: string
+  university: string,
+  degree: string,
+  branch: string,
+  category: string,
+  level: string,
+  faculty: string,
+  accreditation1: string,
+  accreditation2: string,
+  note: string,
+  letterNo: string,
+  letterDate: string
 ) {
   return {
     id,
-    name,
-    calories,
-    fat,
-    carbs,
-    protein,
-    price,
-    test,
-    history: [
-      {
-        date: '2020-01-05',
-        customerId: '11091700',
-        amount: 3,
-      },
-      {
-        date: '2020-01-02',
-        customerId: 'Anonymous',
-        amount: 1,
-      },
-    ],
+    university,
+    degree,
+    branch,
+    category,
+    level,
+    faculty,
+    accreditation1,
+    accreditation2,
+    note,
+    letterNo,
+    letterDate,
   }
+}
+
+const getLabel = (row: any, fieldName: string) => {
+  const result = get(row, fieldName, null)
+  if (result === null || result === undefined || result === '') {
+    return '-'
+  } else {
+    return result
+  }
+}
+
+const parseLinkToDefaultColor = (text: string) => {
+  return text.replace('<a', '<a style="color:#00A69C; text-decoration: none;"')
 }
 
 function Row(props: { row: ReturnType<typeof createData> }) {
@@ -71,16 +82,16 @@ function Row(props: { row: ReturnType<typeof createData> }) {
           </IconButton>
         </TableCell>
         <TableCell component='th' scope='row'>
-          {row.id}
+          {getLabel(row, 'id')}
         </TableCell>
         <TableCell component='th' scope='row'>
-          {row.name}
+          {getLabel(row, 'university')}
         </TableCell>
-        <TableCell>{row.calories}</TableCell>
-        <TableCell>{row.fat}</TableCell>
-        <TableCell>{row.carbs}</TableCell>
-        <TableCell>{row.protein}</TableCell>
-        <TableCell>{row.test}</TableCell>
+        <TableCell>{getLabel(row, 'degree')}</TableCell>
+        <TableCell>{getLabel(row, 'branch')}</TableCell>
+        <TableCell>{getLabel(row, 'category')}</TableCell>
+        <TableCell>{getLabel(row, 'level')}</TableCell>
+        <TableCell>{getLabel(row, 'faculty')}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -93,13 +104,32 @@ function Row(props: { row: ReturnType<typeof createData> }) {
                   </Typography>
                 </Box>
                 <Box>
-                  <Typography variant='body2' color='textSecondary'>
-                    สาขาวิชาศึกษาศาสตร์
-                    <br />
-                    ทางธุรกิจการศึกษา
+                  <Typography
+                    variant='body2'
+                    color='textSecondary'
+                    gutterBottom
+                    style={{ lineHeight: '1.2' }}
+                  >
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: parseLinkToDefaultColor(
+                          getLabel(row, 'accreditation1')
+                        ),
+                      }}
+                    ></div>
                   </Typography>
-                  <Typography variant='caption' color='primary'>
-                    สำนักงานคณะกรรมการข้าราชการพลเรือน (สำนักงาน ก.พ.)
+                  <Typography
+                    variant='caption'
+                    color='textSecondary'
+                    style={{ lineHeight: '1.2' }}
+                  >
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: parseLinkToDefaultColor(
+                          getLabel(row, 'accreditation2')
+                        ),
+                      }}
+                    ></div>
                   </Typography>
                 </Box>
               </ListItem>
@@ -111,7 +141,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
                 </Box>
                 <Box>
                   <Typography variant='body2' color='textSecondary'>
-                    เอกเดี่ยว
+                    {getLabel(row, 'note')}
                   </Typography>
                 </Box>
               </ListItem>
@@ -123,7 +153,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
                 </Box>
                 <Box>
                   <Typography variant='body2' color='textSecondary'>
-                    นร 1004.3/ว42
+                    {getLabel(row, 'letterNo')}
                   </Typography>
                 </Box>
               </ListItem>
@@ -135,7 +165,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
                 </Box>
                 <Box>
                   <Typography variant='body2' color='textSecondary'>
-                    30 กันยายน 2563
+                    {getLabel(row, 'letterDate')}
                   </Typography>
                 </Box>
               </ListItem>
@@ -147,19 +177,6 @@ function Row(props: { row: ReturnType<typeof createData> }) {
   )
 }
 
-const rows = [
-  createData(
-    1,
-    'จุฬาลงกรณ์มหาวิทยาลัย',
-    'ปริญญาครุศาสตรบัณฑิต',
-    'ธุรกิจศึกษา',
-    'รัฐ',
-    'ป.ตรี',
-    'คณะครุศาสตร์',
-    'คณะครุศาสตร์'
-  ),
-]
-
 interface SearchResultTableType {
   data: any
 }
@@ -170,7 +187,23 @@ export default function SearchResultTable({ data }: SearchResultTableType) {
   const [tableData, setTableData] = useState([])
 
   useEffect(() => {
-    setTableData(data)
+    const parsedData = data.map((item: any) =>
+      createData(
+        get(item, 'id'),
+        get(item, 'university'),
+        get(item, 'degree'),
+        get(item, 'branch'),
+        get(item, 'category'),
+        get(item, 'level'),
+        get(item, 'faculty'),
+        get(item, 'accreditation1'),
+        get(item, 'accreditation2'),
+        get(item, 'note'),
+        get(item, 'letterNo'),
+        get(item, 'letterDate')
+      )
+    )
+    setTableData(parsedData)
   }, [data])
 
   return (
@@ -206,8 +239,8 @@ export default function SearchResultTable({ data }: SearchResultTableType) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <Row key={row.name} row={row} />
+          {tableData.map((row: any) => (
+            <Row key={row.id} row={row} />
           ))}
         </TableBody>
       </Table>
