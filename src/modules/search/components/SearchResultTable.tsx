@@ -167,8 +167,11 @@ export default function CollapsibleTable() {
         <TableHead>
           <TableRow>
             <TableCell />
-            <TableCell style={{ verticalAlign: 'top', lineHeight: '1.2' }}>
-              ลำดับที่
+            <TableCell
+              align='center'
+              style={{ verticalAlign: 'top', lineHeight: '1.2' }}
+            >
+              ลำดับ
             </TableCell>
             <TableCell style={{ verticalAlign: 'top', lineHeight: '1.2' }}>
               มหาวิทยาลัย/สถาบันการศึกษา

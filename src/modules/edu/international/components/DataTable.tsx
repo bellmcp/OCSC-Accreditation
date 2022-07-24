@@ -45,6 +45,7 @@ export default function DataTable({ data }: any) {
           <TableRow>
             <TableCell
               width={100}
+              align='center'
               style={{ lineHeight: '1.2', verticalAlign: 'top' }}
             >
               ลำดับ
@@ -78,6 +79,7 @@ export default function DataTable({ data }: any) {
               <TableCell
                 component='th'
                 scope='row'
+                align='center'
                 style={{
                   color: theme.palette.text.secondary,
                   verticalAlign: 'top',

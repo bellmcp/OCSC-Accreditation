@@ -42,8 +42,8 @@ const useStyles = makeStyles((theme: Theme) =>
     sectionTitle: {
       fontSize: '1.7rem',
       fontWeight: 600,
+      lineHeight: '1.3',
       zIndex: 3,
-      marginBottom: '24px',
     },
     seeAllButton: {
       marginBottom: '0.35em',
@@ -84,9 +84,8 @@ export default function SearchCurriculum() {
   const [selected, setSelected] = useState(null)
   const [educationLevels, setEducationLevels] = useState([])
 
-  const { educationLevels: initalEducationLevels = [] } = useSelector(
-    (state: any) => state.search
-  )
+  const { educationLevels: initalEducationLevels = [], visitor = 0 } =
+    useSelector((state: any) => state.search)
 
   useEffect(() => {
     setEducationLevels(initalEducationLevels)
@@ -107,15 +106,37 @@ export default function SearchCurriculum() {
             direction='row'
             justify={matches ? 'space-between' : 'center'}
             alignItems='center'
+            style={{ marginBottom: 24 }}
           >
-            <Typography
-              gutterBottom
-              component='h2'
-              variant='h6'
-              className={classes.sectionTitle}
+            <Grid item xs={6}>
+              <Typography
+                component='h2'
+                variant='h6'
+                className={classes.sectionTitle}
+              >
+                ค้นหาการรับรองคุณวุฒิหลักสูตร
+              </Typography>
+            </Grid>
+            <Grid
+              item
+              xs={6}
+              container
+              direction='column'
+              alignItems='flex-end'
+              spacing={0}
             >
-              ค้นหาการรับรองคุณวุฒิหลักสูตร
-            </Typography>
+              <Grid item>
+                <Typography variant='body2'>จำนวนผู้เข้าชม</Typography>
+              </Grid>
+              <Grid item>
+                <Typography variant='h6' color='secondary'>
+                  <span style={{ fontWeight: 600 }}>
+                    {visitor.toLocaleString()}
+                  </span>{' '}
+                  คน
+                </Typography>
+              </Grid>
+            </Grid>
           </Grid>
           <Paper
             elevation={0}
@@ -366,6 +387,7 @@ export default function SearchCurriculum() {
             component='h2'
             variant='h6'
             className={classes.sectionTitle}
+            style={{ marginBottom: 24 }}
           >
             ผลการค้นหา
           </Typography>
