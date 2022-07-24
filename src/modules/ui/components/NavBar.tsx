@@ -1,5 +1,6 @@
 // @ts-nocheck
 import React, { useEffect, useState } from 'react'
+import clsx from 'clsx'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useLocation } from 'react-router-dom'
 import { getCookie, eraseCookie } from 'utils/cookies'
@@ -67,6 +68,12 @@ const darkTheme = createMuiTheme({
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    selected: {
+      borderLeft: `6px solid ${theme.palette.primary.main} !important`,
+    },
+    dropdownMenu: {
+      borderLeft: `6px solid transparent`,
+    },
     grow: {
       flexGrow: 1,
     },
@@ -395,6 +402,11 @@ export default function NavBar(props: NavigationBarProps) {
     popupId: 'demoMenu',
   })
 
+  const popupState2 = usePopupState({
+    variant: 'popover',
+    popupId: 'demoMenu2',
+  })
+
   return (
     <div className={classes.grow}>
       <AppBar position='fixed' className={classes.appBar} elevation={0}>
@@ -419,8 +431,8 @@ export default function NavBar(props: NavigationBarProps) {
               onClick={linkToHome}
             />
             <div className={classes.grow} />
-            {/* DESKTOP NAVIGATION */}
-            <Hidden xsDown implementation='css'>
+            {/* FULL DESKTOP NAVIGATION */}
+            <Hidden mdDown implementation='css'>
               <ThemeProvider theme={darkTheme}>
                 <NavMenu
                   useStyles={useLineNavigationMenuStyles}
@@ -436,12 +448,8 @@ export default function NavBar(props: NavigationBarProps) {
                           : classes.navItem
                       }
                       onClick={() => {
-                        if (!isUserCurrentlyInLearn) {
-                          history.push(`${item.url}`)
-                          props.setActivePage(item.id)
-                        } else {
-                          dispatch(uiActions.setLearnExitDialog(true))
-                        }
+                        history.push(`${item.url}`)
+                        props.setActivePage(item.id)
                       }}
                     >
                       <Typography noWrap>{item.title}</Typography>
@@ -450,6 +458,39 @@ export default function NavBar(props: NavigationBarProps) {
                   <NavItem
                     className={classes.navItem}
                     {...bindHover(popupState)}
+                  >
+                    <Typography noWrap>อื่นๆ </Typography>
+                    <ArrowDownIcon style={{ marginLeft: 8 }} />
+                  </NavItem>
+                </NavMenu>
+              </ThemeProvider>
+            </Hidden>
+            {/* MEDIUM DESKTOP NAVIGATION */}
+            <Hidden xsDown lgUp implementation='css'>
+              <ThemeProvider theme={darkTheme}>
+                <NavMenu
+                  useStyles={useLineNavigationMenuStyles}
+                  color='inherit'
+                >
+                  {navigationItem.splice(0, 2).map((item) => (
+                    <NavItem
+                      active={props.active === item.id}
+                      className={
+                        props.active === item.id
+                          ? classes.navItemActive
+                          : classes.navItem
+                      }
+                      onClick={() => {
+                        history.push(`${item.url}`)
+                        props.setActivePage(item.id)
+                      }}
+                    >
+                      <Typography noWrap>{item.title}</Typography>
+                    </NavItem>
+                  ))}
+                  <NavItem
+                    className={classes.navItem}
+                    {...bindHover(popupState2)}
                   >
                     <Typography noWrap>อื่นๆ </Typography>
                     <ArrowDownIcon style={{ marginLeft: 8 }} />
@@ -478,7 +519,6 @@ export default function NavBar(props: NavigationBarProps) {
         linkToChangePassword={linkToChangePassword}
       />
       <HoverMenu
-        elevation={0}
         {...bindMenu(popupState)}
         anchorOrigin={{
           vertical: 'bottom',
@@ -496,9 +536,100 @@ export default function NavBar(props: NavigationBarProps) {
           },
         }}
       >
-        <MenuItem onClick={popupState.close}>เมนูเพิ่มเติม 1</MenuItem>
-        <MenuItem onClick={popupState.close}>เมนูเพิ่มเติม 2</MenuItem>
+        <MenuItem
+          onClick={() => {
+            popupState.close()
+          }}
+        >
+          เมนูเพิ่มเติม 1
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            popupState.close()
+          }}
+        >
+          เมนูเพิ่มเติม 2
+        </MenuItem>
       </HoverMenu>
+      <Hidden lgUp implementation='css'>
+        <HoverMenu
+          {...bindMenu(popupState2)}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right',
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          PaperProps={{
+            style: {
+              marginTop: '36px',
+              borderRadius: 8,
+              boxShadow: 'rgb(0 0 0 / 15%) 0px 0px 10px',
+            },
+          }}
+        >
+          <MenuItem
+            selected={props.active === 2}
+            onClick={() => {
+              popupState2.close()
+              history.push(`${PATH}/edu/international`)
+              props.setActivePage(2)
+            }}
+            className={clsx({
+              [classes.dropdownMenu]: true,
+              [classes.selected]: props.active === 2,
+            })}
+          >
+            สถาบันการศึกษาในต่างประเทศ
+          </MenuItem>
+          <MenuItem
+            selected={props.active === 3}
+            onClick={() => {
+              popupState2.close()
+              history.push(`${PATH}/download`)
+              props.setActivePage(3)
+            }}
+            className={clsx({
+              [classes.dropdownMenu]: true,
+              [classes.selected]: props.active === 3,
+            })}
+          >
+            เอกสารดาวน์โหลด/หนังสือเวียน
+          </MenuItem>
+          <MenuItem
+            selected={props.active === 4}
+            onClick={() => {
+              popupState2.close()
+              history.push(`${PATH}/faq`)
+              props.setActivePage(4)
+            }}
+            className={clsx({
+              [classes.dropdownMenu]: true,
+              [classes.selected]: props.active === 4,
+            })}
+          >
+            คำถามที่พบบ่อย
+          </MenuItem>
+          <MenuItem
+            onClick={popupState2.close}
+            className={clsx({
+              [classes.dropdownMenu]: true,
+            })}
+          >
+            เมนูเพิ่มเติม 1
+          </MenuItem>
+          <MenuItem
+            onClick={popupState2.close}
+            className={clsx({
+              [classes.dropdownMenu]: true,
+            })}
+          >
+            เมนูเพิ่มเติม 2
+          </MenuItem>
+        </HoverMenu>
+      </Hidden>
       <NavDrawer
         mobileOpen={mobileOpen}
         handleDrawerToggle={handleDrawerToggle}

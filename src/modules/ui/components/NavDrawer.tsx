@@ -177,15 +177,6 @@ export default function NavDrawer({
                 }}
               >
                 <ListItem className={classes.listItem} key={index} dense>
-                  {/* <ListItemIcon className={classes.listItemIcon}>
-                    {navigationItem.notification !== 0 ? (
-                      <Badge variant='dot' color='error'>
-                        {navigationItem.icon}
-                      </Badge>
-                    ) : (
-                      navigationItem.icon
-                    )}
-                  </ListItemIcon> */}
                   <ListItemText primary={navigationItem.title} />
                 </ListItem>
               </MenuItem>
