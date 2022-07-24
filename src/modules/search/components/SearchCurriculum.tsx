@@ -84,8 +84,11 @@ export default function SearchCurriculum() {
   const [selected, setSelected] = useState(null)
   const [educationLevels, setEducationLevels] = useState([])
 
-  const { educationLevels: initalEducationLevels = [], visitor = 0 } =
-    useSelector((state: any) => state.search)
+  const {
+    educationLevels: initalEducationLevels = [],
+    visitor = 0,
+    isIncrementing = false,
+  } = useSelector((state: any) => state.search)
 
   useEffect(() => {
     setEducationLevels(initalEducationLevels)
@@ -126,14 +129,14 @@ export default function SearchCurriculum() {
               spacing={0}
             >
               <Grid item>
-                <Typography variant='body2'>จำนวนผู้เข้าชม</Typography>
+                <Typography variant='body2'>จำนวนครั้งที่เข้าชม</Typography>
               </Grid>
               <Grid item>
                 <Typography variant='h6' color='secondary'>
                   <span style={{ fontWeight: 600 }}>
-                    {visitor.toLocaleString()}
+                    {isIncrementing ? '...' : visitor.toLocaleString()}
                   </span>{' '}
-                  คน
+                  ครั้ง
                 </Typography>
               </Grid>
             </Grid>

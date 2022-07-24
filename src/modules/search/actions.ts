@@ -72,7 +72,7 @@ function incrementVisitor() {
       dispatch({ type: INCREMENT_VISITOR_FAILURE })
       dispatch(
         uiActions.setFlashMessage(
-          `โหลดจำนวนผู้เข้าชมไม่สำเร็จ เกิดข้อผิดพลาด ${get(
+          `โหลดจำนวนครั้งที่เข้าชมไม่สำเร็จ เกิดข้อผิดพลาด ${get(
             err,
             'response.status',
             'บางอย่าง'

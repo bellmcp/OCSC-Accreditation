@@ -26,7 +26,7 @@ export default function (state = initialState, action: any) {
     case SEARCH_CURRICULUMS_REQUEST:
       return { ...state, isSearching: true, searchResults: [] }
     case INCREMENT_VISITOR_REQUEST:
-      return { ...state, isIncrementing: false, visitor: 0 }
+      return { ...state, isIncrementing: true, visitor: 0 }
     case LOAD_EDUCATION_LEVELS_SUCCESS:
       return {
         ...state,
