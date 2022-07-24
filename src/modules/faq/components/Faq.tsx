@@ -36,6 +36,7 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: '1.7rem',
       fontWeight: 600,
       zIndex: 3,
+      lineHeight: '1.3',
       marginBottom: '24px',
     },
     seeAllButton: {
@@ -200,6 +201,7 @@ export default function Faq() {
               component='h2'
               variant='h6'
               className={classes.sectionTitle}
+              align={matches ? 'left' : 'center'}
             >
               คำถามที่พบบ่อย
             </Typography>

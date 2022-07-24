@@ -390,6 +390,7 @@ export default function SearchCurriculum() {
             component='h2'
             variant='h6'
             className={classes.sectionTitle}
+            align={matches ? 'left' : 'center'}
             style={{ marginBottom: 24 }}
           >
             ผลการค้นหา

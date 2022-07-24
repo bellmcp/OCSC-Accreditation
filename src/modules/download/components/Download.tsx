@@ -41,6 +41,7 @@ const useStyles = makeStyles((theme: Theme) =>
       fontWeight: 600,
       zIndex: 3,
       marginBottom: '24px',
+      lineHeight: '1.3',
     },
     table: {
       minWidth: 650,
@@ -131,6 +132,7 @@ export default function Download() {
               component='h2'
               variant='h6'
               className={classes.sectionTitle}
+              align={matches ? 'left' : 'center'}
             >
               เอกสารดาวน์โหลด/หนังสือเวียน
             </Typography>
