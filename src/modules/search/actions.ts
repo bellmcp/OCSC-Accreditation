@@ -17,6 +17,13 @@ const SEARCH_CURRICULUMS_SUCCESS =
 const SEARCH_CURRICULUMS_FAILURE =
   'learning-platform/press/SEARCH_CURRICULUMS_FAILURE'
 
+const INCREMENT_VISITOR_REQUEST =
+  'learning-platform/press/INCREMENT_VISITOR_REQUEST'
+const INCREMENT_VISITOR_SUCCESS =
+  'learning-platform/press/INCREMENT_VISITOR_SUCCESS'
+const INCREMENT_VISITOR_FAILURE =
+  'learning-platform/press/INCREMENT_VISITOR_FAILURE'
+
 function loadEducationlevels() {
   return async (dispatch: any) => {
     dispatch({ type: LOAD_EDUCATION_LEVELS_REQUEST })
@@ -47,6 +54,36 @@ function loadEducationlevels() {
   }
 }
 
+function incrementVisitor() {
+  return async (dispatch: any) => {
+    dispatch({ type: INCREMENT_VISITOR_REQUEST })
+    try {
+      var { data } = await axios.put('/counters/approcurr')
+      if (data.length === 0) {
+        data = []
+      }
+      dispatch({
+        type: INCREMENT_VISITOR_SUCCESS,
+        payload: {
+          visitor: data.value,
+        },
+      })
+    } catch (err) {
+      dispatch({ type: INCREMENT_VISITOR_FAILURE })
+      dispatch(
+        uiActions.setFlashMessage(
+          `โหลดข้อมูลผู้เยี่ยมชมไม่สำเร็จ เกิดข้อผิดพลาด ${get(
+            err,
+            'response.status',
+            'บางอย่าง'
+          )}`,
+          'error'
+        )
+      )
+    }
+  }
+}
+
 function searchCurriculums({
   isGov,
   level,
@@ -59,16 +96,14 @@ function searchCurriculums({
   return async (dispatch: any) => {
     dispatch({ type: SEARCH_CURRICULUMS_REQUEST })
     try {
-      var { data } = await axios.get('/curriculums/search', {
-        data: {
-          isGov,
-          level,
-          university,
-          faculty,
-          degree,
-          branch,
-          isLetter,
-        },
+      var { data } = await axios.post('/curriculums/search', {
+        isGov,
+        level,
+        university,
+        faculty,
+        degree,
+        branch,
+        isLetter,
       })
       if (data.length === 0) {
         data = []
@@ -102,6 +137,10 @@ export {
   SEARCH_CURRICULUMS_REQUEST,
   SEARCH_CURRICULUMS_SUCCESS,
   SEARCH_CURRICULUMS_FAILURE,
+  INCREMENT_VISITOR_REQUEST,
+  INCREMENT_VISITOR_SUCCESS,
+  INCREMENT_VISITOR_FAILURE,
   loadEducationlevels,
   searchCurriculums,
+  incrementVisitor,
 }

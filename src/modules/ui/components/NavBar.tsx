@@ -499,21 +499,6 @@ export default function NavBar(props: NavigationBarProps) {
         <MenuItem onClick={popupState.close}>เมนูเพิ่มเติม 1</MenuItem>
         <MenuItem onClick={popupState.close}>เมนูเพิ่มเติม 2</MenuItem>
       </HoverMenu>
-      {/* <NavDropdownDesktop
-        login={login}
-        logout={logout}
-        users={users}
-        linkToPortal={linkToPortal}
-        linkToProfile={linkToProfile}
-        linkToPrintCertificate={linkToPrintCertificate}
-        linkToCertificate={linkToCertificate}
-        linkToEditProfile={linkToEditProfile}
-        linkToChangePassword={linkToChangePassword}
-        anchorEl={anchorEl}
-        menuId={menuId}
-        isMenuOpen={isMenuOpen}
-        handleProfileMenuClose={handleProfileMenuClose}
-      /> */}
       <NavDrawer
         mobileOpen={mobileOpen}
         handleDrawerToggle={handleDrawerToggle}

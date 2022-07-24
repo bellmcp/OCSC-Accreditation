@@ -60,6 +60,7 @@ export default function SearchCurriculum() {
 
   useEffect(() => {
     dispatch(searchActions.loadEducationlevels())
+    dispatch(searchActions.incrementVisitor())
   }, [dispatch])
 
   const handleClickSearch = () => {
