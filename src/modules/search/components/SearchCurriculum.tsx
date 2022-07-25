@@ -33,6 +33,7 @@ import { Search as SearchIcon } from '@material-ui/icons'
 
 import * as searchActions from 'modules/search/actions'
 import Header from 'modules/ui/components/Header'
+import Loading from 'modules/ui/components/Loading'
 import SearchResultTable from './SearchResultTable'
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -66,14 +67,14 @@ export default function SearchCurriculum() {
     const result = educationLevels.find((item: any) => {
       return item.level === label
     })
-    return get(result, 'id', null)
+    return get(result, 'id', 0)
   }
 
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
       type: 'gov',
-      level: null,
+      level: 0,
       status: 'active',
       university: '',
       faculty: '',
@@ -85,7 +86,7 @@ export default function SearchCurriculum() {
       dispatch(
         searchActions.searchCurriculums({
           isGov: get(values, 'type', 'gov') === 'gov',
-          level: getLevelIdByLabel(get(values, 'level', null)),
+          level: getLevelIdByLabel(get(values, 'level', 0)),
           university: get(values, 'university', ''),
           faculty: get(values, 'faculty', ''),
           degree: get(values, 'degree', ''),
@@ -99,6 +100,9 @@ export default function SearchCurriculum() {
   useEffect(() => {
     dispatch(searchActions.loadEducationlevels())
     dispatch(searchActions.incrementVisitor())
+    return () => {
+      dispatch(searchActions.clearSearchResult())
+    }
   }, [dispatch])
 
   const note = (
@@ -123,6 +127,53 @@ export default function SearchCurriculum() {
   useEffect(() => {
     setEducationLevels(initalEducationLevels)
   }, [initalEducationLevels])
+
+  const renderSearchResult = () => {
+    if (isSearching) {
+      return <Loading height={300}></Loading>
+    } else {
+      if (isEmpty(searchResults)) {
+        return <></>
+      } else {
+        return (
+          <>
+            <Box mt={6} mb={4}>
+              <Divider />
+            </Box>
+            <Grid
+              container
+              direction='row'
+              justify={matches ? 'space-between' : 'center'}
+              alignItems='center'
+            >
+              <Typography
+                gutterBottom
+                component='h2'
+                variant='h6'
+                className={classes.sectionTitle}
+                align={matches ? 'left' : 'center'}
+                style={{ marginBottom: 24 }}
+              >
+                ผลการค้นหา
+              </Typography>
+            </Grid>
+            <Paper
+              elevation={0}
+              style={{
+                borderRadius: 16,
+                padding: 24,
+                paddingTop: 8,
+                boxShadow: '0 0 20px 0 rgba(0,0,0,0.04)',
+                minHeight: 300,
+              }}
+            >
+              <SearchResultTable data={searchResults} isLoading={isSearching} />
+            </Paper>
+          </>
+        )
+      }
+    }
+  }
 
   return (
     <>
@@ -241,7 +292,7 @@ export default function SearchCurriculum() {
                           getContentAnchorEl: null,
                         }}
                         renderValue={(selected) => {
-                          if (selected === null) {
+                          if (selected === 0) {
                             return (
                               <span
                                 style={{ color: theme.palette.text.secondary }}
@@ -433,44 +484,7 @@ export default function SearchCurriculum() {
             </Button>
           </Box>
         </form>
-        {!isEmpty(searchResults) ? (
-          <>
-            <Box mt={6} mb={4}>
-              <Divider />
-            </Box>
-            <Grid
-              container
-              direction='row'
-              justify={matches ? 'space-between' : 'center'}
-              alignItems='center'
-            >
-              <Typography
-                gutterBottom
-                component='h2'
-                variant='h6'
-                className={classes.sectionTitle}
-                align={matches ? 'left' : 'center'}
-                style={{ marginBottom: 24 }}
-              >
-                ผลการค้นหา
-              </Typography>
-            </Grid>
-            <Paper
-              elevation={0}
-              style={{
-                borderRadius: 16,
-                padding: 24,
-                paddingTop: 8,
-                boxShadow: '0 0 20px 0 rgba(0,0,0,0.04)',
-                minHeight: 300,
-              }}
-            >
-              <SearchResultTable data={searchResults} />
-            </Paper>
-          </>
-        ) : (
-          <></>
-        )}
+        {renderSearchResult()}
       </Container>
     </>
   )

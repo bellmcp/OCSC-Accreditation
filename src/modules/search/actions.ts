@@ -26,6 +26,8 @@ const INCREMENT_VISITOR_SUCCESS =
 const INCREMENT_VISITOR_FAILURE =
   'learning-platform/press/INCREMENT_VISITOR_FAILURE'
 
+const CLEAR_SEARCH_RESULT = 'learning-platform/press/CLEAR_SEARCH_RESULT'
+
 function loadEducationlevels() {
   return async (dispatch: any) => {
     dispatch({ type: LOAD_EDUCATION_LEVELS_REQUEST })
@@ -109,6 +111,12 @@ function searchCurriculums({
       })
       if (data.length === 0) {
         data = []
+        dispatch(
+          uiActions.setFlashMessage(
+            'ไม่พบผลลัพธ์การค้นหา โปรดลองใหม่อีกครั้ง',
+            'info'
+          )
+        )
       }
       dispatch({
         type: SEARCH_CURRICULUMS_SUCCESS,
@@ -138,6 +146,14 @@ function searchCurriculums({
   }
 }
 
+function clearSearchResult() {
+  return (dispatch: any) => {
+    dispatch({
+      type: CLEAR_SEARCH_RESULT,
+    })
+  }
+}
+
 export {
   LOAD_EDUCATION_LEVELS_REQUEST,
   LOAD_EDUCATION_LEVELS_SUCCESS,
@@ -148,7 +164,9 @@ export {
   INCREMENT_VISITOR_REQUEST,
   INCREMENT_VISITOR_SUCCESS,
   INCREMENT_VISITOR_FAILURE,
+  CLEAR_SEARCH_RESULT,
   loadEducationlevels,
   searchCurriculums,
   incrementVisitor,
+  clearSearchResult,
 }

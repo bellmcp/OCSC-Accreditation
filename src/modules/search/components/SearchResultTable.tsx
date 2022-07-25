@@ -61,8 +61,8 @@ const parseLinkToDefaultColor = (text: string) => {
   return text.replace('<a', '<a style="color:#00A69C; text-decoration: none;"')
 }
 
-function Row(props: { row: ReturnType<typeof createData> }) {
-  const { row } = props
+function Row(props: any) {
+  const { row, index } = props
   const [open, setOpen] = React.useState(false)
 
   return (
@@ -82,7 +82,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
           </IconButton>
         </TableCell>
         <TableCell component='th' scope='row'>
-          {getLabel(row, 'id')}
+          {index + 1}
         </TableCell>
         <TableCell component='th' scope='row'>
           {getLabel(row, 'university')}
@@ -94,7 +94,10 @@ function Row(props: { row: ReturnType<typeof createData> }) {
         <TableCell>{getLabel(row, 'faculty')}</TableCell>
       </TableRow>
       <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+        <TableCell
+          style={{ paddingBottom: 0, paddingTop: 0, borderBottom: 'none' }}
+          colSpan={6}
+        >
           <Collapse in={open} timeout='auto' unmountOnExit>
             <List>
               <ListItem divider>
@@ -157,7 +160,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
                   </Typography>
                 </Box>
               </ListItem>
-              <ListItem>
+              <ListItem divider>
                 <Box style={{ flexBasis: '25%', flexShrink: 0 }}>
                   <Typography variant='body2' style={{ fontWeight: 600 }}>
                     ลงวันที่
@@ -166,6 +169,18 @@ function Row(props: { row: ReturnType<typeof createData> }) {
                 <Box>
                   <Typography variant='body2' color='textSecondary'>
                     {getLabel(row, 'letterDate')}
+                  </Typography>
+                </Box>
+              </ListItem>
+              <ListItem divider>
+                <Box style={{ flexBasis: '25%', flexShrink: 0 }}>
+                  <Typography variant='body2' style={{ fontWeight: 600 }}>
+                    เลขที่อ้างอิง
+                  </Typography>
+                </Box>
+                <Box>
+                  <Typography variant='body2' color='textSecondary'>
+                    {getLabel(row, 'id')}
                   </Typography>
                 </Box>
               </ListItem>
@@ -239,8 +254,8 @@ export default function SearchResultTable({ data }: SearchResultTableType) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {tableData.map((row: any) => (
-            <Row key={row.id} row={row} />
+          {tableData.map((row: any, index: number) => (
+            <Row key={row.id} row={row} index={index} />
           ))}
         </TableBody>
       </Table>

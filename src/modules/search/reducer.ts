@@ -8,6 +8,7 @@ import {
   INCREMENT_VISITOR_REQUEST,
   INCREMENT_VISITOR_SUCCESS,
   INCREMENT_VISITOR_FAILURE,
+  CLEAR_SEARCH_RESULT,
 } from './actions'
 
 const initialState = {
@@ -51,6 +52,8 @@ export default function (state = initialState, action: any) {
       return { ...state, isSearching: false }
     case INCREMENT_VISITOR_FAILURE:
       return { ...state, isIncrementing: false }
+    case CLEAR_SEARCH_RESULT:
+      return { ...state, searchResults: [] }
     default:
       return state
   }
