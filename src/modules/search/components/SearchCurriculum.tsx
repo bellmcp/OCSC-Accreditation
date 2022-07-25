@@ -136,7 +136,7 @@ export default function SearchCurriculum() {
         return <></>
       } else {
         return (
-          <>
+          <Box mb={4}>
             <Box mt={6} mb={4}>
               <Divider />
             </Box>
@@ -169,7 +169,7 @@ export default function SearchCurriculum() {
             >
               <SearchResultTable data={searchResults} isLoading={isSearching} />
             </Paper>
-          </>
+          </Box>
         )
       }
     }
@@ -394,6 +394,8 @@ export default function SearchCurriculum() {
                       variant='outlined'
                       size='small'
                       fullWidth
+                      multiline={!matches}
+                      rows={4}
                     />
                   </Grid>
                 </Grid>
@@ -418,6 +420,8 @@ export default function SearchCurriculum() {
                       variant='outlined'
                       size='small'
                       fullWidth
+                      multiline={!matches}
+                      rows={4}
                     />
                   </Grid>
                 </Grid>
@@ -442,6 +446,8 @@ export default function SearchCurriculum() {
                       variant='outlined'
                       size='small'
                       fullWidth
+                      multiline={!matches}
+                      rows={4}
                     />
                   </Grid>
                 </Grid>
@@ -466,6 +472,8 @@ export default function SearchCurriculum() {
                       variant='outlined'
                       size='small'
                       fullWidth
+                      multiline={!matches}
+                      rows={4}
                     />
                   </Grid>
                 </Grid>
