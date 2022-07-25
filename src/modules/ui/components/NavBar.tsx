@@ -3,7 +3,6 @@ import React, { useState } from 'react'
 import clsx from 'clsx'
 import { useDispatch } from 'react-redux'
 import { useHistory, useLocation } from 'react-router-dom'
-import { eraseCookie } from 'utils/cookies'
 
 import {
   fade,
@@ -18,16 +17,12 @@ import {
   Toolbar,
   Typography,
   IconButton,
-  InputBase,
   Hidden,
   Container,
-  Dialog,
-  Box,
   MenuItem,
 } from '@material-ui/core'
 import {
   Menu as MenuIcon,
-  Search as SearchIcon,
   KeyboardArrowDown as ArrowDownIcon,
 } from '@material-ui/icons'
 import { grey } from '@material-ui/core/colors'
@@ -43,9 +38,7 @@ import HoverMenu from 'material-ui-popup-state/HoverMenu'
 
 import * as uiActions from 'modules/ui/actions'
 
-import useSearchInputState from '../hooks/useSearchInputState'
 import NavDrawer from './NavDrawer'
-import NavDropdownMobile from './NavDropdownMobile'
 
 const darkTheme = createMuiTheme({
   palette: {
@@ -207,14 +200,9 @@ export default function NavBar(props: NavigationBarProps) {
   const dispatch = useDispatch()
   const PATH = process.env.REACT_APP_BASE_PATH
 
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
-    useState<null | HTMLElement>(null)
-
   const LogoImage = require('assets/images/logo.png')
 
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl)
   const [mobileOpen, setMobileOpen] = useState(false)
-  const [mobileSearchDialogOpen, setMobileSearchDialogOpen] = useState(false)
 
   const navigationItem = [
     {
@@ -260,71 +248,6 @@ export default function NavBar(props: NavigationBarProps) {
     }
   }
 
-  const linkToLogin = () => {
-    handleProfileMenuClose()
-    if (!isUserCurrentlyInLearn) {
-      history.push(`${PATH}/login`)
-    } else {
-      dispatch(uiActions.setLearnExitDialog(true))
-    }
-  }
-
-  const linkToProfile = () => {
-    handleProfileMenuClose()
-    if (!isUserCurrentlyInLearn) {
-      history.push(`${PATH}/me`)
-    } else {
-      dispatch(uiActions.setLearnExitDialog(true))
-    }
-  }
-
-  const linkToPrintCertificate = () => {
-    handleProfileMenuClose()
-    if (!isUserCurrentlyInLearn) {
-      history.push(`${PATH}/me/certificate`)
-    } else {
-      dispatch(uiActions.setLearnExitDialog(true))
-    }
-  }
-
-  const linkToCertificate = () => {
-    handleProfileMenuClose()
-    window.open(`${process.env.REACT_APP_PORTAL_URL}history`, '_blank')
-  }
-
-  const linkToEditProfile = () => {
-    handleProfileMenuClose()
-    window.open(`${process.env.REACT_APP_PORTAL_URL}edit`, '_blank')
-  }
-
-  const linkToChangePassword = () => {
-    handleProfileMenuClose()
-    window.open(`${process.env.REACT_APP_PORTAL_URL}reset`, '_blank')
-  }
-
-  const linkToPortal = () => {
-    handleProfileMenuClose()
-    window.open(`${process.env.REACT_APP_PORTAL_URL}`, '_blank')
-  }
-
-  const toggleSearchBarClose = () => {
-    setMobileSearchDialogOpen(false)
-  }
-
-  const logout = () => {
-    handleProfileMenuClose()
-    if (!isUserCurrentlyInLearn) {
-      eraseCookie('token')
-      dispatch(uiActions.setFlashMessage('ออกจากระบบเรียบร้อยแล้ว', 'success'))
-      setTimeout(() => {
-        history.push(`${PATH}`)
-        window.location.reload()
-      }, 1000)
-    } else {
-      dispatch(uiActions.setLearnExitDialog(true))
-    }
-  }
-
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen)
   }
@@ -332,16 +255,6 @@ export default function NavBar(props: NavigationBarProps) {
   const handleProfileMenuClose = () => {
     setAnchorEl(null)
   }
-
-  const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null)
-  }
-
-  const [searchValue, setSearchValue] = useSearchInputState(() => {
-    history.push(`${PATH}/search?query=${searchValue}`)
-  })
-
-  const mobileMenuId = 'primary-search-account-menu-mobile'
 
   const popupState = usePopupState({
     variant: 'popover',
@@ -447,23 +360,6 @@ export default function NavBar(props: NavigationBarProps) {
           </Toolbar>
         </Container>
       </AppBar>
-
-      <NavDropdownMobile
-        login={() => {}}
-        logout={logout}
-        users={[]}
-        mobileMenuId={mobileMenuId}
-        mobileMoreAnchorEl={mobileMoreAnchorEl}
-        isMobileMenuOpen={isMobileMenuOpen}
-        handleMobileMenuClose={handleMobileMenuClose}
-        linkToLogin={linkToLogin}
-        linkToPortal={linkToPortal}
-        linkToProfile={linkToProfile}
-        linkToPrintCertificate={linkToPrintCertificate}
-        linkToCertificate={linkToCertificate}
-        linkToEditProfile={linkToEditProfile}
-        linkToChangePassword={linkToChangePassword}
-      />
       <HoverMenu
         {...bindMenu(popupState)}
         anchorOrigin={{
@@ -583,33 +479,6 @@ export default function NavBar(props: NavigationBarProps) {
         unreadNotificationCount={0}
         isUserCurrentlyInLearn={isUserCurrentlyInLearn}
       />
-      <Dialog
-        open={mobileSearchDialogOpen}
-        onClose={toggleSearchBarClose}
-        classes={{
-          scrollPaper: classes.topScrollPaper,
-          paperScrollBody: classes.topPaperScrollBody,
-        }}
-      >
-        <Box m={2}>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              autoFocus
-              defaultValue={searchValue}
-              placeholder='ค้นหา'
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-              onChange={(e) => setSearchValue(e?.target?.value ?? null)}
-            />
-          </div>
-        </Box>
-      </Dialog>
     </div>
   )
 }
