@@ -3,9 +3,9 @@ import { get } from 'lodash'
 
 import * as uiActions from 'modules/ui/actions'
 
-const LOAD_FAQ_REQUEST = 'learning-platform/faq/LOAD_FAQ_REQUEST'
-const LOAD_FAQ_SUCCESS = 'learning-platform/faq/LOAD_FAQ_SUCCESS'
-const LOAD_FAQ_FAILURE = 'learning-platform/faq/LOAD_FAQ_FAILURE'
+const LOAD_FAQ_REQUEST = 'ocsc-e-accredit/faq/LOAD_FAQ_REQUEST'
+const LOAD_FAQ_SUCCESS = 'ocsc-e-accredit/faq/LOAD_FAQ_SUCCESS'
+const LOAD_FAQ_FAILURE = 'ocsc-e-accredit/faq/LOAD_FAQ_FAILURE'
 
 function loadFaq() {
   return async (dispatch: any) => {

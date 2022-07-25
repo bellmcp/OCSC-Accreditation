@@ -1,12 +1,12 @@
 // @ts-nocheck
 import axios from 'axios'
 
-const SET_FLASH_MESSAGE = 'learning-platform/ui/SET_FLASH_MESSAGE'
-const CLEAR_FLASH_MESSAGE = 'learning-platform/ui/CLEAR_FLASH_MESSAGE'
-const SET_LEARN_EXIT_DIALOG = 'learning-platform/ui/SET_LEARN_EXIT_DIALOG'
-const LOAD_FOOTER_INFO_REQUEST = 'learning-platform/ui/LOAD_FOOTER_INFO_REQUEST'
-const LOAD_FOOTER_INFO_SUCCESS = 'learning-platform/ui/LOAD_FOOTER_INFO_SUCCESS'
-const LOAD_FOOTER_INFO_FAILURE = 'learning-platform/ui/LOAD_FOOTER_INFO_FAILURE'
+const SET_FLASH_MESSAGE = 'ocsc-e-accredit/ui/SET_FLASH_MESSAGE'
+const CLEAR_FLASH_MESSAGE = 'ocsc-e-accredit/ui/CLEAR_FLASH_MESSAGE'
+const SET_LEARN_EXIT_DIALOG = 'ocsc-e-accredit/ui/SET_LEARN_EXIT_DIALOG'
+const LOAD_FOOTER_INFO_REQUEST = 'ocsc-e-accredit/ui/LOAD_FOOTER_INFO_REQUEST'
+const LOAD_FOOTER_INFO_SUCCESS = 'ocsc-e-accredit/ui/LOAD_FOOTER_INFO_SUCCESS'
+const LOAD_FOOTER_INFO_FAILURE = 'ocsc-e-accredit/ui/LOAD_FOOTER_INFO_FAILURE'
 
 function setFlashMessage(message: string, severity: string) {
   return {

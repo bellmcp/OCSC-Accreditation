@@ -6,27 +6,27 @@ import * as uiActions from 'modules/ui/actions'
 // import { mock } from './mock'
 
 const LOAD_EDUCATION_LEVELS_REQUEST =
-  'learning-platform/press/LOAD_EDUCATION_LEVELS_REQUEST'
+  'ocsc-e-accredit/search/LOAD_EDUCATION_LEVELS_REQUEST'
 const LOAD_EDUCATION_LEVELS_SUCCESS =
-  'learning-platform/press/LOAD_EDUCATION_LEVELS_SUCCESS'
+  'ocsc-e-accredit/search/LOAD_EDUCATION_LEVELS_SUCCESS'
 const LOAD_EDUCATION_LEVELS_FAILURE =
-  'learning-platform/press/LOAD_EDUCATION_LEVELS_FAILURE'
+  'ocsc-e-accredit/search/LOAD_EDUCATION_LEVELS_FAILURE'
 
 const SEARCH_CURRICULUMS_REQUEST =
-  'learning-platform/press/SEARCH_CURRICULUMS_REQUEST'
+  'ocsc-e-accredit/search/SEARCH_CURRICULUMS_REQUEST'
 const SEARCH_CURRICULUMS_SUCCESS =
-  'learning-platform/press/SEARCH_CURRICULUMS_SUCCESS'
+  'ocsc-e-accredit/search/SEARCH_CURRICULUMS_SUCCESS'
 const SEARCH_CURRICULUMS_FAILURE =
-  'learning-platform/press/SEARCH_CURRICULUMS_FAILURE'
+  'ocsc-e-accredit/search/SEARCH_CURRICULUMS_FAILURE'
 
 const INCREMENT_VISITOR_REQUEST =
-  'learning-platform/press/INCREMENT_VISITOR_REQUEST'
+  'ocsc-e-accredit/search/INCREMENT_VISITOR_REQUEST'
 const INCREMENT_VISITOR_SUCCESS =
-  'learning-platform/press/INCREMENT_VISITOR_SUCCESS'
+  'ocsc-e-accredit/search/INCREMENT_VISITOR_SUCCESS'
 const INCREMENT_VISITOR_FAILURE =
-  'learning-platform/press/INCREMENT_VISITOR_FAILURE'
+  'ocsc-e-accredit/search/INCREMENT_VISITOR_FAILURE'
 
-const CLEAR_SEARCH_RESULT = 'learning-platform/press/CLEAR_SEARCH_RESULT'
+const CLEAR_SEARCH_RESULT = 'ocsc-e-accredit/search/CLEAR_SEARCH_RESULT'
 
 function loadEducationlevels() {
   return async (dispatch: any) => {

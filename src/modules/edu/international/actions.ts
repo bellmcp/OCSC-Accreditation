@@ -3,11 +3,11 @@ import { get } from 'lodash'
 import * as uiActions from 'modules/ui/actions'
 
 const LOAD_COUNTRIES_REQUEST =
-  'learning-platform/download/LOAD_COUNTRIES_REQUEST'
+  'ocsc-e-accredit/edu/international/LOAD_COUNTRIES_REQUEST'
 const LOAD_COUNTRIES_SUCCESS =
-  'learning-platform/download/LOAD_COUNTRIES_SUCCESS'
+  'ocsc-e-accredit/edu/international/LOAD_COUNTRIES_SUCCESS'
 const LOAD_COUNTRIES_FAILURE =
-  'learning-platform/download/LOAD_COUNTRIES_FAILURE'
+  'ocsc-e-accredit/edu/international/LOAD_COUNTRIES_FAILURE'
 
 function loadCountries() {
   return async (dispatch: any) => {

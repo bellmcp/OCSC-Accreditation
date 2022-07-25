@@ -2,9 +2,9 @@ import axios from 'axios'
 import { get } from 'lodash'
 import * as uiActions from 'modules/ui/actions'
 
-const LOAD_LETTERS_REQUEST = 'learning-platform/download/LOAD_LETTERS_REQUEST'
-const LOAD_LETTERS_SUCCESS = 'learning-platform/download/LOAD_LETTERS_SUCCESS'
-const LOAD_LETTERS_FAILURE = 'learning-platform/download/LOAD_LETTERS_FAILURE'
+const LOAD_LETTERS_REQUEST = 'ocsc-e-accredit/download/LOAD_LETTERS_REQUEST'
+const LOAD_LETTERS_SUCCESS = 'ocsc-e-accredit/download/LOAD_LETTERS_SUCCESS'
+const LOAD_LETTERS_FAILURE = 'ocsc-e-accredit/download/LOAD_LETTERS_FAILURE'
 
 function loadLetters(category: number) {
   return async (dispatch: any) => {
