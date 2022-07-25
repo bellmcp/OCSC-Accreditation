@@ -1,7 +1,6 @@
 import React from 'react'
 import { get, isNull } from 'lodash'
 
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import {
   Table,
   TableBody,
@@ -14,17 +13,7 @@ import {
 } from '@material-ui/core'
 import { GetApp as GetAppIcon, Launch as LaunchIcon } from '@material-ui/icons'
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    table: {
-      minWidth: 650,
-    },
-  })
-)
-
 export default function DataTable({ data }: any) {
-  const classes = useStyles()
-
   const getValue = (data: any, name: any, defaultValue: any) => {
     const value = get(data, name, null)
     if (isNull(value)) return defaultValue

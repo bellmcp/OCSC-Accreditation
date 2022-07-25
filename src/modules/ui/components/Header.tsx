@@ -1,17 +1,6 @@
 import React from 'react'
-import {
-  createStyles,
-  makeStyles,
-  Theme,
-  useTheme,
-} from '@material-ui/core/styles'
-import {
-  useMediaQuery,
-  Container,
-  Typography,
-  Grid,
-  Toolbar,
-} from '@material-ui/core'
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
+import { Grid, Toolbar } from '@material-ui/core'
 
 const HeroImage = require('assets/images/hero.svg')
 
@@ -44,8 +33,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function Header({ title, subtitle, icon }: HeaderProps) {
   const classes = useStyles()
-  const theme = useTheme()
-  const matches = useMediaQuery(theme.breakpoints.down('sm'))
 
   return (
     <>

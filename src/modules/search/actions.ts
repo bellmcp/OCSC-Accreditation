@@ -3,7 +3,7 @@ import { get } from 'lodash'
 
 import * as uiActions from 'modules/ui/actions'
 
-import { mock } from './mock'
+// import { mock } from './mock'
 
 const LOAD_EDUCATION_LEVELS_REQUEST =
   'learning-platform/press/LOAD_EDUCATION_LEVELS_REQUEST'

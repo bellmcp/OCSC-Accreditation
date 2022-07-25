@@ -1,10 +1,10 @@
 // @ts-nocheck
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import clsx from 'clsx'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useHistory, useLocation } from 'react-router-dom'
-import { getCookie, eraseCookie } from 'utils/cookies'
-import parseJwt from 'utils/parseJwt'
+import { eraseCookie } from 'utils/cookies'
+
 import {
   fade,
   makeStyles,
@@ -19,16 +19,10 @@ import {
   Typography,
   IconButton,
   InputBase,
-  Badge,
-  Avatar,
   Hidden,
-  Button,
-  Divider,
   Container,
-  Tooltip,
   Dialog,
   Box,
-  Menu,
   MenuItem,
 } from '@material-ui/core'
 import {
@@ -48,12 +42,10 @@ import {
 import HoverMenu from 'material-ui-popup-state/HoverMenu'
 
 import * as uiActions from 'modules/ui/actions'
-import * as userActions from 'modules/user/actions'
-import * as supportActions from 'modules/support/actions'
+
 import useSearchInputState from '../hooks/useSearchInputState'
 import NavDrawer from './NavDrawer'
 import NavDropdownMobile from './NavDropdownMobile'
-import NavDropdownDesktop from './NavDropdownDesktop'
 
 const darkTheme = createMuiTheme({
   palette: {
@@ -214,42 +206,15 @@ export default function NavBar(props: NavigationBarProps) {
   const { pathname } = useLocation()
   const dispatch = useDispatch()
   const PATH = process.env.REACT_APP_BASE_PATH
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     useState<null | HTMLElement>(null)
 
   const LogoImage = require('assets/images/logo.png')
 
-  const isMenuOpen = Boolean(anchorEl)
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [mobileSearchDialogOpen, setMobileSearchDialogOpen] = useState(false)
-
-  const token = getCookie('token')
-  const userId = parseJwt(token).unique_name
-
-  const { items: users } = useSelector((state: any) => state.user)
-  const login = () => {
-    if (token === null) {
-      return false
-    }
-    if (
-      (token !== '' || token !== undefined) &&
-      parseJwt(token).role === 'user'
-    ) {
-      return true
-    }
-    return false
-  }
-
-  const { items: supports } = useSelector((state) => state.support)
-  const mySupportList = supports.filter((support) => {
-    return support.userId === userId
-  })
-
-  const UNREAD_NOTIFICATION_COUNT = mySupportList.filter((support: any) => {
-    return support.replyMessage !== null && support.isAcknowledged === false
-  }).length
 
   const navigationItem = [
     {
@@ -268,19 +233,19 @@ export default function NavBar(props: NavigationBarProps) {
       id: 2,
       title: 'สถาบันการศึกษาในต่างประเทศ',
       url: `${PATH}/edu/international`,
-      notification: UNREAD_NOTIFICATION_COUNT,
+      notification: 0,
     },
     {
       id: 3,
       title: 'เอกสารดาวน์โหลด/หนังสือเวียน',
       url: `${PATH}/download`,
-      notification: UNREAD_NOTIFICATION_COUNT,
+      notification: 0,
     },
     {
       id: 4,
       title: 'คำถามที่พบบ่อย',
       url: `${PATH}/faq`,
-      notification: UNREAD_NOTIFICATION_COUNT,
+      notification: 0,
     },
   ]
 
@@ -342,10 +307,6 @@ export default function NavBar(props: NavigationBarProps) {
     window.open(`${process.env.REACT_APP_PORTAL_URL}`, '_blank')
   }
 
-  const toggleSearchBar = () => {
-    setMobileSearchDialogOpen(true)
-  }
-
   const toggleSearchBarClose = () => {
     setMobileSearchDialogOpen(false)
   }
@@ -368,12 +329,6 @@ export default function NavBar(props: NavigationBarProps) {
     setMobileOpen(!mobileOpen)
   }
 
-  const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-    if (anchorEl !== event.currentTarget) {
-      setAnchorEl(event.currentTarget)
-    }
-  }
-
   const handleProfileMenuClose = () => {
     setAnchorEl(null)
   }
@@ -382,20 +337,11 @@ export default function NavBar(props: NavigationBarProps) {
     setMobileMoreAnchorEl(null)
   }
 
-  const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setMobileMoreAnchorEl(event.currentTarget)
-  }
-
   const [searchValue, setSearchValue] = useSearchInputState(() => {
     history.push(`${PATH}/search?query=${searchValue}`)
   })
 
-  const menuId = 'primary-search-account-menu'
   const mobileMenuId = 'primary-search-account-menu-mobile'
-
-  const isLearnModule =
-    pathname.includes(`${PATH}/learn/courses`) ||
-    pathname.includes(`${PATH}/democontent`)
 
   const popupState = usePopupState({
     variant: 'popover',
@@ -410,7 +356,7 @@ export default function NavBar(props: NavigationBarProps) {
   return (
     <div className={classes.grow}>
       <AppBar position='fixed' className={classes.appBar} elevation={0}>
-        <Container maxWidth={!isLearnModule ? 'lg' : false}>
+        <Container maxWidth='lg'>
           <Toolbar>
             {/* DRAWER TOGGLE */}
             <Hidden smUp implementation='css'>
@@ -503,9 +449,9 @@ export default function NavBar(props: NavigationBarProps) {
       </AppBar>
 
       <NavDropdownMobile
-        login={login}
+        login={() => {}}
         logout={logout}
-        users={users}
+        users={[]}
         mobileMenuId={mobileMenuId}
         mobileMoreAnchorEl={mobileMoreAnchorEl}
         isMobileMenuOpen={isMobileMenuOpen}
@@ -634,7 +580,7 @@ export default function NavBar(props: NavigationBarProps) {
         mobileOpen={mobileOpen}
         handleDrawerToggle={handleDrawerToggle}
         active={props.active}
-        unreadNotificationCount={UNREAD_NOTIFICATION_COUNT}
+        unreadNotificationCount={0}
         isUserCurrentlyInLearn={isUserCurrentlyInLearn}
       />
       <Dialog

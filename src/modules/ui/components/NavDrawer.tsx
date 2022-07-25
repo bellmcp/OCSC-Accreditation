@@ -1,7 +1,6 @@
 //@ts-nocheck
 import React from 'react'
 import clsx from 'clsx'
-import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import {
@@ -17,19 +16,10 @@ import {
   MenuItem,
   List,
   ListItem,
-  ListItemIcon,
   ListItemText,
-  Badge,
   IconButton,
 } from '@material-ui/core'
-import {
-  Home as HomeIcon,
-  PlayArrow as LearnIcon,
-  Help as HelpIcon,
-  CloseRounded as CloseIcon,
-} from '@material-ui/icons'
-
-import * as uiActions from 'modules/ui/actions'
+import { CloseRounded as CloseIcon } from '@material-ui/icons'
 
 const DRAWER_WIDTH = '80%'
 const PATH = process.env.REACT_APP_BASE_PATH
@@ -116,7 +106,6 @@ export default function NavDrawer({
   const classes = useStyles()
   const theme = useTheme()
   const history = useHistory()
-  const dispatch = useDispatch()
   const container =
     window !== undefined ? () => window().document.body : undefined
 

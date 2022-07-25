@@ -1,8 +1,7 @@
 // @ts-nocheck
 import React, { useState, useEffect } from 'react'
-import { get } from 'lodash'
 import { useSelector, useDispatch } from 'react-redux'
-import { useLocation, useHistory } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import LoadingBar from 'react-redux-loading-bar'
 import useKonami from 'use-konami'
 import {
@@ -10,15 +9,11 @@ import {
   Snackbar,
   IconButton,
   Dialog,
-  DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
-  Button,
   Typography,
   Divider,
   Link,
-  CircularProgress,
 } from '@material-ui/core'
 import {
   unstable_createMuiStrictModeTheme as createMuiTheme,
@@ -32,45 +27,14 @@ import NavBar from './NavBar'
 import Routes from './Routes'
 import Footer from './Footer'
 
-import { isLogin } from 'utils/isLogin'
-import * as pressesActions from 'modules/press/actions'
-
 export default function Layout() {
   const { pathname } = useLocation()
-  const history = useHistory()
   const PATH = process.env.REACT_APP_BASE_PATH
   const dispatch = useDispatch()
-  const { isSnackbarOpen, isDialogOpen, flashMessage, alertType } = useSelector(
+  const { isSnackbarOpen, flashMessage, alertType } = useSelector(
     (state) => state.ui
   )
   const closeFlashMessage = () => dispatch(actions.clearFlashMessage())
-
-  const [announcementDialogOpen, setAnnouncementDialogOpen] = useState(false)
-
-  const { isAnnoucementLoading, announcement } = useSelector(
-    (state) => state.press
-  )
-
-  const handleAnnouncementDialogClose = () => {
-    setAnnouncementDialogOpen(false)
-  }
-
-  const isLearnModule =
-    pathname.includes(`${PATH}/learn/courses`) ||
-    pathname.includes(`${PATH}/democontent`)
-
-  // //GET STATE FOR DEBUG
-  // const loginState = useSelector((state) => state.login);
-  // const userState = useSelector((state) => state.user);
-  // const categoriesState = useSelector((state) => state.categories);
-  // const coursesState = useSelector((state) => state.courses);
-  // const curriculumsState = useSelector((state) => state.curriculums);
-  // const registrationsState = useSelector((state) => state.registrations);
-  // const learnState = useSelector((state) => state.learn);
-  // const pressState = useSelector((state) => state.press);
-  // const supportState = useSelector((state) => state.support);
-  // const meState = useSelector((state) => state.me);
-  // const uiState = useSelector((state) => state.ui);
 
   useEffect(() => {
     const setInitialActivePage = () => {
@@ -94,12 +58,9 @@ export default function Layout() {
           setActivePage(99)
           break
       }
-      if (isLearnModule) {
-        setActivePage(1)
-      }
     }
     setInitialActivePage()
-  }, [pathname])
+  }, [pathname]) //eslint-disable-line
 
   const [activePage, setActivePage] = useState(0)
 
@@ -166,17 +127,6 @@ export default function Layout() {
     setDebugDialogOpen(false)
   }
 
-  const handleDialogClose = () => {
-    dispatch(actions.setLearnExitDialog(false))
-  }
-  const linkToLearn = () => {
-    handleDialogClose()
-    history.push(`${PATH}/learn`)
-    dispatch(
-      actions.setFlashMessage('บันทึกเวลาเรียนสะสมเรียบร้อยแล้ว', 'success')
-    )
-  }
-
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -240,42 +190,6 @@ export default function Layout() {
             , All rights reserved.
           </Typography>
         </DialogContent>
-        {/* <DialogActions>
-          <Button
-            color="secondary"
-            onClick={() => console.log(JSON.stringify(loginState, null, "\t"))}
-          >
-            Log Login State
-          </Button>
-        </DialogActions> */}
-      </Dialog>
-      {/* LEARN EXIT DIALOG */}
-      <Dialog
-        open={isDialogOpen}
-        onClose={handleDialogClose}
-        aria-labelledby='alert-dialog-title'
-        aria-describedby='alert-dialog-description'
-      >
-        <DialogTitle id='alert-dialog-title'>{'ออกจากห้องเรียน?'}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id='alert-dialog-description'>
-            เซสชันปัจจุบันจะจบลง และเวลาเรียนสะสมของคุณจะถูกบันทึก
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleDialogClose} color='secondary'>
-            ยกเลิก
-          </Button>
-          <Button
-            color='secondary'
-            autoFocus
-            variant='contained'
-            disableElevation
-            onClick={linkToLearn}
-          >
-            ตกลง
-          </Button>
-        </DialogActions>
       </Dialog>
       <Snackbar
         open={isSnackbarOpen}
@@ -292,9 +206,6 @@ export default function Layout() {
             <CloseIcon fontSize='small' />
           </IconButton>
         }
-        style={{
-          marginBottom: isLearnModule ? 60 : 'unset',
-        }}
       >
         <Alert
           onClose={closeFlashMessage}
@@ -305,7 +216,7 @@ export default function Layout() {
           {flashMessage}
         </Alert>
       </Snackbar>
-      {!isLearnModule && <Footer />}
+      <Footer />
     </ThemeProvider>
   )
 }

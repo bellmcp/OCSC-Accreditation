@@ -51,7 +51,7 @@ export default function Footer() {
       const footer_info_action = uiActions.loadFooterInfo()
       dispatch(footer_info_action)
     }
-  }, [dispatch])
+  }, [dispatch]) //eslint-disable-line
 
   const parseLinkToDefaultColor = (text: string) => {
     return text.replace(
