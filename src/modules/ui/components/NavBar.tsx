@@ -314,13 +314,13 @@ export default function NavBar(props: NavigationBarProps) {
                       <Typography noWrap>{item.title}</Typography>
                     </NavItem>
                   ))}
-                  <NavItem
+                  {/* <NavItem
                     className={classes.navItem}
                     {...bindHover(popupState)}
                   >
                     <Typography noWrap>อื่นๆ </Typography>
                     <ArrowDownIcon style={{ marginLeft: 8 }} />
-                  </NavItem>
+                  </NavItem> */}
                 </NavMenu>
               </ThemeProvider>
             </Hidden>
@@ -454,7 +454,7 @@ export default function NavBar(props: NavigationBarProps) {
           >
             คำถามที่พบบ่อย
           </MenuItem>
-          <MenuItem
+          {/* <MenuItem
             onClick={popupState2.close}
             className={clsx({
               [classes.dropdownMenu]: true,
@@ -469,7 +469,7 @@ export default function NavBar(props: NavigationBarProps) {
             })}
           >
             เมนูเพิ่มเติม 2
-          </MenuItem>
+          </MenuItem> */}
         </HoverMenu>
       </Hidden>
       <NavDrawer

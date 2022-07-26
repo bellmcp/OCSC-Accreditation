@@ -94,7 +94,12 @@ export default function DataTable({ data }: any) {
               <TableCell style={{ verticalAlign: 'top' }}>
                 <Grid container alignItems='center' spacing={2} wrap='nowrap'>
                   <Grid item>
-                    <Avatar src={data.flag} style={{ width: 30, height: 30 }}>
+                    <Avatar
+                      alt={data.country}
+                      src={data.flag}
+                      variant='square'
+                      style={{ height: 18, width: 30 }}
+                    >
                       <FlagIcon />
                     </Avatar>
                   </Grid>

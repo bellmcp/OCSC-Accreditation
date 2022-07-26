@@ -175,7 +175,7 @@ export default function NavDrawer({
               </MenuItem>
             </React.Fragment>
           ))}
-          <MenuItem
+          {/* <MenuItem
             button
             className={clsx({
               [classes.listItem]: true,
@@ -184,8 +184,8 @@ export default function NavDrawer({
             <ListItem key={999} dense>
               <ListItemText primary='เมนูเพิ่มเติม 1' />
             </ListItem>
-          </MenuItem>
-          <MenuItem
+          </MenuItem> */}
+          {/* <MenuItem
             button
             className={clsx({
               [classes.listItem]: true,
@@ -194,7 +194,7 @@ export default function NavDrawer({
             <ListItem key={999} dense>
               <ListItemText primary='เมนูเพิ่มเติม 2' />
             </ListItem>
-          </MenuItem>
+          </MenuItem> */}
           <Divider />
         </List>
         <p className={classes.copyright}>

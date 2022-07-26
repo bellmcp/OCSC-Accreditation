@@ -67,7 +67,7 @@ export default function DownloadTable({ data }: any) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((data: any) => (
+          {data.map((data: any, index: number) => (
             <TableRow key={data.id}>
               <TableCell
                 component='th'
@@ -78,7 +78,7 @@ export default function DownloadTable({ data }: any) {
                   color: theme.palette.text.secondary,
                 }}
               >
-                {data.id}
+                {index + 1}
               </TableCell>
               <TableCell
                 style={{

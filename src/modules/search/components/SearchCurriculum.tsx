@@ -366,7 +366,11 @@ export default function SearchCurriculum() {
               <Grid container item spacing={2}>
                 <Grid container item direction='row' alignItems='center'>
                   <Grid xs={12}>
-                    <Typography variant='body2' color='primary'>
+                    <Typography
+                      variant='body2'
+                      color='primary'
+                      style={{ fontWeight: 500 }}
+                    >
                       <b>*</b> ไม่จำเป็นต้องระบุข้อมูลที่ใช้ค้นหาครบทุกฟิลด์
                       จะค้นจาก มหาวิทยาลัย หรือ คณะ หรือ ชื่อปริญญา หรือ
                       สาขาวิชา หรือ ทั้งหมดก็ได้
@@ -490,6 +494,26 @@ export default function SearchCurriculum() {
             >
               ค้นหา
             </Button>
+            <Grid
+              container
+              spacing={1}
+              direction='row'
+              justify='center'
+              alignItems='center'
+              alignContent='center'
+              wrap='nowrap'
+              style={{ marginTop: 16 }}
+            >
+              <Typography
+                variant='body2'
+                color='secondary'
+                align='center'
+                style={{ margin: '0 16px', fontWeight: 500 }}
+              >
+                จำกัดผลการค้นหาแค่ 50 รายการแรกเท่านั้น
+                โปรดใช้คำค้นหาที่เฉพาะเจาะจง
+              </Typography>
+            </Grid>
           </Box>
         </form>
         {renderSearchResult()}
