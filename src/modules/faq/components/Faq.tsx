@@ -120,7 +120,8 @@ export default function Faq() {
                 style={{
                   padding: '4px 8px',
                   borderRadius: 16,
-                  boxShadow: '0 0 20px 0 rgba(0,0,0,0.04)',
+                  boxShadow: '0 0 20px 0 rgba(204,242,251,0.3)',
+                  border: '1px solid rgb(204 242 251)',
                 }}
                 expanded={expanded === get(item, 'id', index + 1)}
                 onChange={handleChange(get(item, 'id', index + 1))}
@@ -200,6 +201,7 @@ export default function Faq() {
               gutterBottom
               component='h2'
               variant='h6'
+              color='secondary'
               className={classes.sectionTitle}
               align={matches ? 'left' : 'center'}
             >

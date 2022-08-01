@@ -288,6 +288,7 @@ export default function NavBar(props: NavigationBarProps) {
               alt='OCSC Logo'
               className={classes.logo}
               onClick={linkToHome}
+              style={{ filter: 'saturate(1.3)' }}
             />
             <div className={classes.grow} />
             {/* FULL DESKTOP NAVIGATION */}

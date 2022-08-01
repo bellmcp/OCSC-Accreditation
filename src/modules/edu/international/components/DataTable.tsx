@@ -85,7 +85,6 @@ export default function DataTable({ data }: any) {
                 scope='row'
                 align='center'
                 style={{
-                  color: theme.palette.text.secondary,
                   verticalAlign: 'top',
                 }}
               >
@@ -103,9 +102,7 @@ export default function DataTable({ data }: any) {
                       <FlagIcon />
                     </Avatar>
                   </Grid>
-                  <Grid item style={{ color: theme.palette.text.secondary }}>
-                    {data.country}
-                  </Grid>
+                  <Grid item>{data.country}</Grid>
                 </Grid>
               </TableCell>
               <TableCell style={{ verticalAlign: 'top' }}>
@@ -160,7 +157,6 @@ export default function DataTable({ data }: any) {
               </TableCell>
               <TableCell
                 style={{
-                  color: theme.palette.text.secondary,
                   verticalAlign: 'top',
                 }}
               >

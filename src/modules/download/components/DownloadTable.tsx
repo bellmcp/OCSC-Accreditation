@@ -75,7 +75,6 @@ export default function DownloadTable({ data }: any) {
                 align='center'
                 style={{
                   verticalAlign: 'top',
-                  color: theme.palette.text.secondary,
                 }}
               >
                 {index + 1}
@@ -83,7 +82,6 @@ export default function DownloadTable({ data }: any) {
               <TableCell
                 style={{
                   verticalAlign: 'top',
-                  color: theme.palette.text.secondary,
                 }}
               >
                 {data.date}
@@ -91,7 +89,6 @@ export default function DownloadTable({ data }: any) {
               <TableCell
                 style={{
                   verticalAlign: 'top',
-                  color: theme.palette.text.secondary,
                 }}
               >
                 {data.no}
@@ -99,7 +96,6 @@ export default function DownloadTable({ data }: any) {
               <TableCell
                 style={{
                   verticalAlign: 'top',
-                  color: theme.palette.text.secondary,
                 }}
               >
                 {data.subject}

@@ -104,6 +104,9 @@ export default function Layout() {
       secondary: {
         main: process.env.REACT_APP_SECONDARY_COLOR_HEX,
       },
+      background: {
+        default: '#f7feff',
+      },
     },
   })
 

@@ -47,6 +47,11 @@ const useStyles = makeStyles((theme: Theme) =>
       fontWeight: 600,
       lineHeight: '1.3',
       zIndex: 3,
+      color: theme.palette.secondary.main,
+      // // background: '#09348B',
+      // background: 'linear-gradient(to top, #09348B 0%, #0D49C4 100%)',
+      // WebkitBackgroundClip: 'text',
+      // WebkitTextFillColor: 'transparent',
     },
     seeAllButton: {
       marginBottom: '0.35em',
@@ -163,7 +168,8 @@ export default function SearchCurriculum() {
                 borderRadius: 16,
                 padding: 24,
                 paddingTop: 8,
-                boxShadow: '0 0 20px 0 rgba(0,0,0,0.04)',
+                boxShadow: '0 0 20px 0 rgba(204,242,251,0.3)',
+                border: '1px solid rgb(204 242 251)',
                 minHeight: 300,
               }}
             >
@@ -223,7 +229,8 @@ export default function SearchCurriculum() {
               style={{
                 borderRadius: 16,
                 padding: 24,
-                boxShadow: '0 0 20px 0 rgba(0,0,0,0.04)',
+                boxShadow: '0 0 20px 0 rgba(204,242,251,0.3)',
+                border: '1px solid rgb(204 242 251)',
               }}
             >
               <Grid container item spacing={2}>
@@ -358,7 +365,8 @@ export default function SearchCurriculum() {
               style={{
                 borderRadius: 16,
                 padding: 24,
-                boxShadow: '0 0 20px 0 rgba(0,0,0,0.04)',
+                boxShadow: '0 0 20px 0 rgba(204,242,251,0.3)',
+                border: '1px solid rgb(204 242 251)',
                 minHeight: 300,
                 marginTop: 24,
               }}
@@ -487,7 +495,6 @@ export default function SearchCurriculum() {
               fullWidth
               variant='contained'
               color='secondary'
-              disableElevation
               startIcon={<SearchIcon />}
               style={{ marginTop: 32 }}
               type='submit'

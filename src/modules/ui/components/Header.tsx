@@ -47,6 +47,7 @@ export default function Header({ title, subtitle, icon }: HeaderProps) {
           background: `url(${HeroImage}) no-repeat`,
           backgroundSize: 'cover',
           backgroundPosition: 'center center',
+          filter: 'saturate(1.3)',
         }}
       ></Grid>
     </>

@@ -131,6 +131,7 @@ export default function Download() {
               gutterBottom
               component='h2'
               variant='h6'
+              color='secondary'
               className={classes.sectionTitle}
               align={matches ? 'left' : 'center'}
             >
@@ -141,7 +142,8 @@ export default function Download() {
             elevation={0}
             style={{
               borderRadius: 16,
-              boxShadow: '0 0 20px 0 rgba(0,0,0,0.04)',
+              boxShadow: '0 0 20px 0 rgba(204,242,251,0.3)',
+              border: '1px solid rgb(204 242 251)',
             }}
           >
             <Tabs

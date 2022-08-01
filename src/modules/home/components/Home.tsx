@@ -82,6 +82,7 @@ export default function Home() {
                   gutterBottom
                   component='h2'
                   variant='h6'
+                  color='secondary'
                   className={classes.sectionTitle}
                   align={matches ? 'left' : 'center'}
                 >
@@ -90,7 +91,7 @@ export default function Home() {
               </Grid>
               <Typography
                 variant='body1'
-                color='textSecondary'
+                color='textPrimary'
                 style={{ textIndent: '50px', marginBottom: '16px' }}
               >
                 การรับรองคุณวุฒิบุคคลเพื่อบรรจุเข้ารับราชการ
@@ -100,7 +101,7 @@ export default function Home() {
               </Typography>
               <Typography
                 variant='body1'
-                color='textSecondary'
+                color='textPrimary'
                 gutterBottom
                 style={{ textIndent: '50px', marginBottom: '16px' }}
               >
@@ -116,7 +117,7 @@ export default function Home() {
               </Typography>
               <Typography
                 variant='body1'
-                color='textSecondary'
+                color='textPrimary'
                 gutterBottom
                 style={{ textIndent: '50px', marginBottom: '16px' }}
               >
@@ -128,7 +129,7 @@ export default function Home() {
               </Typography>
               <Typography
                 variant='body1'
-                color='textSecondary'
+                color='textPrimary'
                 gutterBottom
                 style={{ textIndent: '50px', marginBottom: '16px' }}
               >
@@ -140,7 +141,7 @@ export default function Home() {
               </Typography>
               <Typography
                 variant='body1'
-                color='textSecondary'
+                color='textPrimary'
                 gutterBottom
                 style={{ marginLeft: '50px', marginBottom: '16px' }}
               >
@@ -150,7 +151,7 @@ export default function Home() {
               </Typography>
               <Typography
                 variant='body1'
-                color='textSecondary'
+                color='textPrimary'
                 gutterBottom
                 style={{ textIndent: '50px', marginBottom: '32px' }}
               >
@@ -162,8 +163,7 @@ export default function Home() {
                 <Button
                   fullWidth
                   variant='contained'
-                  color='primary'
-                  disableElevation
+                  color='secondary'
                   startIcon={<SearchIcon />}
                   onClick={linkToSearchCurriculum}
                 >
@@ -187,7 +187,7 @@ export default function Home() {
           </Grid>
         </Grid>
       </Container>
-      <div style={{ backgroundColor: '#F2F4F3' }}>
+      <div style={{ backgroundColor: '#e9fcff' }}>
         <Container maxWidth='lg' className={classes.content}>
           <Grid
             container
@@ -201,14 +201,15 @@ export default function Home() {
               gutterBottom
               component='h2'
               variant='h6'
+              color='secondary'
               className={classes.sectionTitle}
               align={matches ? 'left' : 'center'}
             >
               คำถามที่พบบ่อย
             </Typography>
             <Button
-              variant='text'
-              color='primary'
+              variant='contained'
+              color='secondary'
               endIcon={<ArrowForwardIcon />}
               onClick={linkToFaq}
               className={classes.seeAllButton}
@@ -218,14 +219,14 @@ export default function Home() {
           </Grid>
           <Typography
             variant='h6'
-            color='textPrimary'
+            color='secondary'
             style={{ marginBottom: '16px', fontWeight: 600, lineHeight: '1.3' }}
           >
             1. การนำผลการรับรองในระบบรับรองคุณวุฒิด้วยระบบอิเล็กทรอนิกส์ไปใช้
           </Typography>
           <Typography
             variant='body1'
-            color='textSecondary'
+            color='textPrimary'
             style={{ textIndent: '50px', marginBottom: '16px' }}
           >
             สำนักงาน ก.พ. ขอเรียนว่า ผลการรับรองที่ได้จากระบบอิเล็กทรอนิกส์นี้
@@ -235,7 +236,8 @@ export default function Home() {
             ต้องอ้างอิงจากหนังสือเวียนหรือไฟล์หนังสือเวียนที่เป็น PDF เท่านั้น
             ตรวจสอบหนังสือเวียนได้จาก{' '}
             <Link
-              underline='hover'
+              underline='always'
+              color='secondary'
               onClick={linkToDownload}
               style={{ cursor: 'pointer' }}
             >
@@ -244,14 +246,19 @@ export default function Home() {
           </Typography>
           <Typography
             variant='h6'
-            color='textPrimary'
-            style={{ marginBottom: '16px', fontWeight: 600, lineHeight: '1.3' }}
+            color='secondary'
+            style={{
+              marginTop: '32px',
+              marginBottom: '16px',
+              fontWeight: 600,
+              lineHeight: '1.3',
+            }}
           >
             2. การสมัครสอบของข้าราชการประเภทอื่น
           </Typography>
           <Typography
             variant='body1'
-            color='textSecondary'
+            color='textPrimary'
             style={{ textIndent: '50px', marginBottom: '16px' }}
           >
             การสมัครสอบใด ๆ ที่ไม่ใช่ข้าราชการพลเรือนสามัญ

@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.common.white,
     padding: theme.spacing(6, 2),
     marginTop: 'auto',
-    backgroundColor: process.env.REACT_APP_SECONDARY_COLOR_HEX,
+    backgroundImage: `linear-gradient(180deg, #09348b, #06225b)`,
   },
   link: {
     color: process.env.REACT_APP_TERTIARY_COLOR_HEX,
@@ -56,7 +56,7 @@ export default function Footer() {
   const parseLinkToDefaultColor = (text: string) => {
     return text.replace(
       '<a',
-      '<a style="color:#00A69C; text-decoration: none;"'
+      '<a style="color:#00d1c3; text-decoration: none;"'
     )
   }
 
