@@ -22,7 +22,7 @@ import {
 import { CloseRounded as CloseIcon } from '@material-ui/icons'
 
 const DRAWER_WIDTH = '80%'
-const PATH = process.env.REACT_APP_BASE_PATH
+const PATH = ''
 
 interface NavigationDrawerProps {
   window?: () => Window
@@ -30,7 +30,6 @@ interface NavigationDrawerProps {
   mobileOpen: boolean
   active: number
   unreadNotificationCount: number
-  isUserCurrentlyInLearn: boolean
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -101,7 +100,6 @@ export default function NavDrawer({
   mobileOpen,
   active,
   unreadNotificationCount,
-  isUserCurrentlyInLearn,
 }: NavigationDrawerProps) {
   const classes = useStyles()
   const theme = useTheme()

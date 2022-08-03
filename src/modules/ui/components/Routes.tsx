@@ -9,24 +9,22 @@ import FaqRoutes from 'modules/faq/Routes'
 
 import NotFound from './NotFound'
 
-const PATH = process.env.REACT_APP_BASE_PATH
-
 export default function Routes() {
   return (
     <Switch>
-      <Route path={`${PATH}/search/curriculum`}>
+      <Route path='/search/curriculum'>
         <SearchRoutes />
       </Route>
-      <Route path={`${PATH}/edu`}>
+      <Route path='/edu'>
         <EduRoutes />
       </Route>
-      <Route path={`${PATH}/download`}>
+      <Route path='/download'>
         <DownloadRoutes />
       </Route>
-      <Route path={`${PATH}/faq`}>
+      <Route path='/faq'>
         <FaqRoutes />
       </Route>
-      <Route exact path={`${PATH}`}>
+      <Route path='/'>
         <HomeRoutes />
       </Route>
       <Route>

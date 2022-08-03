@@ -50,7 +50,7 @@ export default function Home() {
   const theme = useTheme()
   const matches = useMediaQuery(theme.breakpoints.up('sm'))
   const history = useHistory()
-  const PATH = process.env.REACT_APP_BASE_PATH
+  const PATH = ''
 
   const linkToFaq = () => {
     history.push(`${PATH}/faq`)
@@ -69,7 +69,7 @@ export default function Home() {
       <Header title='FAQ' subtitle='คำถามที่พบบ่อย' icon={<div />} />
       <Container maxWidth='lg' className={classes.content}>
         <Grid container spacing={matches ? 10 : 2}>
-          <Grid container item xs={12} lg={6}>
+          <Grid container item xs={12} md={6}>
             <Box mt={2} mb={4}>
               <Grid
                 container
@@ -172,7 +172,7 @@ export default function Home() {
               </Grid>
             </Box>
           </Grid>
-          <Grid item xs={12} lg={6}>
+          <Grid item xs={12} md={6}>
             <Box mt={2} mb={4}>
               <Link href={Infographic} target='_blank'>
                 <Avatar

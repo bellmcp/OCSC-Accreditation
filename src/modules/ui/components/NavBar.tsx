@@ -1,8 +1,7 @@
 // @ts-nocheck
 import React, { useState } from 'react'
 import clsx from 'clsx'
-import { useDispatch } from 'react-redux'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 import {
   fade,
@@ -35,8 +34,6 @@ import {
   bindMenu,
 } from 'material-ui-popup-state/hooks'
 import HoverMenu from 'material-ui-popup-state/HoverMenu'
-
-import * as uiActions from 'modules/ui/actions'
 
 import NavDrawer from './NavDrawer'
 
@@ -196,9 +193,6 @@ interface NavigationBarProps {
 export default function NavBar(props: NavigationBarProps) {
   const classes = useStyles()
   const history = useHistory()
-  const { pathname } = useLocation()
-  const dispatch = useDispatch()
-  const PATH = process.env.REACT_APP_BASE_PATH
 
   const LogoImage = require('assets/images/logo.png')
 
@@ -208,44 +202,38 @@ export default function NavBar(props: NavigationBarProps) {
     {
       id: 0,
       title: 'หน้าหลัก',
-      url: `${PATH}`,
+      url: '/',
       notification: 0,
     },
     {
       id: 1,
       title: 'ค้นหาการรับรองคุณวุฒิหลักสูตร',
-      url: `${PATH}/search/curriculum`,
+      url: '/search/curriculum',
       notification: 0,
     },
     {
       id: 2,
       title: 'สถาบันการศึกษาในต่างประเทศ',
-      url: `${PATH}/edu/international`,
+      url: '/edu/international',
       notification: 0,
     },
     {
       id: 3,
       title: 'เอกสารดาวน์โหลด/หนังสือเวียน',
-      url: `${PATH}/download`,
+      url: '/download',
       notification: 0,
     },
     {
       id: 4,
       title: 'คำถามที่พบบ่อย',
-      url: `${PATH}/faq`,
+      url: '/faq',
       notification: 0,
     },
   ]
 
-  const isUserCurrentlyInLearn = pathname.includes(`${PATH}/learn/courses`)
-
   const linkToHome = () => {
     handleProfileMenuClose()
-    if (!isUserCurrentlyInLearn) {
-      history.push(`${PATH}`)
-    } else {
-      dispatch(uiActions.setLearnExitDialog(true))
-    }
+    history.push('/')
   }
 
   const handleDrawerToggle = () => {
@@ -417,7 +405,7 @@ export default function NavBar(props: NavigationBarProps) {
             selected={props.active === 2}
             onClick={() => {
               popupState2.close()
-              history.push(`${PATH}/edu/international`)
+              history.push(`/edu/international`)
               props.setActivePage(2)
             }}
             className={clsx({
@@ -431,7 +419,7 @@ export default function NavBar(props: NavigationBarProps) {
             selected={props.active === 3}
             onClick={() => {
               popupState2.close()
-              history.push(`${PATH}/download`)
+              history.push(`/download`)
               props.setActivePage(3)
             }}
             className={clsx({
@@ -445,7 +433,7 @@ export default function NavBar(props: NavigationBarProps) {
             selected={props.active === 4}
             onClick={() => {
               popupState2.close()
-              history.push(`${PATH}/faq`)
+              history.push(`/faq`)
               props.setActivePage(4)
             }}
             className={clsx({
@@ -478,7 +466,6 @@ export default function NavBar(props: NavigationBarProps) {
         handleDrawerToggle={handleDrawerToggle}
         active={props.active}
         unreadNotificationCount={0}
-        isUserCurrentlyInLearn={isUserCurrentlyInLearn}
       />
     </div>
   )

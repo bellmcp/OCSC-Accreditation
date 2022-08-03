@@ -18,7 +18,6 @@ import Footer from './Footer'
 
 export default function Layout() {
   const { pathname } = useLocation()
-  const PATH = process.env.REACT_APP_BASE_PATH
   const dispatch = useDispatch()
   const { isSnackbarOpen, flashMessage, alertType } = useSelector(
     (state) => state.ui
@@ -28,19 +27,20 @@ export default function Layout() {
   useEffect(() => {
     const setInitialActivePage = () => {
       switch (pathname) {
-        case `${PATH}`:
+        case '/':
+        case '/index.html':
           setActivePage(0)
           break
-        case `${PATH}/search/curriculum`:
+        case '/search/curriculum':
           setActivePage(1)
           break
-        case `${PATH}/edu/international`:
+        case '/edu/international':
           setActivePage(2)
           break
-        case `${PATH}/download`:
+        case '/download':
           setActivePage(3)
           break
-        case `${PATH}/faq`:
+        case '/faq':
           setActivePage(4)
           break
         default:

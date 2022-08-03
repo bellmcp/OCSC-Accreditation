@@ -1,11 +1,6 @@
 import React from 'react'
 
-import {
-  createStyles,
-  makeStyles,
-  Theme,
-  useTheme,
-} from '@material-ui/core/styles'
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import {
   Table,
   TableBody,
@@ -28,7 +23,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function DownloadTable({ data }: any) {
   const classes = useStyles()
-  const theme = useTheme()
 
   return (
     <TableContainer>
