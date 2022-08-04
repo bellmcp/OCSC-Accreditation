@@ -1,12 +1,7 @@
 import React from 'react'
 import { get, isNull } from 'lodash'
 
-import {
-  createStyles,
-  makeStyles,
-  Theme,
-  useTheme,
-} from '@material-ui/core/styles'
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import {
   Table,
   TableBody,
@@ -34,7 +29,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function DataTable({ data }: any) {
   const classes = useStyles()
-  const theme = useTheme()
 
   const getValue = (data: any, name: any, defaultValue: any) => {
     const value = get(data, name, null)
