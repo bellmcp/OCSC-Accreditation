@@ -236,7 +236,7 @@ export default function Home() {
             ต้องอ้างอิงจากหนังสือเวียนหรือไฟล์หนังสือเวียนที่เป็น PDF เท่านั้น
             ตรวจสอบหนังสือเวียนได้จาก{' '}
             <Link
-              underline='always'
+              underline='hover'
               color='secondary'
               onClick={linkToDownload}
               style={{ cursor: 'pointer' }}

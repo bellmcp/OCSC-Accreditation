@@ -27,13 +27,21 @@ export default function DataTable({ data }: any) {
           <TableRow>
             <TableCell
               width='50%'
-              style={{ lineHeight: '1.2', verticalAlign: 'top' }}
+              style={{
+                lineHeight: '1.2',
+                verticalAlign: 'top',
+                fontWeight: 600,
+              }}
             >
               ดาวน์โหลด
             </TableCell>
             <TableCell
               width='50%'
-              style={{ lineHeight: '1.2', verticalAlign: 'top' }}
+              style={{
+                lineHeight: '1.2',
+                verticalAlign: 'top',
+                fontWeight: 600,
+              }}
             >
               เว็บไซต์ที่เกี่ยวข้อง
             </TableCell>

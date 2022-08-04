@@ -59,7 +59,7 @@ const getLabel = (row: any, fieldName: string) => {
 }
 
 const parseLinkToDefaultColor = (text: string) => {
-  return text.replace('<a', '<a style="color:#00A69C; text-decoration: none;"')
+  return text.replace(/<a/g, '<a class="custom_link"')
 }
 
 function Row(props: any) {
@@ -103,16 +103,19 @@ function Row(props: any) {
             <List>
               <ListItem divider>
                 <Box style={{ flexBasis: '25%', flexShrink: 0 }}>
-                  <Typography variant='body2' style={{ fontWeight: 600 }}>
+                  <Typography
+                    variant='body2'
+                    style={{ lineHeight: '1.2', fontWeight: 600 }}
+                  >
                     ผลการรับรอง
                   </Typography>
                 </Box>
                 <Box>
                   <Typography
                     variant='body2'
-                    color='textSecondary'
                     gutterBottom
-                    style={{ lineHeight: '1.2' }}
+                    color='secondary'
+                    style={{ lineHeight: '1.2', fontWeight: 500 }}
                   >
                     <div
                       dangerouslySetInnerHTML={{
@@ -124,7 +127,7 @@ function Row(props: any) {
                   </Typography>
                   <Typography
                     variant='caption'
-                    color='textSecondary'
+                    color='secondary'
                     style={{ lineHeight: '1.2' }}
                   >
                     <div
@@ -144,7 +147,7 @@ function Row(props: any) {
                   </Typography>
                 </Box>
                 <Box>
-                  <Typography variant='body2' color='textSecondary'>
+                  <Typography variant='body2' color='secondary'>
                     {getLabel(row, 'note')}
                   </Typography>
                 </Box>
@@ -156,7 +159,7 @@ function Row(props: any) {
                   </Typography>
                 </Box>
                 <Box>
-                  <Typography variant='body2' color='textSecondary'>
+                  <Typography variant='body2' color='secondary'>
                     {getLabel(row, 'letterNo')}
                   </Typography>
                 </Box>
@@ -168,7 +171,7 @@ function Row(props: any) {
                   </Typography>
                 </Box>
                 <Box>
-                  <Typography variant='body2' color='textSecondary'>
+                  <Typography variant='body2' color='secondary'>
                     {getLabel(row, 'letterDate')}
                   </Typography>
                 </Box>
@@ -180,7 +183,7 @@ function Row(props: any) {
                   </Typography>
                 </Box>
                 <Box>
-                  <Typography variant='body2' color='textSecondary'>
+                  <Typography variant='body2' color='secondary'>
                     {getLabel(row, 'id')}
                   </Typography>
                 </Box>
@@ -230,26 +233,66 @@ export default function SearchResultTable({ data }: SearchResultTableType) {
             <TableCell />
             <TableCell
               align='center'
-              style={{ verticalAlign: 'top', lineHeight: '1.2' }}
+              style={{
+                verticalAlign: 'top',
+                lineHeight: '1.2',
+                fontWeight: 600,
+              }}
             >
               ลำดับ
             </TableCell>
-            <TableCell style={{ verticalAlign: 'top', lineHeight: '1.2' }}>
+            <TableCell
+              style={{
+                verticalAlign: 'top',
+                lineHeight: '1.2',
+                fontWeight: 600,
+              }}
+            >
               มหาวิทยาลัย/สถาบันการศึกษา
             </TableCell>
-            <TableCell style={{ verticalAlign: 'top', lineHeight: '1.2' }}>
+            <TableCell
+              style={{
+                verticalAlign: 'top',
+                lineHeight: '1.2',
+                fontWeight: 600,
+              }}
+            >
               ชื่อปริญญา/ประกาศนียบัตร
             </TableCell>
-            <TableCell style={{ verticalAlign: 'top', lineHeight: '1.2' }}>
+            <TableCell
+              style={{
+                verticalAlign: 'top',
+                lineHeight: '1.2',
+                fontWeight: 600,
+              }}
+            >
               สาขา/วิชาเอก
             </TableCell>
-            <TableCell style={{ verticalAlign: 'top', lineHeight: '1.2' }}>
+            <TableCell
+              style={{
+                verticalAlign: 'top',
+                lineHeight: '1.2',
+                fontWeight: 600,
+              }}
+            >
               รัฐ/เอกชน
             </TableCell>
-            <TableCell style={{ verticalAlign: 'top', lineHeight: '1.2' }}>
+            <TableCell
+              style={{
+                verticalAlign: 'top',
+                lineHeight: '1.2',
+                fontWeight: 600,
+              }}
+            >
               ระดับการศึกษา
             </TableCell>
-            <TableCell style={{ verticalAlign: 'top', lineHeight: '1.2' }}>
+            <TableCell
+              style={{
+                verticalAlign: 'top',
+                lineHeight: '1.2',
+                fontWeight: 600,
+              }}
+            >
               คณะ/หน่วยงาน
             </TableCell>
           </TableRow>

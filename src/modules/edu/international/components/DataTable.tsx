@@ -50,29 +50,51 @@ export default function DataTable({ data }: any) {
             <TableCell
               width={100}
               align='center'
-              style={{ lineHeight: '1.2', verticalAlign: 'top' }}
+              style={{
+                lineHeight: '1.2',
+                verticalAlign: 'top',
+                fontWeight: 600,
+              }}
             >
               ลำดับ
             </TableCell>
             <TableCell
               width={250}
-              style={{ lineHeight: '1.2', verticalAlign: 'top' }}
+              style={{
+                lineHeight: '1.2',
+                verticalAlign: 'top',
+                fontWeight: 600,
+              }}
             >
               ประเทศ
             </TableCell>
             <TableCell
               width={300}
-              style={{ lineHeight: '1.2', verticalAlign: 'top' }}
+              style={{
+                lineHeight: '1.2',
+                verticalAlign: 'top',
+                fontWeight: 600,
+              }}
             >
               ดาวน์โหลด
             </TableCell>
             <TableCell
               width={300}
-              style={{ lineHeight: '1.2', verticalAlign: 'top' }}
+              style={{
+                lineHeight: '1.2',
+                verticalAlign: 'top',
+                fontWeight: 600,
+              }}
             >
               เว็บไซต์ที่เกี่ยวข้อง
             </TableCell>
-            <TableCell style={{ lineHeight: '1.2', verticalAlign: 'top' }}>
+            <TableCell
+              style={{
+                lineHeight: '1.2',
+                verticalAlign: 'top',
+                fontWeight: 600,
+              }}
+            >
               หมายเหตุ
             </TableCell>
           </TableRow>
