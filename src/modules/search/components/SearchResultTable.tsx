@@ -82,7 +82,7 @@ function Row(props: any) {
             )}
           </IconButton>
         </TableCell>
-        <TableCell component='th' scope='row'>
+        <TableCell component='th' scope='row' align='center'>
           {index + 1}
         </TableCell>
         <TableCell component='th' scope='row'>

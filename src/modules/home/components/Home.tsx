@@ -241,7 +241,7 @@ export default function Home() {
               onClick={linkToDownload}
               style={{ cursor: 'pointer' }}
             >
-              ที่นี่
+              ที่นี่ {'>'}
             </Link>
           </Typography>
           <Typography
