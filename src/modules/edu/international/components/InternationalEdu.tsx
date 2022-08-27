@@ -16,6 +16,7 @@ import {
   Paper,
   useMediaQuery,
 } from '@material-ui/core'
+import { Alert, AlertTitle } from '@material-ui/lab'
 
 import Header from 'modules/ui/components/Header'
 import Loading from 'modules/ui/components/Loading'
@@ -72,12 +73,15 @@ export default function InternationalEdu() {
 
   const [tableData, setTableData] = useState([])
 
-  const { countries: initialCountries = [], isLoading = false } = useSelector(
-    (state: any) => state.international
-  )
+  const {
+    countries: initialCountries = [],
+    isLoading = false,
+    recognitionInfo = { value1: '', value2: '' },
+  } = useSelector((state: any) => state.international)
 
   useEffect(() => {
     dispatch(internationalActions.loadCountries())
+    dispatch(internationalActions.loadRecognitionInfo())
   }, [dispatch])
 
   useEffect(() => {
@@ -97,17 +101,19 @@ export default function InternationalEdu() {
     setTableData(parsedData)
   }, [initialCountries])
 
+  const parseLinkToDefaultColor = (text: string) => {
+    return text.replace(/<a/g, '<a class="footer_link"')
+  }
+
+  const recognitionText1 = get(recognitionInfo, 'value1', '')
+  const recognitionText2 = get(recognitionInfo, 'value2', '')
+
   return (
     <>
       <Header title='FAQ' subtitle='คำถามที่พบบ่อย' icon={<div />} />
       <Container maxWidth='lg' className={classes.content}>
         <Box mt={2} mb={4}>
-          <Grid
-            container
-            direction='row'
-            justify={matches ? 'space-between' : 'center'}
-            alignItems='center'
-          >
+          <Grid container direction='column'>
             <Typography
               gutterBottom
               component='h2'
@@ -118,6 +124,33 @@ export default function InternationalEdu() {
             >
               สถาบันการศึกษาในต่างประเทศ
             </Typography>
+            {recognitionText1 !== '' && recognitionText2 !== '' && (
+              <Alert
+                severity='info'
+                style={{
+                  marginBottom: 36,
+                  borderRadius: 8,
+                  padding: '16px 24px',
+                }}
+              >
+                <AlertTitle>
+                  <Typography variant='body1' color='secondary'>
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: parseLinkToDefaultColor(recognitionText1),
+                      }}
+                    ></div>
+                  </Typography>
+                </AlertTitle>
+                <Typography variant='body2' color='secondary'>
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: parseLinkToDefaultColor(recognitionText2),
+                    }}
+                  ></div>
+                </Typography>
+              </Alert>
+            )}
           </Grid>
           <Paper
             elevation={0}

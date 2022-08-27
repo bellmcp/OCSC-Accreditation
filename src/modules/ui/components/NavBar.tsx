@@ -240,7 +240,6 @@ export default function NavBar(props: NavigationBarProps) {
   const isUserCurrentlyInLearn = pathname.includes(`${PATH}/learn/courses`)
 
   const linkToHome = () => {
-    handleProfileMenuClose()
     if (!isUserCurrentlyInLearn) {
       history.push(`${PATH}`)
     } else {
@@ -250,10 +249,6 @@ export default function NavBar(props: NavigationBarProps) {
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen)
-  }
-
-  const handleProfileMenuClose = () => {
-    setAnchorEl(null)
   }
 
   const popupState = usePopupState({

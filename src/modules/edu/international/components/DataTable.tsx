@@ -94,7 +94,7 @@ export default function DataTable({ data }: any) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((data: any) => (
+          {data.map((data: any, index: number) => (
             <TableRow key={data.id}>
               <TableCell
                 component='th'
@@ -104,7 +104,7 @@ export default function DataTable({ data }: any) {
                   verticalAlign: 'top',
                 }}
               >
-                {data.id}
+                {index + 1}
               </TableCell>
               <TableCell style={{ verticalAlign: 'top' }}>
                 <Grid container alignItems='center' spacing={2} wrap='nowrap'>
