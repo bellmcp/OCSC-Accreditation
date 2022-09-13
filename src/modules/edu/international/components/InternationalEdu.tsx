@@ -131,6 +131,8 @@ export default function InternationalEdu() {
                   marginBottom: 36,
                   borderRadius: 8,
                   padding: '16px 24px',
+                  border: '1px solid rgb(204 242 251)',
+                  boxShadow: '0 0 20px 0 rgba(204,242,251,0.3)',
                 }}
               >
                 <AlertTitle>
@@ -142,7 +144,11 @@ export default function InternationalEdu() {
                     ></div>
                   </Typography>
                 </AlertTitle>
-                <Typography variant='body2' color='secondary'>
+                <Typography
+                  variant='body1'
+                  color='secondary'
+                  style={{ fontSize: 15, lineHeight: '1.4' }}
+                >
                   <div
                     dangerouslySetInnerHTML={{
                       __html: parseLinkToDefaultColor(recognitionText2),
