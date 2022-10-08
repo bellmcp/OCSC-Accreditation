@@ -65,7 +65,7 @@ export default function Home() {
   }
 
   return (
-    <>
+    <div style={{ overflowX: 'hidden' }}>
       <Header title='FAQ' subtitle='คำถามที่พบบ่อย' icon={<div />} />
       <Container maxWidth='lg' className={classes.content}>
         <Grid container spacing={matches ? 10 : 2}>
@@ -267,6 +267,6 @@ export default function Home() {
           </Typography>
         </Container>
       </div>
-    </>
+    </div>
   )
 }
