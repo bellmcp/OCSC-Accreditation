@@ -26,7 +26,7 @@ import NavBar from './NavBar'
 import Routes from './Routes'
 import Footer from './Footer'
 
-import { setCookie, getCookie } from 'utils/cookies'
+import { setCookieSubDomain, getCookie } from 'utils/cookies'
 
 export default function Layout() {
   const { pathname } = useLocation()
@@ -124,7 +124,7 @@ export default function Layout() {
   })
 
   const handleClickAcceptCookie = () => {
-    setCookie('AcceptCookie', 'true', 9999)
+    setCookieSubDomain('AcceptCookie', 'true', 9999)
     setIsCookieBannerOpen(false)
   }
 
