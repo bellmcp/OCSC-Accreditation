@@ -51,7 +51,8 @@ function createData(
   documentUrl?: string[],
   documentText?: string[],
   websiteUrl?: string[],
-  websiteText?: string[]
+  websiteText?: string[],
+  counter?: number
 ) {
   return {
     id,
@@ -62,6 +63,7 @@ function createData(
     documentText,
     websiteUrl,
     websiteText,
+    counter,
   }
 }
 
@@ -71,7 +73,7 @@ export default function InternationalEdu() {
   const theme = useTheme()
   const matches = useMediaQuery(theme.breakpoints.up('sm'))
 
-  const [tableData, setTableData] = useState([])
+  const [tableData, setTableData] = useState<any>([])
 
   const {
     countries: initialCountries = [],
@@ -95,7 +97,8 @@ export default function InternationalEdu() {
         get(country, 'documentUrl'),
         get(country, 'documentText'),
         get(country, 'websiteUrl'),
-        get(country, 'websiteText')
+        get(country, 'websiteText'),
+        get(country, 'counter')
       )
     )
     setTableData(parsedData)
@@ -103,6 +106,17 @@ export default function InternationalEdu() {
 
   const parseLinkToDefaultColor = (text: string) => {
     return text.replace(/<a/g, '<a class="footer_link"')
+  }
+
+  const incrementCounterValue = (countryId: string) => {
+    const updatedData = tableData.map((country: any) => {
+      if (country.id === countryId) {
+        return { ...country, counter: country.counter + 1 }
+      } else {
+        return country
+      }
+    })
+    setTableData(updatedData)
   }
 
   const recognitionText1 = get(recognitionInfo, 'value1', '')
@@ -170,7 +184,10 @@ export default function InternationalEdu() {
             }}
           >
             {!isLoading ? (
-              <DataTable data={tableData} />
+              <DataTable
+                data={tableData}
+                incrementCounterValue={incrementCounterValue}
+              />
             ) : (
               <Loading height={200} />
             )}

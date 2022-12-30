@@ -216,7 +216,7 @@ export default function Layout() {
                     href='https://www.ocsc.go.th/cookies-policy'
                     target='_blank'
                   >
-                    นโยบายคุ้กกี้
+                    นโยบายคุกกี้
                   </Link>
                 </Typography>
               </Grid>

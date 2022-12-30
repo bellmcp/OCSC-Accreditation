@@ -118,6 +118,7 @@ export default function DownloadTable({ data }: any) {
                   component={Link}
                   href={data.url}
                   target='_blank'
+                  color='primary'
                 >
                   <GetAppIcon fontSize='small' />
                 </IconButton>

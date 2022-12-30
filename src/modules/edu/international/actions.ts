@@ -14,6 +14,12 @@ const LOAD_RECOGNITION_INFO_SUCCESS =
   'ocsc-e-accredit/edu/international/LOAD_RECOGNITION_INFO_SUCCESS'
 const LOAD_RECOGNITION_INFO_FAILURE =
   'ocsc-e-accredit/edu/international/LOAD_RECOGNITION_INFO_FAILURE'
+const INCREMENT_COUNTER_REQUEST =
+  'ocsc-e-accredit/edu/international/INCREMENT_COUNTER_REQUEST'
+const INCREMENT_COUNTER_SUCCESS =
+  'ocsc-e-accredit/edu/international/INCREMENT_COUNTER_SUCCESS'
+const INCREMENT_COUNTER_FAILURE =
+  'ocsc-e-accredit/edu/international/INCREMENT_COUNTER_FAILURE'
 
 function loadCountries() {
   return async (dispatch: any) => {
@@ -75,6 +81,36 @@ function loadRecognitionInfo() {
   }
 }
 
+function incrementCounter(countryId: number) {
+  return async (dispatch: any) => {
+    dispatch({ type: INCREMENT_COUNTER_REQUEST })
+    try {
+      var { data } = await axios.patch(`/countries/${countryId}`)
+      if (data.length === 0) {
+        data = []
+      }
+      dispatch({
+        type: INCREMENT_COUNTER_SUCCESS,
+        payload: {
+          countries: data,
+        },
+      })
+    } catch (err) {
+      dispatch({ type: INCREMENT_COUNTER_FAILURE })
+      dispatch(
+        uiActions.setFlashMessage(
+          `เพิ่มจำนวนครั้งที่เข้าชมไม่สำเร็จ เกิดข้อผิดพลาด ${get(
+            err,
+            'response.status',
+            'บางอย่าง'
+          )}`,
+          'error'
+        )
+      )
+    }
+  }
+}
+
 export {
   LOAD_COUNTRIES_REQUEST,
   LOAD_COUNTRIES_SUCCESS,
@@ -82,6 +118,10 @@ export {
   LOAD_RECOGNITION_INFO_REQUEST,
   LOAD_RECOGNITION_INFO_SUCCESS,
   LOAD_RECOGNITION_INFO_FAILURE,
+  INCREMENT_COUNTER_REQUEST,
+  INCREMENT_COUNTER_SUCCESS,
+  INCREMENT_COUNTER_FAILURE,
   loadCountries,
   loadRecognitionInfo,
+  incrementCounter,
 }
