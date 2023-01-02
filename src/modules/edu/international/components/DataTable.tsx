@@ -206,7 +206,7 @@ export default function DataTable({ data, incrementCounterValue }: any) {
                   verticalAlign: 'top',
                 }}
               >
-                {data.counter} ครั้ง
+                {data.counter.toLocaleString()} ครั้ง
               </TableCell>
             </TableRow>
           ))}
