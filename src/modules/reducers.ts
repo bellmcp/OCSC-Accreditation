@@ -7,6 +7,7 @@ import search from 'modules/search/reducer'
 import download from 'modules/download/reducer'
 import international from 'modules/edu/international/reducer'
 import faq from 'modules/faq/reducer'
+import press from 'modules/press/reducer'
 
 export default (history: any) =>
   combineReducers({
@@ -17,4 +18,5 @@ export default (history: any) =>
     search,
     download,
     international,
+    press,
   })

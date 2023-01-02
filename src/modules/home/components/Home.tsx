@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
+import { useDispatch, useSelector, RootStateOrAny } from 'react-redux'
 
 import {
   createStyles,
@@ -23,8 +24,12 @@ import {
 } from '@material-ui/icons'
 
 import Header from 'modules/ui/components/Header'
+import PressCarousel from 'modules/press/components/PressCarousel'
 
+import 'pure-react-carousel/dist/react-carousel.es.css'
 import Infographic from 'assets/images/infographic.jpeg'
+
+import * as pressesActions from 'modules/press/actions'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -50,7 +55,12 @@ export default function Home() {
   const theme = useTheme()
   const matches = useMediaQuery(theme.breakpoints.up('sm'))
   const history = useHistory()
+  const dispatch = useDispatch()
   const PATH = process.env.REACT_APP_BASE_PATH
+
+  const { isLoading: isPressesLoading, items: presses } = useSelector(
+    (state: RootStateOrAny) => state.press
+  )
 
   const linkToFaq = () => {
     history.push(`${PATH}/faq`)
@@ -64,9 +74,19 @@ export default function Home() {
     history.push(`${PATH}/download`)
   }
 
+  useEffect(() => {
+    const presses_action = pressesActions.loadPresses()
+    dispatch(presses_action)
+  }, [dispatch])
+
   return (
     <div style={{ overflowX: 'hidden' }}>
-      <Header title='FAQ' subtitle='คำถามที่พบบ่อย' icon={<div />} />
+      <Header />
+      <div style={{ backgroundColor: '#e9fcff' }}>
+        <Container maxWidth='lg' className={classes.content}>
+          <PressCarousel presses={presses} isLoading={isPressesLoading} />
+        </Container>
+      </div>
       <Container maxWidth='lg' className={classes.content}>
         <Grid container spacing={matches ? 10 : 2}>
           <Grid container item xs={12} md={6}>
@@ -179,9 +199,7 @@ export default function Home() {
                   variant='rounded'
                   src={Infographic}
                   style={{ width: '100%', height: 'auto', borderRadius: 8 }}
-                >
-                  test
-                </Avatar>
+                />
               </Link>
             </Box>
           </Grid>
