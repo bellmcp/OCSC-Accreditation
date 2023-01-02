@@ -78,7 +78,6 @@ const useStyles = makeStyles((theme: Theme) =>
       outline: 'none !important',
       '&:disabled': {
         cursor: 'not-allowed',
-        opacity: '50%',
       },
     },
     buttonNext: {
@@ -92,7 +91,6 @@ const useStyles = makeStyles((theme: Theme) =>
       outline: 'none !important',
       '&:disabled': {
         cursor: 'not-allowed',
-        opacity: '50%',
       },
     },
     growButtonBack: {
