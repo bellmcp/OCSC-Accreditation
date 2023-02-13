@@ -213,7 +213,7 @@ export default function NavBar(props: NavigationBarProps) {
     },
     {
       id: 1,
-      title: 'ค้นหาการรับรองคุณวุฒิหลักสูตร',
+      title: 'การค้นหารับรองคุณวุฒิ',
       url: `${PATH}/search/curriculum`,
       notification: 0,
     },

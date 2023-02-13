@@ -205,7 +205,7 @@ export default function SearchCurriculum() {
                   variant='h6'
                   className={classes.sectionTitle}
                 >
-                  ค้นหาการรับรองคุณวุฒิหลักสูตร
+                  การค้นหารับรองคุณวุฒิ
                 </Typography>
               </Grid>
               <Grid

@@ -187,7 +187,7 @@ export default function Home() {
                   startIcon={<SearchIcon />}
                   onClick={linkToSearchCurriculum}
                 >
-                  ค้นหาการรับรองคุณวุฒิหลักสูตร
+                  การค้นหารับรองคุณวุฒิ
                 </Button>
               </Grid>
             </Box>
