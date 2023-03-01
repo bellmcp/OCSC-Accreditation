@@ -413,7 +413,6 @@ export default function SearchCurriculum() {
                       name='university'
                       value={formik.values.university}
                       onChange={formik.handleChange}
-                      placeholder='ใส่คำค้นหาได้ไม่เกิน 3 คำ เช่น กกก ขขข คคค หมายถึง ในชื่อต้องมีคำค้นหาทั้งหมดปรากฏอยู่'
                       variant='outlined'
                       size='small'
                       fullWidth
@@ -439,7 +438,6 @@ export default function SearchCurriculum() {
                       name='faculty'
                       value={formik.values.faculty}
                       onChange={formik.handleChange}
-                      placeholder='ใส่คำค้นหาได้ไม่เกิน 3 คำ เช่น กกก ขขข คคค หมายถึง ในชื่อต้องมีคำค้นหาทั้งหมดปรากฏอยู่'
                       variant='outlined'
                       size='small'
                       fullWidth
@@ -465,7 +463,6 @@ export default function SearchCurriculum() {
                       name='degree'
                       value={formik.values.degree}
                       onChange={formik.handleChange}
-                      placeholder='ใส่คำค้นหาได้ไม่เกิน 3 คำ เช่น กกก ขขข คคค หมายถึง ในชื่อต้องมีคำค้นหาทั้งหมดปรากฏอยู่'
                       variant='outlined'
                       size='small'
                       fullWidth
@@ -491,7 +488,6 @@ export default function SearchCurriculum() {
                       name='branch'
                       value={formik.values.branch}
                       onChange={formik.handleChange}
-                      placeholder='ใส่คำค้นหาได้ไม่เกิน 3 คำ เช่น กกก ขขข คคค หมายถึง ในชื่อต้องมีคำค้นหาทั้งหมดปรากฏอยู่'
                       variant='outlined'
                       size='small'
                       fullWidth
