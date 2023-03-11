@@ -2,6 +2,7 @@ import { combineReducers } from 'redux'
 import { connectRouter } from 'connected-react-router'
 import { loadingBarReducer } from 'react-redux-loading-bar'
 
+import home from 'modules/home/reducer'
 import ui from 'modules/ui/reducer'
 import search from 'modules/search/reducer'
 import download from 'modules/download/reducer'
@@ -13,6 +14,7 @@ export default (history: any) =>
   combineReducers({
     router: connectRouter(history),
     loadingBar: loadingBarReducer,
+    home,
     ui,
     faq,
     search,

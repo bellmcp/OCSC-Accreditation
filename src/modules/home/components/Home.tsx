@@ -29,6 +29,7 @@ import PressCarousel from 'modules/press/components/PressCarousel'
 import 'pure-react-carousel/dist/react-carousel.es.css'
 import Infographic from 'assets/images/infographic.jpeg'
 
+import * as homeActions from 'modules/home/actions'
 import * as pressesActions from 'modules/press/actions'
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -40,8 +41,9 @@ const useStyles = makeStyles((theme: Theme) =>
     sectionTitle: {
       fontSize: '1.7rem',
       fontWeight: 600,
-      zIndex: 3,
       lineHeight: '1.3',
+      zIndex: 3,
+      color: theme.palette.secondary.main,
     },
     seeAllButton: {
       marginBottom: '0.35em',
@@ -61,6 +63,9 @@ export default function Home() {
   const { isLoading: isPressesLoading, items: presses } = useSelector(
     (state: RootStateOrAny) => state.press
   )
+  const { visitor = 0, isIncrementing = false } = useSelector(
+    (state: any) => state.home
+  )
 
   const linkToFaq = () => {
     history.push(`${PATH}/faq`)
@@ -75,8 +80,8 @@ export default function Home() {
   }
 
   useEffect(() => {
-    const presses_action = pressesActions.loadPresses()
-    dispatch(presses_action)
+    dispatch(pressesActions.loadPresses())
+    dispatch(homeActions.incrementVisitor())
   }, [dispatch])
 
   return (
@@ -84,6 +89,44 @@ export default function Home() {
       <Header />
       <div style={{ backgroundColor: '#e9fcff' }}>
         <Container maxWidth='lg' className={classes.content}>
+          <Box my={2}>
+            <Grid
+              container
+              direction='row'
+              justify={matches ? 'space-between' : 'center'}
+              alignItems='center'
+            >
+              <Grid item xs={6}>
+                <Typography
+                  component='h2'
+                  variant='h6'
+                  className={classes.sectionTitle}
+                >
+                  หน้าหลัก
+                </Typography>
+              </Grid>
+              <Grid
+                item
+                xs={6}
+                container
+                direction='column'
+                alignItems='flex-end'
+                spacing={0}
+              >
+                <Grid item>
+                  <Typography variant='body2'>จำนวนครั้งที่เข้าชม</Typography>
+                </Grid>
+                <Grid item>
+                  <Typography variant='h6' color='secondary'>
+                    <span style={{ fontWeight: 600 }}>
+                      {isIncrementing ? '...' : visitor.toLocaleString()}
+                    </span>{' '}
+                    ครั้ง
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Box>
           <PressCarousel presses={presses} isLoading={isPressesLoading} />
         </Container>
       </div>
