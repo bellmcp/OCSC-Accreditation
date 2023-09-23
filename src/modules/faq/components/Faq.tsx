@@ -83,6 +83,10 @@ function createData(
   }
 }
 
+const parseLinkToDefaultColor = (text: string) => {
+  return text.replace(/<a/g, '<a class="footer_link"')
+}
+
 export default function Faq() {
   const classes = useStyles()
   const dispatch = useDispatch()
@@ -165,7 +169,9 @@ export default function Faq() {
                           <Grid item>
                             <div
                               dangerouslySetInnerHTML={{
-                                __html: get(item, 'answer', ''),
+                                __html: parseLinkToDefaultColor(
+                                  get(item, 'answer', '')
+                                ),
                               }}
                             ></div>
                           </Grid>
@@ -188,7 +194,7 @@ export default function Faq() {
 
   return (
     <>
-      <Header title='FAQ' subtitle='คำถามที่พบบ่อย' icon={<div />} />
+      <Header />
       <Container maxWidth='lg' className={classes.content}>
         <Box mt={2} mb={4}>
           <Grid

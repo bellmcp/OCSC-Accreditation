@@ -54,10 +54,7 @@ export default function Footer() {
   }, [dispatch]) //eslint-disable-line
 
   const parseLinkToDefaultColor = (text: string) => {
-    return text.replace(
-      '<a',
-      '<a style="color:#00d1c3; text-decoration: none;"'
-    )
+    return text.replace(/<a/g, '<a class="footer_link"')
   }
 
   function DesktopFooter() {
@@ -75,7 +72,7 @@ export default function Footer() {
           </Typography>
           <Typography variant='body2' color='inherit' align='left'>
             {'Copyright © '} {new Date().getFullYear()}{' '}
-            <Link className={classes.link} href={OCSC_URL} underline='none'>
+            <Link className={classes.link} href={OCSC_URL} underline='hover'>
               {OCSC_NAME_EN}
             </Link>
           </Typography>

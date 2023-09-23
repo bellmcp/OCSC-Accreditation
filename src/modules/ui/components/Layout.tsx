@@ -3,7 +3,17 @@ import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 import LoadingBar from 'react-redux-loading-bar'
-import { CssBaseline, Snackbar, IconButton } from '@material-ui/core'
+import {
+  CssBaseline,
+  Snackbar,
+  IconButton,
+  Slide,
+  Container,
+  Grid,
+  Typography,
+  Button,
+  Link,
+} from '@material-ui/core'
 import {
   unstable_createMuiStrictModeTheme as createMuiTheme,
   ThemeProvider,
@@ -15,6 +25,8 @@ import * as actions from '../actions'
 import NavBar from './NavBar'
 import Routes from './Routes'
 import Footer from './Footer'
+
+import { setCookieSubDomain, getCookie } from 'utils/cookies'
 
 export default function Layout() {
   const { pathname } = useLocation()
@@ -52,6 +64,7 @@ export default function Layout() {
   }, [pathname]) //eslint-disable-line
 
   const [activePage, setActivePage] = useState(0)
+  const [isCookieBannerOpen, setIsCookieBannerOpen] = useState(true)
 
   const defaultTheme = createMuiTheme()
 
@@ -110,6 +123,16 @@ export default function Layout() {
     },
   })
 
+  const handleClickAcceptCookie = () => {
+    setCookieSubDomain('AcceptCookie', 'true', 9999)
+    setIsCookieBannerOpen(false)
+  }
+
+  useEffect(() => {
+    const isCookieAccecpted = getCookie('AcceptCookie')
+    setIsCookieBannerOpen(!isCookieAccecpted)
+  }, [])
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -151,6 +174,66 @@ export default function Layout() {
         </Alert>
       </Snackbar>
       <Footer />
+      <Slide
+        direction='up'
+        in={isCookieBannerOpen}
+        timeout={{ enter: 2000, exit: 1000 }}
+      >
+        <div
+          style={{
+            position: 'fixed',
+            bottom: 0,
+            left: 0,
+            width: '100vw',
+            zIndex: 1199,
+            backgroundColor: 'rgba(255, 255, 255, 0.95)',
+            // backdropFilter: 'saturate(180%) blur(20px)',
+            boxShadow: 'rgb(0 0 0 / 15%) 0px 0px 10px',
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
+          <Container maxWidth='lg'>
+            <Grid
+              container
+              spacing={2}
+              justify='space-between'
+              alignItems='center'
+              style={{ padding: '18px 12px' }}
+            >
+              <Grid item>
+                <Typography
+                  variant='body1'
+                  color='textPrimary'
+                  style={{ fontWeight: 500 }}
+                >
+                  เราใช้คุกกี้เพื่อพัฒนาประสิทธิภาพ
+                  และประสบการณ์ที่ดีในการใช้เว็บไซต์ของคุณ
+                </Typography>
+                <Typography variant='body2' color='textSecondary'>
+                  คุณสามารถศึกษารายละเอียดได้ที่{' '}
+                  <Link
+                    href='https://www.ocsc.go.th/cookies-policy'
+                    target='_blank'
+                  >
+                    นโยบายคุกกี้
+                  </Link>
+                </Typography>
+              </Grid>
+              <Grid item>
+                <Button
+                  variant='contained'
+                  color='secondary'
+                  style={{ borderRadius: 24 }}
+                  onClick={handleClickAcceptCookie}
+                >
+                  ยอมรับ
+                </Button>
+              </Grid>
+            </Grid>
+          </Container>
+        </div>
+      </Slide>
     </ThemeProvider>
   )
 }

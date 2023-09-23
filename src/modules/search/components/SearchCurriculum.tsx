@@ -78,7 +78,7 @@ export default function SearchCurriculum() {
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      type: 'gov',
+      type: 'both',
       level: 0,
       status: 'active',
       university: '',
@@ -90,7 +90,12 @@ export default function SearchCurriculum() {
     onSubmit: (values) => {
       dispatch(
         searchActions.searchCurriculums({
-          isGov: get(values, 'type', 'gov') === 'gov',
+          isGov:
+            get(values, 'type', 'both') === 'gov' ||
+            get(values, 'type', 'both') === 'both',
+          isPrivate:
+            get(values, 'type', 'both') === 'org' ||
+            get(values, 'type', 'both') === 'both',
           level: getLevelIdByLabel(get(values, 'level', 0)),
           university: get(values, 'university', ''),
           faculty: get(values, 'faculty', ''),
@@ -200,7 +205,7 @@ export default function SearchCurriculum() {
                   variant='h6'
                   className={classes.sectionTitle}
                 >
-                  ค้นหาการรับรองคุณวุฒิหลักสูตร
+                  การค้นหารับรองคุณวุฒิ
                 </Typography>
               </Grid>
               <Grid
@@ -252,6 +257,12 @@ export default function SearchCurriculum() {
                       value={formik.values.type}
                       onChange={formik.handleChange}
                     >
+                      <FormControlLabel
+                        value='both'
+                        control={<Radio size='small' />}
+                        label='หลักสูตรของรัฐ และเอกชน'
+                        style={{ marginRight: 96 }}
+                      />
                       <FormControlLabel
                         value='gov'
                         control={<Radio size='small' />}
@@ -348,7 +359,7 @@ export default function SearchCurriculum() {
                         value='active'
                         control={<Radio size='small' />}
                         label='หลักสูตรที่ออกหนังสือเวียนแล้ว'
-                        style={{ marginRight: 96 }}
+                        style={{ marginRight: 66 }}
                       />
                       <FormControlLabel
                         value='pending'
@@ -402,7 +413,6 @@ export default function SearchCurriculum() {
                       name='university'
                       value={formik.values.university}
                       onChange={formik.handleChange}
-                      placeholder='ใส่คำค้นหาได้ไม่เกิน 3 คำ เช่น กกก ขขข คคค หมายถึง ในชื่อต้องมีคำค้นหาทั้งหมดปรากฏอยู่'
                       variant='outlined'
                       size='small'
                       fullWidth
@@ -428,7 +438,6 @@ export default function SearchCurriculum() {
                       name='faculty'
                       value={formik.values.faculty}
                       onChange={formik.handleChange}
-                      placeholder='ใส่คำค้นหาได้ไม่เกิน 3 คำ เช่น กกก ขขข คคค หมายถึง ในชื่อต้องมีคำค้นหาทั้งหมดปรากฏอยู่'
                       variant='outlined'
                       size='small'
                       fullWidth
@@ -454,7 +463,6 @@ export default function SearchCurriculum() {
                       name='degree'
                       value={formik.values.degree}
                       onChange={formik.handleChange}
-                      placeholder='ใส่คำค้นหาได้ไม่เกิน 3 คำ เช่น กกก ขขข คคค หมายถึง ในชื่อต้องมีคำค้นหาทั้งหมดปรากฏอยู่'
                       variant='outlined'
                       size='small'
                       fullWidth
@@ -480,7 +488,6 @@ export default function SearchCurriculum() {
                       name='branch'
                       value={formik.values.branch}
                       onChange={formik.handleChange}
-                      placeholder='ใส่คำค้นหาได้ไม่เกิน 3 คำ เช่น กกก ขขข คคค หมายถึง ในชื่อต้องมีคำค้นหาทั้งหมดปรากฏอยู่'
                       variant='outlined'
                       size='small'
                       fullWidth

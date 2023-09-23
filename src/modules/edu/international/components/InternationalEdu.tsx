@@ -16,6 +16,7 @@ import {
   Paper,
   useMediaQuery,
 } from '@material-ui/core'
+import { Alert, AlertTitle } from '@material-ui/lab'
 
 import Header from 'modules/ui/components/Header'
 import Loading from 'modules/ui/components/Loading'
@@ -50,7 +51,8 @@ function createData(
   documentUrl?: string[],
   documentText?: string[],
   websiteUrl?: string[],
-  websiteText?: string[]
+  websiteText?: string[],
+  counter?: number
 ) {
   return {
     id,
@@ -61,6 +63,7 @@ function createData(
     documentText,
     websiteUrl,
     websiteText,
+    counter,
   }
 }
 
@@ -70,14 +73,17 @@ export default function InternationalEdu() {
   const theme = useTheme()
   const matches = useMediaQuery(theme.breakpoints.up('sm'))
 
-  const [tableData, setTableData] = useState([])
+  const [tableData, setTableData] = useState<any>([])
 
-  const { countries: initialCountries = [], isLoading = false } = useSelector(
-    (state: any) => state.international
-  )
+  const {
+    countries: initialCountries = [],
+    isLoading = false,
+    recognitionInfo = { value1: '', value2: '' },
+  } = useSelector((state: any) => state.international)
 
   useEffect(() => {
     dispatch(internationalActions.loadCountries())
+    dispatch(internationalActions.loadRecognitionInfo())
   }, [dispatch])
 
   useEffect(() => {
@@ -91,23 +97,37 @@ export default function InternationalEdu() {
         get(country, 'documentUrl'),
         get(country, 'documentText'),
         get(country, 'websiteUrl'),
-        get(country, 'websiteText')
+        get(country, 'websiteText'),
+        get(country, 'counter')
       )
     )
     setTableData(parsedData)
   }, [initialCountries])
 
+  const parseLinkToDefaultColor = (text: string) => {
+    return text.replace(/<a/g, '<a class="footer_link"')
+  }
+
+  const incrementCounterValue = (countryId: string) => {
+    const updatedData = tableData.map((country: any) => {
+      if (country.id === countryId) {
+        return { ...country, counter: country.counter + 1 }
+      } else {
+        return country
+      }
+    })
+    setTableData(updatedData)
+  }
+
+  const recognitionText1 = get(recognitionInfo, 'value1', '')
+  const recognitionText2 = get(recognitionInfo, 'value2', '')
+
   return (
     <>
-      <Header title='FAQ' subtitle='คำถามที่พบบ่อย' icon={<div />} />
+      <Header />
       <Container maxWidth='lg' className={classes.content}>
         <Box mt={2} mb={4}>
-          <Grid
-            container
-            direction='row'
-            justify={matches ? 'space-between' : 'center'}
-            alignItems='center'
-          >
+          <Grid container direction='column'>
             <Typography
               gutterBottom
               component='h2'
@@ -118,6 +138,39 @@ export default function InternationalEdu() {
             >
               สถาบันการศึกษาในต่างประเทศ
             </Typography>
+            {recognitionText1 !== '' && recognitionText2 !== '' && (
+              <Alert
+                severity='info'
+                style={{
+                  marginBottom: 36,
+                  borderRadius: 8,
+                  padding: '16px 24px',
+                  border: '1px solid rgb(204 242 251)',
+                  boxShadow: '0 0 20px 0 rgba(204,242,251,0.3)',
+                }}
+              >
+                <AlertTitle>
+                  <Typography variant='body1' color='secondary'>
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: parseLinkToDefaultColor(recognitionText1),
+                      }}
+                    ></div>
+                  </Typography>
+                </AlertTitle>
+                <Typography
+                  variant='body1'
+                  color='secondary'
+                  style={{ fontSize: 15, lineHeight: '1.4' }}
+                >
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: parseLinkToDefaultColor(recognitionText2),
+                    }}
+                  ></div>
+                </Typography>
+              </Alert>
+            )}
           </Grid>
           <Paper
             elevation={0}
@@ -131,7 +184,10 @@ export default function InternationalEdu() {
             }}
           >
             {!isLoading ? (
-              <DataTable data={tableData} />
+              <DataTable
+                data={tableData}
+                incrementCounterValue={incrementCounterValue}
+              />
             ) : (
               <Loading height={200} />
             )}

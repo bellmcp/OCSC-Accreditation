@@ -32,29 +32,47 @@ export default function DownloadTable({ data }: any) {
             <TableCell
               align='center'
               width='10%'
-              style={{ verticalAlign: 'top', lineHeight: '1.2' }}
+              style={{
+                verticalAlign: 'top',
+                lineHeight: '1.2',
+                fontWeight: 600,
+              }}
             >
               ลำดับ
             </TableCell>
             <TableCell
               width='20%'
-              style={{ verticalAlign: 'top', lineHeight: '1.2' }}
+              style={{
+                verticalAlign: 'top',
+                lineHeight: '1.2',
+                fontWeight: 600,
+              }}
             >
               วันที่ออกหนังสือเวียน
             </TableCell>
             <TableCell
               width='20%'
-              style={{ verticalAlign: 'top', lineHeight: '1.2' }}
+              style={{
+                verticalAlign: 'top',
+                lineHeight: '1.2',
+                fontWeight: 600,
+              }}
             >
               เลขที่หนังสือเวียน
             </TableCell>
-            <TableCell style={{ verticalAlign: 'top', lineHeight: '1.2' }}>
+            <TableCell
+              style={{
+                verticalAlign: 'top',
+                lineHeight: '1.2',
+                fontWeight: 600,
+              }}
+            >
               เรื่อง
             </TableCell>
             <TableCell
               width='10%'
               align='center'
-              style={{ verticalAlign: 'top' }}
+              style={{ verticalAlign: 'top', fontWeight: 600 }}
             >
               ดาวน์โหลด
             </TableCell>
@@ -100,6 +118,7 @@ export default function DownloadTable({ data }: any) {
                   component={Link}
                   href={data.url}
                   target='_blank'
+                  color='primary'
                 >
                   <GetAppIcon fontSize='small' />
                 </IconButton>

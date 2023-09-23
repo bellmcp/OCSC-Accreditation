@@ -8,7 +8,7 @@
     "url": "https://www.ocsc.go.th/"
   },
   "main": "index.js",
-  "homepage": "https://accreditation.ocsc.go.th",
+  "homepage": "https://accreditation.ocsc.go.th/accreditation",
   "dependencies": {
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
@@ -36,6 +36,7 @@
     "formik": "2.2.8",
     "lodash": "^4.17.21",
     "material-ui-popup-state": "^1.9.3",
+    "pure-react-carousel": "1.27.6",
     "query-string": "^6.13.8",
     "react": "^16.13.1",
     "react-app-rewired": "^2.1.8",

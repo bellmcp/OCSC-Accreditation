@@ -4,12 +4,6 @@ import { Grid, Toolbar } from '@material-ui/core'
 
 const HeroImage = require('assets/images/hero.svg')
 
-interface HeaderProps {
-  title: string
-  subtitle?: string
-  icon: React.ReactElement
-}
-
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
@@ -17,7 +11,8 @@ const useStyles = makeStyles((theme: Theme) =>
       minHeight: 57,
     },
     background: {
-      paddingBottom: '25%',
+      paddingBottom: '20%',
+      minHeight: 120,
     },
     icon: {
       marginTop: 8,
@@ -31,7 +26,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 )
 
-export default function Header({ title, subtitle, icon }: HeaderProps) {
+export default function Header() {
   const classes = useStyles()
 
   return (

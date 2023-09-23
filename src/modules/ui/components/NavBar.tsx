@@ -207,8 +207,8 @@ export default function NavBar(props: NavigationBarProps) {
     },
     {
       id: 1,
-      title: 'ค้นหาการรับรองคุณวุฒิหลักสูตร',
-      url: '/search/curriculum',
+      title: 'การค้นหารับรองคุณวุฒิ',
+      url: `${PATH}/search/curriculum`,
       notification: 0,
     },
     {
@@ -232,16 +232,15 @@ export default function NavBar(props: NavigationBarProps) {
   ]
 
   const linkToHome = () => {
-    handleProfileMenuClose()
-    history.push('/')
+    if (!isUserCurrentlyInLearn) {
+      history.push(`${PATH}`)
+    } else {
+      dispatch(uiActions.setLearnExitDialog(true))
+    }
   }
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen)
-  }
-
-  const handleProfileMenuClose = () => {
-    setAnchorEl(null)
   }
 
   const popupState = usePopupState({

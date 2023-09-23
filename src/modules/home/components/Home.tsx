@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
+import { useDispatch, useSelector, RootStateOrAny } from 'react-redux'
 
 import {
   createStyles,
@@ -23,8 +24,13 @@ import {
 } from '@material-ui/icons'
 
 import Header from 'modules/ui/components/Header'
+import PressCarousel from 'modules/press/components/PressCarousel'
 
+import 'pure-react-carousel/dist/react-carousel.es.css'
 import Infographic from 'assets/images/infographic.jpeg'
+
+import * as homeActions from 'modules/home/actions'
+import * as pressesActions from 'modules/press/actions'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -35,8 +41,9 @@ const useStyles = makeStyles((theme: Theme) =>
     sectionTitle: {
       fontSize: '1.7rem',
       fontWeight: 600,
-      zIndex: 3,
       lineHeight: '1.3',
+      zIndex: 3,
+      color: theme.palette.secondary.main,
     },
     seeAllButton: {
       marginBottom: '0.35em',
@@ -50,7 +57,15 @@ export default function Home() {
   const theme = useTheme()
   const matches = useMediaQuery(theme.breakpoints.up('sm'))
   const history = useHistory()
-  const PATH = ''
+  const dispatch = useDispatch()
+  const PATH = process.env.REACT_APP_BASE_PATH
+
+  const { isLoading: isPressesLoading, items: presses } = useSelector(
+    (state: RootStateOrAny) => state.press
+  )
+  const { visitor = 0, isIncrementing = false } = useSelector(
+    (state: any) => state.home
+  )
 
   const linkToFaq = () => {
     history.push(`${PATH}/faq`)
@@ -64,9 +79,57 @@ export default function Home() {
     history.push(`${PATH}/download`)
   }
 
+  useEffect(() => {
+    dispatch(pressesActions.loadPresses())
+    dispatch(homeActions.incrementVisitor())
+  }, [dispatch])
+
   return (
-    <>
-      <Header title='FAQ' subtitle='คำถามที่พบบ่อย' icon={<div />} />
+    <div style={{ overflowX: 'hidden' }}>
+      <Header />
+      <div style={{ backgroundColor: '#e9fcff' }}>
+        <Container maxWidth='lg' className={classes.content}>
+          <Box my={2}>
+            <Grid
+              container
+              direction='row'
+              justify={matches ? 'space-between' : 'center'}
+              alignItems='center'
+            >
+              <Grid item xs={6}>
+                <Typography
+                  component='h2'
+                  variant='h6'
+                  className={classes.sectionTitle}
+                >
+                  หน้าหลัก
+                </Typography>
+              </Grid>
+              <Grid
+                item
+                xs={6}
+                container
+                direction='column'
+                alignItems='flex-end'
+                spacing={0}
+              >
+                <Grid item>
+                  <Typography variant='body2'>จำนวนครั้งที่เข้าชม</Typography>
+                </Grid>
+                <Grid item>
+                  <Typography variant='h6' color='secondary'>
+                    <span style={{ fontWeight: 600 }}>
+                      {isIncrementing ? '...' : visitor.toLocaleString()}
+                    </span>{' '}
+                    ครั้ง
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Box>
+          <PressCarousel presses={presses} isLoading={isPressesLoading} />
+        </Container>
+      </div>
       <Container maxWidth='lg' className={classes.content}>
         <Grid container spacing={matches ? 10 : 2}>
           <Grid container item xs={12} md={6}>
@@ -167,7 +230,7 @@ export default function Home() {
                   startIcon={<SearchIcon />}
                   onClick={linkToSearchCurriculum}
                 >
-                  ค้นหาการรับรองคุณวุฒิหลักสูตร
+                  การค้นหารับรองคุณวุฒิ
                 </Button>
               </Grid>
             </Box>
@@ -179,9 +242,7 @@ export default function Home() {
                   variant='rounded'
                   src={Infographic}
                   style={{ width: '100%', height: 'auto', borderRadius: 8 }}
-                >
-                  test
-                </Avatar>
+                />
               </Link>
             </Box>
           </Grid>
@@ -236,12 +297,12 @@ export default function Home() {
             ต้องอ้างอิงจากหนังสือเวียนหรือไฟล์หนังสือเวียนที่เป็น PDF เท่านั้น
             ตรวจสอบหนังสือเวียนได้จาก{' '}
             <Link
-              underline='always'
+              underline='hover'
               color='secondary'
               onClick={linkToDownload}
               style={{ cursor: 'pointer' }}
             >
-              ที่นี่
+              ที่นี่ {'>'}
             </Link>
           </Typography>
           <Typography
@@ -267,6 +328,6 @@ export default function Home() {
           </Typography>
         </Container>
       </div>
-    </>
+    </div>
   )
 }
