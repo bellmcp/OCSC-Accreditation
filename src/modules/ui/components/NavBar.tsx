@@ -208,7 +208,7 @@ export default function NavBar(props: NavigationBarProps) {
     {
       id: 1,
       title: 'การค้นหารับรองคุณวุฒิ',
-      url: `${PATH}/search/curriculum`,
+      url: '/search/curriculum',
       notification: 0,
     },
     {
@@ -232,11 +232,7 @@ export default function NavBar(props: NavigationBarProps) {
   ]
 
   const linkToHome = () => {
-    if (!isUserCurrentlyInLearn) {
-      history.push(`${PATH}`)
-    } else {
-      dispatch(uiActions.setLearnExitDialog(true))
-    }
+    history.push('/')
   }
 
   const handleDrawerToggle = () => {

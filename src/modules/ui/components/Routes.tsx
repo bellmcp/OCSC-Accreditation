@@ -28,7 +28,7 @@ export default function Routes() {
         <HomeRoutes />
       </Route>
       <Route
-        path={`${PATH}admin`}
+        path='/admin'
         component={() => {
           window.location.replace(
             'https://learningportal.ocsc.go.th/accreditationadmin/index.html'
