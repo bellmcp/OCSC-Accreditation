@@ -337,7 +337,7 @@ export default function SearchCurriculum() {
                     </FormControl>
                   </Grid>
                 </Grid>
-                <Grid container item direction='row' alignItems='center'>
+                {/* <Grid container item direction='row' alignItems='center'>
                   <Grid xs={12} md={3}>
                     <Typography
                       variant='body1'
@@ -368,7 +368,7 @@ export default function SearchCurriculum() {
                       />
                     </RadioGroup>
                   </Grid>
-                </Grid>
+                </Grid> */}
               </Grid>
             </Paper>
             <Paper
