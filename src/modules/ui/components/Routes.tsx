@@ -8,27 +8,28 @@ import DownloadRoutes from 'modules/download/Routes'
 import FaqRoutes from 'modules/faq/Routes'
 
 import NotFound from './NotFound'
+const PATH = process.env.REACT_APP_BASE_PATH
 
 export default function Routes() {
   return (
     <Switch>
-      <Route path='/search/curriculum'>
+      <Route path={`${PATH}/search/curriculum`}>
         <SearchRoutes />
       </Route>
-      <Route path='/edu'>
+      <Route path={`${PATH}/edu`}>
         <EduRoutes />
       </Route>
-      <Route path='/download'>
+      <Route path={`${PATH}/download`}>
         <DownloadRoutes />
       </Route>
-      <Route path='/faq'>
+      <Route path={`${PATH}/faq`}>
         <FaqRoutes />
       </Route>
-      <Route path='/'>
+      <Route path={`${PATH}/`}>
         <HomeRoutes />
       </Route>
       <Route
-        path='/admin'
+        path={`${PATH}/admin`}
         component={() => {
           window.location.replace(
             'https://learningportal.ocsc.go.th/accreditationadmin/index.html'

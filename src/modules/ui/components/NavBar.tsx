@@ -37,6 +37,8 @@ import HoverMenu from 'material-ui-popup-state/HoverMenu'
 
 import NavDrawer from './NavDrawer'
 
+const PATH = process.env.REACT_APP_BASE_PATH
+
 const darkTheme = createMuiTheme({
   palette: {
     primary: {
@@ -202,37 +204,37 @@ export default function NavBar(props: NavigationBarProps) {
     {
       id: 0,
       title: 'หน้าหลัก',
-      url: '/',
+      url: `${PATH}`,
       notification: 0,
     },
     {
       id: 1,
       title: 'การค้นหารับรองคุณวุฒิ',
-      url: '/search/curriculum',
+      url: `${PATH}/search/curriculum`,
       notification: 0,
     },
     {
       id: 2,
       title: 'สถาบันการศึกษาในต่างประเทศ',
-      url: '/edu/international',
+      url: `${PATH}/edu/international`,
       notification: 0,
     },
     {
       id: 3,
       title: 'เอกสารดาวน์โหลด/หนังสือเวียน',
-      url: '/download',
+      url: `${PATH}/download`,
       notification: 0,
     },
     {
       id: 4,
       title: 'คำถามที่พบบ่อย',
-      url: '/faq',
+      url: `${PATH}/faq`,
       notification: 0,
     },
   ]
 
   const linkToHome = () => {
-    history.push('/')
+    history.push(`${PATH}`)
   }
 
   const handleDrawerToggle = () => {
@@ -400,7 +402,7 @@ export default function NavBar(props: NavigationBarProps) {
             selected={props.active === 2}
             onClick={() => {
               popupState2.close()
-              history.push(`/edu/international`)
+              history.push(`${PATH}/edu/international`)
               props.setActivePage(2)
             }}
             className={clsx({
@@ -414,7 +416,7 @@ export default function NavBar(props: NavigationBarProps) {
             selected={props.active === 3}
             onClick={() => {
               popupState2.close()
-              history.push(`/download`)
+              history.push(`${PATH}/download`)
               props.setActivePage(3)
             }}
             className={clsx({
@@ -428,7 +430,7 @@ export default function NavBar(props: NavigationBarProps) {
             selected={props.active === 4}
             onClick={() => {
               popupState2.close()
-              history.push(`/faq`)
+              history.push(`${PATH}/faq`)
               props.setActivePage(4)
             }}
             className={clsx({

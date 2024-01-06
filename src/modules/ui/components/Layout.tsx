@@ -28,6 +28,8 @@ import Footer from './Footer'
 
 import { setCookieSubDomain, getCookie } from 'utils/cookies'
 
+const PATH = process.env.REACT_APP_BASE_PATH
+
 export default function Layout() {
   const { pathname } = useLocation()
   const dispatch = useDispatch()
@@ -39,20 +41,20 @@ export default function Layout() {
   useEffect(() => {
     const setInitialActivePage = () => {
       switch (pathname) {
-        case '/':
-        case '/index.html':
+        case `${PATH}`:
+        case `${PATH}/index.html`:
           setActivePage(0)
           break
-        case '/search/curriculum':
+        case `${PATH}/search/curriculum`:
           setActivePage(1)
           break
-        case '/edu/international':
+        case `${PATH}/edu/international`:
           setActivePage(2)
           break
-        case '/download':
+        case `${PATH}/download`:
           setActivePage(3)
           break
-        case '/faq':
+        case `${PATH}/faq`:
           setActivePage(4)
           break
         default:

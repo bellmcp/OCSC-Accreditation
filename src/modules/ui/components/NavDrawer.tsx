@@ -22,7 +22,7 @@ import {
 import { CloseRounded as CloseIcon } from '@material-ui/icons'
 
 const DRAWER_WIDTH = '80%'
-const PATH = ''
+const PATH = process.env.REACT_APP_BASE_PATH
 
 interface NavigationDrawerProps {
   window?: () => Window
