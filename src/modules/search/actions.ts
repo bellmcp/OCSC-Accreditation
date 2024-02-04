@@ -26,6 +26,13 @@ const INCREMENT_VISITOR_SUCCESS =
 const INCREMENT_VISITOR_FAILURE =
   'ocsc-e-accredit/search/INCREMENT_VISITOR_FAILURE'
 
+const LOAD_ACCREDITATION_INFO_REQUEST =
+  'ocsc-e-accredit/search/LOAD_ACCREDITATION_INFO_REQUEST'
+const LOAD_ACCREDITATION_INFO_SUCCESS =
+  'ocsc-e-accredit/search/LOAD_ACCREDITATION_INFO_SUCCESS'
+const LOAD_ACCREDITATION_INFO_FAILURE =
+  'ocsc-e-accredit/search/LOAD_ACCREDITATION_INFO_FAILURE'
+
 const CLEAR_SEARCH_RESULT = 'ocsc-e-accredit/search/CLEAR_SEARCH_RESULT'
 
 function loadEducationlevels() {
@@ -148,6 +155,36 @@ function searchCurriculums({
   }
 }
 
+function loadAccredtitationInfo() {
+  return async (dispatch: any) => {
+    dispatch({ type: LOAD_ACCREDITATION_INFO_REQUEST })
+    try {
+      var { data } = await axios.get('/constants/accreditationinfo')
+      if (data.length === 0) {
+        data = []
+      }
+      dispatch({
+        type: LOAD_ACCREDITATION_INFO_SUCCESS,
+        payload: {
+          accreditationInfo: data,
+        },
+      })
+    } catch (err) {
+      dispatch({ type: LOAD_ACCREDITATION_INFO_FAILURE })
+      dispatch(
+        uiActions.setFlashMessage(
+          `โหลดคำชี้แจ้งไม่สำเร็จ เกิดข้อผิดพลาด ${get(
+            err,
+            'response.status',
+            'บางอย่าง'
+          )}`,
+          'error'
+        )
+      )
+    }
+  }
+}
+
 function clearSearchResult() {
   return (dispatch: any) => {
     dispatch({
@@ -166,9 +203,13 @@ export {
   INCREMENT_VISITOR_REQUEST,
   INCREMENT_VISITOR_SUCCESS,
   INCREMENT_VISITOR_FAILURE,
+  LOAD_ACCREDITATION_INFO_REQUEST,
+  LOAD_ACCREDITATION_INFO_SUCCESS,
+  LOAD_ACCREDITATION_INFO_FAILURE,
   CLEAR_SEARCH_RESULT,
   loadEducationlevels,
   searchCurriculums,
   incrementVisitor,
+  loadAccredtitationInfo,
   clearSearchResult,
 }

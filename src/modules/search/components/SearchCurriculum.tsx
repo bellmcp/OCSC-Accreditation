@@ -29,6 +29,7 @@ import {
   MenuItem,
   Divider,
 } from '@material-ui/core'
+import { Alert, AlertTitle } from '@material-ui/lab'
 import { Search as SearchIcon } from '@material-ui/icons'
 
 import * as searchActions from 'modules/search/actions'
@@ -110,6 +111,7 @@ export default function SearchCurriculum() {
   useEffect(() => {
     dispatch(searchActions.loadEducationlevels())
     dispatch(searchActions.incrementVisitor())
+    dispatch(searchActions.loadAccredtitationInfo())
     return () => {
       dispatch(searchActions.clearSearchResult())
     }
@@ -128,6 +130,7 @@ export default function SearchCurriculum() {
     isIncrementing = false,
     searchResults: initialSearchResults = [],
     isSearching = false,
+    accreditationInfo = { value1: '', value2: '' },
   } = useSelector((state: any) => state.search)
 
   useEffect(() => {
@@ -137,6 +140,9 @@ export default function SearchCurriculum() {
   useEffect(() => {
     setEducationLevels(initalEducationLevels)
   }, [initalEducationLevels])
+
+  const accreditationText1 = get(accreditationInfo, 'value1', '')
+  const accreditationText2 = get(accreditationInfo, 'value2', '')
 
   const renderSearchResult = () => {
     if (isSearching) {
@@ -186,6 +192,10 @@ export default function SearchCurriculum() {
     }
   }
 
+  const parseLinkToDefaultColor = (text: string) => {
+    return text.replace(/<a/g, '<a class="footer_link"')
+  }
+
   return (
     <>
       <Header title='FAQ' subtitle='คำถามที่พบบ่อย' icon={<div />} />
@@ -229,6 +239,41 @@ export default function SearchCurriculum() {
                 </Grid>
               </Grid>
             </Grid>
+            <div>
+              {accreditationText1 !== '' && accreditationText2 !== '' && (
+                <Alert
+                  severity='info'
+                  style={{
+                    marginBottom: 36,
+                    borderRadius: 8,
+                    padding: '16px 24px',
+                    border: '1px solid rgb(204 242 251)',
+                    boxShadow: '0 0 20px 0 rgba(204,242,251,0.3)',
+                  }}
+                >
+                  <AlertTitle>
+                    <Typography variant='body1' color='secondary'>
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: parseLinkToDefaultColor(accreditationText1),
+                        }}
+                      ></div>
+                    </Typography>
+                  </AlertTitle>
+                  <Typography
+                    variant='body1'
+                    color='secondary'
+                    style={{ fontSize: 15, lineHeight: '1.4' }}
+                  >
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: parseLinkToDefaultColor(accreditationText2),
+                      }}
+                    ></div>
+                  </Typography>
+                </Alert>
+              )}
+            </div>
             <Paper
               elevation={0}
               style={{
