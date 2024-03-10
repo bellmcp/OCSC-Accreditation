@@ -38,9 +38,9 @@ export default class CertificateRenderer extends React.PureComponent<Props> {
           style={{
             width: '210mm',
             minHeight: '297mm',
-            backgroundColor: 'white',
-            border: '1px solid lightgray',
-            // background: `url(${background})`,
+            // backgroundColor: 'white',
+            // border: '1px solid lightgray',
+            background: `url(${background})`,
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center center',
@@ -51,8 +51,8 @@ export default class CertificateRenderer extends React.PureComponent<Props> {
           <div
             style={{
               position: 'absolute',
-              top: 40,
-              right: 40,
+              top: 55,
+              right: 55,
               display: 'flex',
               flexDirection: 'column',
             }}
@@ -219,7 +219,7 @@ export default class CertificateRenderer extends React.PureComponent<Props> {
               />
               <Typography
                 variant='body2'
-                color='textPrimary'
+                color='textSecondary'
                 align='center'
                 style={{
                   fontSize: 15,
@@ -235,7 +235,7 @@ export default class CertificateRenderer extends React.PureComponent<Props> {
               </Typography>
               <Typography
                 variant='body2'
-                color='textPrimary'
+                color='textSecondary'
                 align='center'
                 style={{
                   fontSize: 15,
@@ -245,14 +245,16 @@ export default class CertificateRenderer extends React.PureComponent<Props> {
                 }}
               >
                 การพิจารณาคุณวุฒิของผู้สมัครสอบแข่งขันเพื่อบรรจุและแต่งตั้งบุคคลเข้ารับราชการเป็นข้าราชการพลเรือนสามัญ
+                <br />
                 มีเงื่อนไขที่แตกต่างกันตามประกาศรับสมัครที่สอบแข่งขันฯ
-                ของแต่ละส่วนราชการ ดังนั้น
-                หากมีข้อสงสัยในการสมัครสอบขอได้โปรดติดต่อสอบถามกับส่วนราชการที่ประกาศรับสมัครสอบแข่งขันฯ
+                ของแต่ละส่วนราชการ ดังนั้น หากมีข้อสงสัย
+                <br />
+                ในการสมัครสอบขอได้โปรดติดต่อสอบถามกับส่วนราชการที่ประกาศรับสมัครสอบแข่งขันฯ
                 โดยตรง
               </Typography>
               <Typography
                 variant='body2'
-                color='textPrimary'
+                color='textSecondary'
                 align='center'
                 style={{
                   color: '#f44336',
@@ -267,7 +269,7 @@ export default class CertificateRenderer extends React.PureComponent<Props> {
               </Typography>
               <Typography
                 variant='body2'
-                color='textPrimary'
+                color='textSecondary'
                 align='center'
                 style={{
                   fontSize: 15,
@@ -278,6 +280,7 @@ export default class CertificateRenderer extends React.PureComponent<Props> {
               >
                 อนึ่ง หลักเกณฑ์การพิจารณาข้างต้น เป็นหลักเกณฑ์ที่ ก.พ.
                 กำหนดสำหรับพิจารณาข้าราชการพลเรือนสามัญ
+                <br />
                 กรณีที่ใช้พิจารณาสำหรับข้าราชการประเภทอื่น
                 เป็นอำนาจหน้าที่ของคณะกรรมการข้าราชการ
               </Typography>
