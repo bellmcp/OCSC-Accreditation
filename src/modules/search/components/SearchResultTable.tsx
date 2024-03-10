@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { get } from 'lodash'
-import { useHistory } from 'react-router-dom'
 
 import {
   Box,
@@ -72,11 +71,10 @@ interface SearchResultTableType {
 
 export default function SearchResultTable({ data }: SearchResultTableType) {
   const [tableData, setTableData] = useState([])
-  const history = useHistory()
 
   const goToCert = (id: number) => {
     if (id !== null) {
-      history.push(`${PATH}/cert/${id}`)
+      window.open(`${PATH}/cert/${id}`, '_blank')
     }
   }
 

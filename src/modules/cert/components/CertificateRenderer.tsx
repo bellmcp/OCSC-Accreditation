@@ -6,6 +6,7 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 
 import logoPictogram from 'assets/images/cert-logo-pictogram.png'
 import background from 'assets/images/cert-background.svg'
+import qrCode from 'assets/images/qr-code.svg'
 
 const theme = createMuiTheme({
   typography: {
@@ -44,8 +45,41 @@ export default class CertificateRenderer extends React.PureComponent<Props> {
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center center',
             display: 'flex',
+            position: 'relative',
           }}
         >
+          <div
+            style={{
+              position: 'absolute',
+              top: 40,
+              right: 40,
+              display: 'flex',
+              flexDirection: 'column',
+            }}
+          >
+            <img
+              alt='QR Code'
+              src={qrCode}
+              style={{
+                width: 75,
+                height: 75,
+                alignSelf: 'center',
+              }}
+            />
+            <Typography
+              variant='caption'
+              color='textSecondary'
+              align='center'
+              style={{
+                fontSize: 12,
+                marginTop: 5,
+                lineHeight: '1.2',
+              }}
+            >
+              Cert ID: {get(this, 'props.certificate.id', '-')}
+            </Typography>
+          </div>
+
           <Grid
             container
             direction='column'
@@ -55,7 +89,7 @@ export default class CertificateRenderer extends React.PureComponent<Props> {
           >
             <Grid
               item
-              style={{ display: 'flex', padding: '0 50px 70px' }}
+              style={{ display: 'flex', padding: '0 50px 0' }}
               direction='column'
             >
               <img
@@ -104,7 +138,7 @@ export default class CertificateRenderer extends React.PureComponent<Props> {
                 style={{
                   fontSize: 37,
                   fontWeight: 500,
-                  marginBottom: 40,
+                  marginBottom: 24,
                   lineHeight: 1,
                 }}
               >
@@ -114,9 +148,26 @@ export default class CertificateRenderer extends React.PureComponent<Props> {
                 variant='body1'
                 color='textPrimary'
                 align='center'
-                style={{ fontSize: 20, marginBottom: 38 }}
+                style={{ fontSize: 20, marginBottom: 5 }}
               >
-                จาก {get(this, 'props.certificate.university', '-')}
+                จาก
+              </Typography>
+              <Typography
+                variant='h6'
+                color='textPrimary'
+                align='center'
+                style={{ fontSize: 28, marginBottom: 24, lineHeight: '1.2' }}
+              >
+                {get(this, 'props.certificate.university', '-')}
+              </Typography>
+
+              <Typography
+                variant='body1'
+                color='textPrimary'
+                align='center'
+                style={{ fontSize: 20, marginBottom: 5 }}
+              >
+                เป็นคุณวุฒิ
               </Typography>
               <Typography
                 variant='h6'
@@ -124,8 +175,6 @@ export default class CertificateRenderer extends React.PureComponent<Props> {
                 align='center'
                 style={{ fontSize: 28, marginBottom: 38, lineHeight: '1.2' }}
               >
-                เป็นคุณวุฒิ
-                <br />
                 {get(this, 'props.certificate.accreditation1', '-')}
               </Typography>
 
@@ -206,7 +255,7 @@ export default class CertificateRenderer extends React.PureComponent<Props> {
                 color='textPrimary'
                 align='center'
                 style={{
-                  color: 'red',
+                  color: '#f44336',
                   fontSize: 15,
                   marginBottom: 0,
                   lineHeight: '1.2',
@@ -232,6 +281,21 @@ export default class CertificateRenderer extends React.PureComponent<Props> {
                 กรณีที่ใช้พิจารณาสำหรับข้าราชการประเภทอื่น
                 เป็นอำนาจหน้าที่ของคณะกรรมการข้าราชการ
               </Typography>
+              {/* 
+              <Typography
+                variant='caption'
+                color='textSecondary'
+                align='center'
+                style={{
+                  fontSize: 12,
+                  marginBottom: 0,
+                  lineHeight: '1.2',
+                  marginTop: 40,
+                }}
+              >
+                https://accreditation.ocsc.go.th/accreditation/cert/
+                {get(this, 'props.certificate.id', '-')}
+              </Typography> */}
             </Grid>
           </Grid>
         </Container>
