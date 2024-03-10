@@ -235,7 +235,7 @@ export default function Certficate() {
             </List>
           </Box>
           <Box my={6} style={{ overflow: 'auto' }}>
-            <CertificateRenderer ref={componentRef} />
+            <CertificateRenderer ref={componentRef} certificate={certificate} />
           </Box>
           <Box my={3}>
             <Button

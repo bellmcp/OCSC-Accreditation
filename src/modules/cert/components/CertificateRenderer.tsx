@@ -1,5 +1,6 @@
 //@ts-nocheck
 import * as React from 'react'
+import { get } from 'lodash'
 import { Typography, Grid, Container } from '@material-ui/core'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 
@@ -36,7 +37,9 @@ export default class CertificateRenderer extends React.PureComponent<Props> {
           style={{
             width: '210mm',
             minHeight: '297mm',
-            background: `url(${background})`,
+            backgroundColor: 'white',
+            border: '1px solid lightgray',
+            // background: `url(${background})`,
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center center',
@@ -70,8 +73,9 @@ export default class CertificateRenderer extends React.PureComponent<Props> {
                 align='center'
                 style={{
                   fontSize: 30,
-                  marginBottom: this.props.text2 ? 10 : 5,
+                  marginBottom: 10,
                   lineHeight: '1.1',
+                  marginTop: 20,
                 }}
               >
                 สำนักงาน ก.พ.
@@ -87,6 +91,7 @@ export default class CertificateRenderer extends React.PureComponent<Props> {
                   width: 470,
                   color: '#BCBEC0',
                   backgroundColor: '#BCBEC0',
+                  marginTop: 20,
                   marginBottom: 50,
                 }}
               />
@@ -103,7 +108,7 @@ export default class CertificateRenderer extends React.PureComponent<Props> {
                   lineHeight: 1,
                 }}
               >
-                ปริญญาครุศาสตรบัณฑิต (เคมี)
+                {get(this, 'props.certificate.degree', '-')}
               </Typography>
               <Typography
                 variant='body1'
@@ -111,7 +116,7 @@ export default class CertificateRenderer extends React.PureComponent<Props> {
                 align='center'
                 style={{ fontSize: 20, marginBottom: 38 }}
               >
-                จาก จุฬาลงกรณ์มหาวิทยาลัย
+                จาก {get(this, 'props.certificate.university', '-')}
               </Typography>
               <Typography
                 variant='h6'
@@ -119,7 +124,9 @@ export default class CertificateRenderer extends React.PureComponent<Props> {
                 align='center'
                 style={{ fontSize: 28, marginBottom: 38, lineHeight: '1.2' }}
               >
-                เป็นคุณวุฒิ สาขาวิชาศึกษาศาสตร์ ทางเคมี
+                เป็นคุณวุฒิ
+                <br />
+                {get(this, 'props.certificate.accreditation1', '-')}
               </Typography>
 
               {/* LENGTH AND DATE */}
@@ -129,7 +136,8 @@ export default class CertificateRenderer extends React.PureComponent<Props> {
                 align='center'
                 style={{ fontSize: 20 }}
               >
-                ตาม หนังสือสำนักงาน ก.พ. ที่ นร 1004.3/ว 41
+                ตาม หนังสือสำนักงาน ก.พ. ที่{' '}
+                {get(this, 'props.certificate.letterNo', '-')}
               </Typography>
               <Typography
                 variant='body1'
@@ -137,31 +145,92 @@ export default class CertificateRenderer extends React.PureComponent<Props> {
                 align='center'
                 style={{ fontSize: 20, marginBottom: 25 }}
               >
-                ลงวันที่ 30 กันยายน 2553
+                ลงวันที่ {get(this, 'props.certificate.letterDate', '-')}
               </Typography>
 
-              {/* SIGNATURE */}
-              {/* <img
-                  alt='Signature'
-                  src={getSignature(this.props.signature)}
-                  style={{
-                    width: 180,
-                    height: 'auto',
-                    alignSelf: 'center',
-                    marginBottom: 10,
-                  }}
-                /> */}
+              <Typography
+                variant='body1'
+                color='textPrimary'
+                align='center'
+                style={{ fontSize: 20, marginBottom: 25 }}
+              >
+                หมายเหตุ {get(this, 'props.certificate.note', '-')}
+              </Typography>
+
+              <hr
+                style={{
+                  border: 'none',
+                  height: 1,
+                  width: 470,
+                  color: '#BCBEC0',
+                  backgroundColor: '#BCBEC0',
+                  marginTop: 20,
+                  marginBottom: 20,
+                }}
+              />
               <Typography
                 variant='body2'
                 color='textPrimary'
                 align='center'
-                style={{ fontSize: 15, marginBottom: 0, lineHeight: '1.2' }}
+                style={{
+                  fontSize: 15,
+                  marginBottom: 0,
+                  lineHeight: '1.2',
+                  marginTop: 20,
+                }}
               >
-                {this.props.signer}
-                <br />
-                {this.props.position1}
-                {this.props.position2 && <br />}
-                {this.props.position2}
+                ในกรณีที่ส่วนราชการกำหนด "สาขาวิชาใดสาขาวิชาหนึ่ง ทาง..."
+                จะต้องนำหนังสือสำนักงาน ก.พ. ที่ นร 1004.3/ว 14 ลงวันที่ 11
+                ธันวาคม 2551 และที่ นร 1004/ว21 ลงวันที่ 22 กันยายน 2564
+                ร่วมประกอบการพิจารณาด้วย
+              </Typography>
+              <Typography
+                variant='body2'
+                color='textPrimary'
+                align='center'
+                style={{
+                  fontSize: 15,
+                  marginBottom: 0,
+                  lineHeight: '1.2',
+                  marginTop: 20,
+                }}
+              >
+                การพิจารณาคุณวุฒิของผู้สมัครสอบแข่งขันเพื่อบรรจุและแต่งตั้งบุคคลเข้ารับราชการเป็นข้าราชการพลเรือนสามัญ
+                มีเงื่อนไขที่แตกต่างกันตามประกาศรับสมัครที่สอบแข่งขันฯ
+                ของแต่ละส่วนราชการ ดังนั้น
+                หากมีข้อสงสัยในการสมัครสอบขอได้โปรดติดต่อสอบถามกับส่วนราชการที่ประกาศรับสมัครสอบแข่งขันฯ
+                โดยตรง
+              </Typography>
+              <Typography
+                variant='body2'
+                color='textPrimary'
+                align='center'
+                style={{
+                  color: 'red',
+                  fontSize: 15,
+                  marginBottom: 0,
+                  lineHeight: '1.2',
+                  marginTop: 20,
+                }}
+              >
+                ทั้งนี้
+                ส่วนราชการโปรดตรวจสอบหลักฐานการศึกษาของผู้สมัครประกอบการพิจารณาต่อไป
+              </Typography>
+              <Typography
+                variant='body2'
+                color='textPrimary'
+                align='center'
+                style={{
+                  fontSize: 15,
+                  marginBottom: 0,
+                  lineHeight: '1.2',
+                  marginTop: 20,
+                }}
+              >
+                อนึ่ง หลักเกณฑ์การพิจารณาข้างต้น เป็นหลักเกณฑ์ที่ ก.พ.
+                กำหนดสำหรับพิจารณาข้าราชการพลเรือนสามัญ
+                กรณีที่ใช้พิจารณาสำหรับข้าราชการประเภทอื่น
+                เป็นอำนาจหน้าที่ของคณะกรรมการข้าราชการ
               </Typography>
             </Grid>
           </Grid>
