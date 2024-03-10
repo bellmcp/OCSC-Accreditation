@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { get } from 'lodash'
+import { useHistory } from 'react-router-dom'
 
 import {
   Box,
@@ -18,6 +19,9 @@ import {
 
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
+import PrintIcon from '@material-ui/icons/Print'
+
+const PATH = process.env.REACT_APP_BASE_PATH
 
 function createData(
   id: number,
@@ -62,148 +66,162 @@ const parseLinkToDefaultColor = (text: string) => {
   return text.replace(/<a/g, '<a class="custom_link"')
 }
 
-function Row(props: any) {
-  const { row, index } = props
-  const [open, setOpen] = React.useState(false)
-
-  return (
-    <React.Fragment>
-      <TableRow style={{ borderBottom: 'unset' }}>
-        <TableCell>
-          <IconButton
-            aria-label='expand row'
-            size='small'
-            onClick={() => setOpen(!open)}
-          >
-            {open ? (
-              <KeyboardArrowUpIcon color='primary' />
-            ) : (
-              <KeyboardArrowDownIcon color='primary' />
-            )}
-          </IconButton>
-        </TableCell>
-        <TableCell component='th' scope='row' align='center'>
-          {index + 1}
-        </TableCell>
-        <TableCell component='th' scope='row'>
-          {getLabel(row, 'university')}
-        </TableCell>
-        <TableCell>{getLabel(row, 'degree')}</TableCell>
-        <TableCell>{getLabel(row, 'branch')}</TableCell>
-        <TableCell>{getLabel(row, 'category')}</TableCell>
-        <TableCell>{getLabel(row, 'level')}</TableCell>
-        <TableCell>{getLabel(row, 'faculty')}</TableCell>
-      </TableRow>
-      <TableRow>
-        <TableCell
-          style={{ paddingBottom: 0, paddingTop: 0, borderBottom: 'none' }}
-          colSpan={6}
-        >
-          <Collapse in={open} timeout='auto' unmountOnExit>
-            <List>
-              <ListItem divider>
-                <Box style={{ flexBasis: '25%', flexShrink: 0 }}>
-                  <Typography
-                    variant='body2'
-                    style={{ lineHeight: '1.2', fontWeight: 600 }}
-                  >
-                    ผลการรับรอง
-                  </Typography>
-                </Box>
-                <Box>
-                  <Typography
-                    variant='body2'
-                    gutterBottom
-                    color='secondary'
-                    style={{ lineHeight: '1.2', fontWeight: 500 }}
-                  >
-                    <div
-                      dangerouslySetInnerHTML={{
-                        __html: parseLinkToDefaultColor(
-                          getLabel(row, 'accreditation1')
-                        ),
-                      }}
-                    ></div>
-                  </Typography>
-                  <Typography
-                    variant='caption'
-                    color='secondary'
-                    style={{ lineHeight: '1.2' }}
-                  >
-                    <div
-                      dangerouslySetInnerHTML={{
-                        __html: parseLinkToDefaultColor(
-                          getLabel(row, 'accreditation2')
-                        ),
-                      }}
-                    ></div>
-                  </Typography>
-                </Box>
-              </ListItem>
-              <ListItem divider>
-                <Box style={{ flexBasis: '25%', flexShrink: 0 }}>
-                  <Typography variant='body2' style={{ fontWeight: 600 }}>
-                    หมายเหตุ
-                  </Typography>
-                </Box>
-                <Box>
-                  <Typography variant='body2' color='secondary'>
-                    {getLabel(row, 'note')}
-                  </Typography>
-                </Box>
-              </ListItem>
-              <ListItem divider>
-                <Box style={{ flexBasis: '25%', flexShrink: 0 }}>
-                  <Typography variant='body2' style={{ fontWeight: 600 }}>
-                    เลขที่หนังสือเวียน
-                  </Typography>
-                </Box>
-                <Box>
-                  <Typography variant='body2' color='secondary'>
-                    {getLabel(row, 'letterNo')}
-                  </Typography>
-                </Box>
-              </ListItem>
-              <ListItem divider>
-                <Box style={{ flexBasis: '25%', flexShrink: 0 }}>
-                  <Typography variant='body2' style={{ fontWeight: 600 }}>
-                    ลงวันที่
-                  </Typography>
-                </Box>
-                <Box>
-                  <Typography variant='body2' color='secondary'>
-                    {getLabel(row, 'letterDate')}
-                  </Typography>
-                </Box>
-              </ListItem>
-              <ListItem divider>
-                <Box style={{ flexBasis: '25%', flexShrink: 0 }}>
-                  <Typography variant='body2' style={{ fontWeight: 600 }}>
-                    เลขที่อ้างอิง
-                  </Typography>
-                </Box>
-                <Box>
-                  <Typography variant='body2' color='secondary'>
-                    {getLabel(row, 'id')}
-                  </Typography>
-                </Box>
-              </ListItem>
-            </List>
-          </Collapse>
-        </TableCell>
-      </TableRow>
-    </React.Fragment>
-  )
-}
-
 interface SearchResultTableType {
   data: any
 }
 
 export default function SearchResultTable({ data }: SearchResultTableType) {
-  console.log('data', data)
-
   const [tableData, setTableData] = useState([])
+  const history = useHistory()
+
+  const goToCert = (id: number) => {
+    if (id !== null) {
+      history.push(`${PATH}/cert/${id}`)
+    }
+  }
+
+  function Row(props: any) {
+    const { row, index } = props
+    const [open, setOpen] = React.useState(false)
+
+    return (
+      <React.Fragment>
+        <TableRow style={{ borderBottom: 'unset' }}>
+          <TableCell>
+            <IconButton
+              aria-label='expand row'
+              size='small'
+              onClick={() => setOpen(!open)}
+            >
+              {open ? (
+                <KeyboardArrowUpIcon color='primary' />
+              ) : (
+                <KeyboardArrowDownIcon color='primary' />
+              )}
+            </IconButton>
+          </TableCell>
+          <TableCell component='th' scope='row' align='center'>
+            {index + 1}
+          </TableCell>
+          <TableCell component='th' scope='row'>
+            {getLabel(row, 'university')}
+          </TableCell>
+          <TableCell>{getLabel(row, 'degree')}</TableCell>
+          <TableCell>{getLabel(row, 'branch')}</TableCell>
+          <TableCell>{getLabel(row, 'category')}</TableCell>
+          <TableCell>{getLabel(row, 'level')}</TableCell>
+          <TableCell>{getLabel(row, 'faculty')}</TableCell>
+          <TableCell>
+            <IconButton
+              aria-label='print certificate'
+              size='small'
+              onClick={() => goToCert(get(row, 'id', null))}
+            >
+              <PrintIcon color='primary' fontSize='small' />
+            </IconButton>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell
+            style={{ paddingBottom: 0, paddingTop: 0, borderBottom: 'none' }}
+            colSpan={6}
+          >
+            <Collapse in={open} timeout='auto' unmountOnExit>
+              <List>
+                <ListItem divider>
+                  <Box style={{ flexBasis: '25%', flexShrink: 0 }}>
+                    <Typography
+                      variant='body2'
+                      style={{ lineHeight: '1.2', fontWeight: 600 }}
+                    >
+                      ผลการรับรอง
+                    </Typography>
+                  </Box>
+                  <Box>
+                    <Typography
+                      variant='body2'
+                      gutterBottom
+                      color='secondary'
+                      style={{ lineHeight: '1.2', fontWeight: 500 }}
+                    >
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: parseLinkToDefaultColor(
+                            getLabel(row, 'accreditation1')
+                          ),
+                        }}
+                      ></div>
+                    </Typography>
+                    <Typography
+                      variant='caption'
+                      color='secondary'
+                      style={{ lineHeight: '1.2' }}
+                    >
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: parseLinkToDefaultColor(
+                            getLabel(row, 'accreditation2')
+                          ),
+                        }}
+                      ></div>
+                    </Typography>
+                  </Box>
+                </ListItem>
+                <ListItem divider>
+                  <Box style={{ flexBasis: '25%', flexShrink: 0 }}>
+                    <Typography variant='body2' style={{ fontWeight: 600 }}>
+                      หมายเหตุ
+                    </Typography>
+                  </Box>
+                  <Box>
+                    <Typography variant='body2' color='secondary'>
+                      {getLabel(row, 'note')}
+                    </Typography>
+                  </Box>
+                </ListItem>
+                <ListItem divider>
+                  <Box style={{ flexBasis: '25%', flexShrink: 0 }}>
+                    <Typography variant='body2' style={{ fontWeight: 600 }}>
+                      เลขที่หนังสือเวียน
+                    </Typography>
+                  </Box>
+                  <Box>
+                    <Typography variant='body2' color='secondary'>
+                      {getLabel(row, 'letterNo')}
+                    </Typography>
+                  </Box>
+                </ListItem>
+                <ListItem divider>
+                  <Box style={{ flexBasis: '25%', flexShrink: 0 }}>
+                    <Typography variant='body2' style={{ fontWeight: 600 }}>
+                      ลงวันที่
+                    </Typography>
+                  </Box>
+                  <Box>
+                    <Typography variant='body2' color='secondary'>
+                      {getLabel(row, 'letterDate')}
+                    </Typography>
+                  </Box>
+                </ListItem>
+                <ListItem divider>
+                  <Box style={{ flexBasis: '25%', flexShrink: 0 }}>
+                    <Typography variant='body2' style={{ fontWeight: 600 }}>
+                      เลขที่อ้างอิง
+                    </Typography>
+                  </Box>
+                  <Box>
+                    <Typography variant='body2' color='secondary'>
+                      {getLabel(row, 'id')}
+                    </Typography>
+                  </Box>
+                </ListItem>
+              </List>
+            </Collapse>
+          </TableCell>
+        </TableRow>
+      </React.Fragment>
+    )
+  }
 
   useEffect(() => {
     const parsedData = data.map((item: any) =>
@@ -294,6 +312,15 @@ export default function SearchResultTable({ data }: SearchResultTableType) {
               }}
             >
               คณะ/หน่วยงาน
+            </TableCell>
+            <TableCell
+              style={{
+                verticalAlign: 'top',
+                lineHeight: '1.2',
+                fontWeight: 600,
+              }}
+            >
+              พิมพ์ใบรับรอง
             </TableCell>
           </TableRow>
         </TableHead>
