@@ -99,7 +99,18 @@ export default function Certficate() {
 
   const handlePrint = useReactToPrint({
     content: reactToPrintContent,
-    documentTitle: `ใบรับรอง${certificateId}`,
+    documentTitle: `ใบรับรอง_${certificateId}_${get(
+      certificate,
+      'degree',
+      '-'
+    ).substring(0, 30)}_${get(certificate, 'university', '-').substring(
+      0,
+      30
+    )}_${new Date(new Date()).toLocaleDateString('th-TH', {
+      day: 'numeric',
+      month: '2-digit',
+      year: 'numeric',
+    })}`,
     onBeforeGetContent: handleOnBeforeGetContent,
     onBeforePrint: handleBeforePrint,
     onAfterPrint: handleAfterPrint,
