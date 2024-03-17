@@ -79,6 +79,33 @@ export default class CertificateRenderer extends React.PureComponent<Props> {
               Cert ID: {get(this, 'props.certificate.id', '-')}
             </Typography>
           </div>
+          <div
+            style={{
+              position: 'absolute',
+              top: 55,
+              left: 55,
+              display: 'flex',
+              flexDirection: 'column',
+            }}
+          >
+            <Typography
+              variant='caption'
+              color='textSecondary'
+              align='center'
+              style={{
+                fontSize: 12,
+                marginTop: 5,
+                lineHeight: '1.2',
+              }}
+            >
+              วันที่พิมพ์{' '}
+              {new Date(new Date()).toLocaleDateString('th-TH', {
+                day: 'numeric',
+                month: 'short',
+                year: 'numeric',
+              })}
+            </Typography>
+          </div>
 
           <Grid
             container
@@ -138,11 +165,24 @@ export default class CertificateRenderer extends React.PureComponent<Props> {
                 style={{
                   fontSize: 37,
                   fontWeight: 500,
-                  marginBottom: 24,
+                  marginBottom: 12,
                   lineHeight: 1,
                 }}
               >
                 {get(this, 'props.certificate.degree', '-')}
+              </Typography>
+              <Typography
+                variant='caption'
+                color='secondary'
+                align='center'
+                style={{
+                  fontSize: 25,
+                  fontWeight: 500,
+                  marginBottom: 24,
+                  lineHeight: 1,
+                }}
+              >
+                ({get(this, 'props.certificate.branch', '-')})
               </Typography>
               <Typography
                 variant='body1'
