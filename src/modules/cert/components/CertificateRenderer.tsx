@@ -1,6 +1,7 @@
 //@ts-nocheck
 import * as React from 'react'
 import { get } from 'lodash'
+import QRCode from 'react-qr-code'
 import { Typography, Grid, Container } from '@material-ui/core'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 
@@ -57,15 +58,25 @@ export default class CertificateRenderer extends React.PureComponent<Props> {
               flexDirection: 'column',
             }}
           >
-            <img
-              alt='QR Code'
-              src={qrCode}
+            <div
               style={{
-                width: 75,
-                height: 75,
-                alignSelf: 'center',
+                height: 'auto',
+                margin: '0 auto',
+                maxWidth: 75,
+                width: '100%',
               }}
-            />
+            >
+              <QRCode
+                size={256}
+                style={{ height: 'auto', maxWidth: '100%', width: '100%' }}
+                value={`https://accreditation.ocsc.go.th/accreditation/cert/${get(
+                  this,
+                  'props.certificate.id',
+                  '-'
+                )}`}
+                viewBox={`0 0 256 256`}
+              />
+            </div>
             <Typography
               variant='caption'
               color='textSecondary'
@@ -171,19 +182,21 @@ export default class CertificateRenderer extends React.PureComponent<Props> {
               >
                 {get(this, 'props.certificate.degree', '-')}
               </Typography>
-              <Typography
-                variant='caption'
-                color='secondary'
-                align='center'
-                style={{
-                  fontSize: 25,
-                  fontWeight: 500,
-                  marginBottom: 24,
-                  lineHeight: 1,
-                }}
-              >
-                ({get(this, 'props.certificate.branch', '-')})
-              </Typography>
+              {get(this, 'props.certificate.branch', '') !== '' && (
+                <Typography
+                  variant='caption'
+                  color='secondary'
+                  align='center'
+                  style={{
+                    fontSize: 25,
+                    fontWeight: 500,
+                    marginBottom: 24,
+                    lineHeight: 1,
+                  }}
+                >
+                  ({get(this, 'props.certificate.branch', '')})
+                </Typography>
+              )}
               <Typography
                 variant='body1'
                 color='textPrimary'
@@ -237,14 +250,16 @@ export default class CertificateRenderer extends React.PureComponent<Props> {
                 ลงวันที่ {get(this, 'props.certificate.letterDate', '-')}
               </Typography>
 
-              <Typography
-                variant='body1'
-                color='textPrimary'
-                align='center'
-                style={{ fontSize: 20, marginBottom: 25 }}
-              >
-                หมายเหตุ {get(this, 'props.certificate.note', '-')}
-              </Typography>
+              {get(this, 'props.certificate.note', '') !== '' && (
+                <Typography
+                  variant='body1'
+                  color='textPrimary'
+                  align='center'
+                  style={{ fontSize: 20, marginBottom: 25 }}
+                >
+                  หมายเหตุ {get(this, 'props.certificate.note', '-')}
+                </Typography>
+              )}
 
               <hr
                 style={{
