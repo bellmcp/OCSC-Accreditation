@@ -7,7 +7,6 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 
 import logoPictogram from 'assets/images/cert-logo-pictogram.png'
 import background from 'assets/images/cert-background.svg'
-import qrCode from 'assets/images/qr-code.svg'
 
 const theme = createMuiTheme({
   typography: {
@@ -30,9 +29,28 @@ export default class CertificateRenderer extends React.PureComponent<Props> {
   //eslint-disable-next-line
   constructor(props) {
     super(props)
+    this.state = {
+      isContentOverflowing: false,
+    }
+    this.containerRef = React.createRef()
+  }
+
+  componentDidMount() {
+    this.checkContentOverflow()
+  }
+
+  checkContentOverflow = () => {
+    const container = this.containerRef.current
+    if (container.scrollHeight > 1122) {
+      this.setState({ isContentOverflowing: true })
+    } else {
+      this.setState({ isContentOverflowing: false })
+    }
   }
 
   public render() {
+    const { isContentOverflowing } = this.state
+
     return (
       <ThemeProvider theme={theme}>
         <Container
@@ -124,10 +142,16 @@ export default class CertificateRenderer extends React.PureComponent<Props> {
             justify='center'
             alignItems='center'
             wrap='nowrap'
+            style={{ overflow: 'hidden', maxHeight: '297mm' }}
           >
             <Grid
               item
-              style={{ display: 'flex', padding: '0 50px 0' }}
+              ref={this.containerRef}
+              style={{
+                transform: isContentOverflowing ? 'scale(0.85)' : 'scale(1)',
+                display: 'flex',
+                padding: '50px',
+              }}
               direction='column'
             >
               <img
@@ -174,7 +198,10 @@ export default class CertificateRenderer extends React.PureComponent<Props> {
                 color='secondary'
                 align='center'
                 style={{
-                  fontSize: 37,
+                  fontSize:
+                    get(this, 'props.certificate.degree.length', 0) >= 50
+                      ? 27
+                      : 37,
                   fontWeight: 500,
                   marginBottom: 12,
                   lineHeight: 1,
@@ -188,7 +215,10 @@ export default class CertificateRenderer extends React.PureComponent<Props> {
                   color='secondary'
                   align='center'
                   style={{
-                    fontSize: 25,
+                    fontSize:
+                      get(this, 'props.certificate.branch.length', 0) >= 40
+                        ? 20
+                        : 25,
                     fontWeight: 500,
                     marginBottom: 24,
                     lineHeight: 1,
@@ -209,7 +239,14 @@ export default class CertificateRenderer extends React.PureComponent<Props> {
                 variant='h6'
                 color='textPrimary'
                 align='center'
-                style={{ fontSize: 28, marginBottom: 24, lineHeight: '1.2' }}
+                style={{
+                  fontSize:
+                    get(this, 'props.certificate.university.length', 0) >= 50
+                      ? 24
+                      : 28,
+                  marginBottom: 24,
+                  lineHeight: '1.2',
+                }}
               >
                 {get(this, 'props.certificate.university', '-')}
               </Typography>
@@ -226,7 +263,15 @@ export default class CertificateRenderer extends React.PureComponent<Props> {
                 variant='h6'
                 color='textPrimary'
                 align='center'
-                style={{ fontSize: 28, marginBottom: 38, lineHeight: '1.2' }}
+                style={{
+                  fontSize:
+                    get(this, 'props.certificate.accreditation1.length', 0) >=
+                    100
+                      ? 16
+                      : 28,
+                  marginBottom: 38,
+                  lineHeight: '1.2',
+                }}
               >
                 {get(this, 'props.certificate.accreditation1', '-')}
               </Typography>
@@ -255,7 +300,14 @@ export default class CertificateRenderer extends React.PureComponent<Props> {
                   variant='body1'
                   color='textPrimary'
                   align='center'
-                  style={{ fontSize: 20, marginBottom: 25 }}
+                  style={{
+                    lineHeight: '1.2',
+                    fontSize:
+                      get(this, 'props.certificate.note.length', 0) >= 100
+                        ? 14
+                        : 20,
+                    marginBottom: 25,
+                  }}
                 >
                   หมายเหตุ {get(this, 'props.certificate.note', '-')}
                 </Typography>
