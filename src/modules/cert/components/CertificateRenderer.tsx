@@ -48,6 +48,10 @@ export default class CertificateRenderer extends React.PureComponent<Props> {
     }
   }
 
+  parseTextToNewLine = (text: string) => {
+    return text.replaceAll('|', '<br>')
+  }
+
   public render() {
     const { isContentOverflowing } = this.state
 
@@ -265,22 +269,42 @@ export default class CertificateRenderer extends React.PureComponent<Props> {
               >
                 เป็นคุณวุฒิ
               </Typography>
-              <Typography
-                variant='h6'
-                color='textPrimary'
-                align='center'
-                style={{
-                  fontSize:
-                    get(this, 'props.certificate.accreditation1.length', 0) >=
-                    100
-                      ? 16
-                      : 28,
-                  marginBottom: 38,
-                  lineHeight: '1.2',
-                }}
-              >
-                {get(this, 'props.certificate.accreditation1', '-')}
-              </Typography>
+
+              {get(this, 'props.certificate.accreditation3', '') !== '' ? (
+                <Typography
+                  variant='h6'
+                  color='textPrimary'
+                  align='center'
+                  style={{
+                    fontSize: 22,
+                    marginTop: 8,
+                    marginBottom: 38,
+                    lineHeight: '1.2',
+                  }}
+                >
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: this.parseTextToNewLine(
+                        get(this, 'props.certificate.accreditation3', '-')
+                      ),
+                    }}
+                  />
+                </Typography>
+              ) : (
+                <Typography
+                  variant='h6'
+                  color='textPrimary'
+                  align='center'
+                  style={{
+                    fontSize: 28,
+                    marginTop: 8,
+                    marginBottom: 38,
+                    lineHeight: '1.2',
+                  }}
+                >
+                  {get(this, 'props.certificate.accreditation1', '-')}
+                </Typography>
+              )}
 
               {/* LENGTH AND DATE */}
               <Typography
