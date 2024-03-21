@@ -132,13 +132,17 @@ export default class CertificateRenderer extends React.PureComponent<Props> {
               }}
             >
               พิมพ์ ณ วันที่{' '}
-              {new Date(new Date()).toLocaleDateString('th-TH', {
+              {new Date(
+                get(this, 'props.localDateTime', new Date())
+              ).toLocaleDateString('th-TH', {
                 day: 'numeric',
                 month: 'short',
                 year: 'numeric',
               })}{' '}
               เวลา{' '}
-              {new Date(new Date()).toLocaleTimeString('th-TH', {
+              {new Date(
+                get(this, 'props.localDateTime', new Date())
+              ).toLocaleTimeString('th-TH', {
                 hour: '2-digit',
                 minute: '2-digit',
               })}{' '}

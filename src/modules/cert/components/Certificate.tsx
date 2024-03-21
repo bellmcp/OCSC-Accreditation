@@ -65,10 +65,15 @@ export default function Certficate() {
   const { id: certificateId }: any = useParams()
   const matches = useMediaQuery(theme.breakpoints.up('sm'))
 
-  const { isLoading, certificate } = useSelector((state: any) => state.cert)
+  const {
+    isLoading,
+    certificate,
+    localDateTime = new Date(),
+  } = useSelector((state: any) => state.cert)
 
   useEffect(() => {
     dispatch(certActions.loadCertificate(certificateId))
+    dispatch(certActions.loadLocalDateTime())
   }, [dispatch, certificateId]) //eslint-disable-line
 
   //PRINT
@@ -250,7 +255,11 @@ export default function Certficate() {
             </List>
           </Box>
           <Box my={6} style={{ overflow: 'auto' }}>
-            <CertificateRenderer ref={componentRef} certificate={certificate} />
+            <CertificateRenderer
+              ref={componentRef}
+              certificate={certificate}
+              localDateTime={localDateTime}
+            />
           </Box>
           <Box my={3}>
             <Button
