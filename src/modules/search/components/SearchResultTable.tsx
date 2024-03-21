@@ -34,7 +34,8 @@ function createData(
   accreditation2: string,
   note: string,
   letterNo: string,
-  letterDate: string
+  letterDate: string,
+  cert: boolean
 ) {
   return {
     id,
@@ -49,6 +50,7 @@ function createData(
     note,
     letterNo,
     letterDate,
+    cert,
   }
 }
 
@@ -110,13 +112,15 @@ export default function SearchResultTable({ data }: SearchResultTableType) {
           <TableCell>{getLabel(row, 'level')}</TableCell>
           <TableCell>{getLabel(row, 'faculty')}</TableCell>
           <TableCell>
-            <IconButton
-              aria-label='print certificate'
-              size='small'
-              onClick={() => goToCert(get(row, 'id', null))}
-            >
-              <PrintIcon color='primary' fontSize='small' />
-            </IconButton>
+            {get(row, 'cert', false) && (
+              <IconButton
+                aria-label='print certificate'
+                size='small'
+                onClick={() => goToCert(get(row, 'id', null))}
+              >
+                <PrintIcon color='primary' fontSize='small' />
+              </IconButton>
+            )}
           </TableCell>
         </TableRow>
         <TableRow>
@@ -235,7 +239,8 @@ export default function SearchResultTable({ data }: SearchResultTableType) {
         get(item, 'accreditation2'),
         get(item, 'note'),
         get(item, 'letterNo'),
-        get(item, 'letterDate')
+        get(item, 'letterDate'),
+        get(item, 'cert')
       )
     )
     setTableData(parsedData)

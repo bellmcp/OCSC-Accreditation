@@ -131,7 +131,11 @@ export default function Certficate() {
   function renderCertificateView() {
     if (isLoading) {
       return <Loading height={307} />
-    } else if (certificate === null || certificate === undefined) {
+    } else if (
+      certificate === null ||
+      certificate === undefined ||
+      get(certificate, 'cert', false) === false
+    ) {
       return (
         <Box my={15}>
           <Grid

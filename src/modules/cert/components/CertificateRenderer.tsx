@@ -127,12 +127,18 @@ export default class CertificateRenderer extends React.PureComponent<Props> {
                 lineHeight: '1.2',
               }}
             >
-              วันที่พิมพ์{' '}
+              พิมพ์ ณ วันที่{' '}
               {new Date(new Date()).toLocaleDateString('th-TH', {
                 day: 'numeric',
                 month: 'short',
                 year: 'numeric',
-              })}
+              })}{' '}
+              เวลา{' '}
+              {new Date(new Date()).toLocaleTimeString('th-TH', {
+                hour: '2-digit',
+                minute: '2-digit',
+              })}{' '}
+              น.
             </Typography>
           </div>
 
