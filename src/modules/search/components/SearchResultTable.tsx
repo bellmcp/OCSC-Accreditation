@@ -14,6 +14,7 @@ import {
   Typography,
   List,
   ListItem,
+  Tooltip,
 } from '@material-ui/core'
 
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
@@ -113,13 +114,15 @@ export default function SearchResultTable({ data }: SearchResultTableType) {
           <TableCell>{getLabel(row, 'faculty')}</TableCell>
           <TableCell>
             {get(row, 'cert', false) && (
-              <IconButton
-                aria-label='print certificate'
-                size='small'
-                onClick={() => goToCert(get(row, 'id', null))}
-              >
-                <PrintIcon color='primary' fontSize='small' />
-              </IconButton>
+              <Tooltip title='พิมพ์ใบรับรอง'>
+                <IconButton
+                  aria-label='พิมพ์ใบรับรอง'
+                  size='small'
+                  onClick={() => goToCert(get(row, 'id', null))}
+                >
+                  <PrintIcon color='primary' fontSize='small' />
+                </IconButton>
+              </Tooltip>
             )}
           </TableCell>
         </TableRow>
