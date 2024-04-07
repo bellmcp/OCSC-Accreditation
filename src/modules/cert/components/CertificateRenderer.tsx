@@ -48,7 +48,17 @@ export default class CertificateRenderer extends React.PureComponent<Props> {
     }
   }
 
+  checkisEmpty = (text: string) => {
+    if (!text || text === null || text === '') {
+      return ''
+    }
+    return text
+  }
+
   parseTextToNewLine = (text: string) => {
+    if (!text || text === null || text === '') {
+      return ''
+    }
     return text.replaceAll('|', '<br>')
   }
 
@@ -274,7 +284,9 @@ export default class CertificateRenderer extends React.PureComponent<Props> {
                 เป็นคุณวุฒิ
               </Typography>
 
-              {get(this, 'props.certificate.accreditation3', '') !== '' ? (
+              {this.checkisEmpty(
+                get(this, 'props.certificate.accreditation3', '')
+              ) !== '' ? (
                 <Typography
                   variant='h6'
                   color='textPrimary'
