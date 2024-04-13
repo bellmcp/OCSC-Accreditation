@@ -41,7 +41,8 @@ export default class CertificateRenderer extends React.PureComponent<Props> {
 
   checkContentOverflow = () => {
     const container = this.containerRef.current
-    if (container.scrollHeight > 1122) {
+    if (container.scrollHeight > 1135) {
+      // at 1.00 scale
       this.setState({ isContentOverflowing: true })
     } else {
       this.setState({ isContentOverflowing: false })
@@ -172,9 +173,9 @@ export default class CertificateRenderer extends React.PureComponent<Props> {
               item
               ref={this.containerRef}
               style={{
-                transform: isContentOverflowing ? 'scale(0.85)' : 'scale(1)',
+                transform: isContentOverflowing ? 'scale(0.80)' : 'scale(0.90)',
                 display: 'flex',
-                padding: '50px',
+                padding: '25px 0',
               }}
               direction='column'
             >
@@ -381,11 +382,58 @@ export default class CertificateRenderer extends React.PureComponent<Props> {
                   marginTop: 20,
                 }}
               >
+                สำนักงาน ก.พ.
+                มีอำนาจหน้าที่ดำเนินการเกี่ยวกับการรับรองคุณวุฒิของผู้ได้รับปริญญา
+                ประกาศนียบัตรวิชาชีพ หรือคุณวุฒิอย่างอื่น
+                เพื่อประโยชน์ในการบรรจุและแต่งตั้งเป็นข้าราชการพลเรือน
+                และกำหนดอัตราเงินเดือนหรือ ค่าตอบแทน
+                รวมทั้งระดับตำแหน่งและประเภทตำแหน่งสำหรับคุณวุฒิดังกล่าว
+                ตามนัยมาตรา 13 (11) แห่งพระราชบัญญัติระเบียบข้าราชการพลเรือน
+                พ.ศ. 2551
+              </Typography>
+              <Typography
+                variant='body2'
+                color='textSecondary'
+                align='center'
+                style={{
+                  fontSize: 15,
+                  marginBottom: 0,
+                  lineHeight: '1.2',
+                  marginTop: 20,
+                }}
+              >
                 ในกรณีที่ส่วนราชการกำหนด "สาขาวิชาใดสาขาวิชาหนึ่ง ทาง..."
-                จะต้องนำหนังสือสำนักงาน ก.พ. ที่ นร 1004.3/ว 14 ลงวันที่ 11
+                จะต้องนำหนังสือ สำนักงาน ก.พ. ที่ นร 1004.3/ว 14 ลงวันที่ 11
                 ธันวาคม 2551 และที่ นร 1004/ว 21 ลงวันที่ 22 กันยายน 2564
                 ร่วมประกอบการพิจารณาด้วย
               </Typography>
+              <Typography
+                variant='body2'
+                color='textSecondary'
+                align='center'
+                style={{
+                  fontSize: 15,
+                  marginBottom: 0,
+                  lineHeight: '1.2',
+                  marginTop: 20,
+                }}
+              >
+                อนึ่ง หลักเกณฑ์การพิจารณาข้างต้น เป็นหลักเกณฑ์ที่ ก.พ.
+                กำหนดสำหรับพิจารณาข้าราชการพลเรือน สามัญ
+                กรณีที่ใช้พิจารณาสำหรับข้าราชการประเภทอื่น
+                เป็นอำนาจหน้าที่ของคณะกรรมการข้าราชการประเภทนั้น
+              </Typography>
+              <hr
+                style={{
+                  border: 'none',
+                  height: 1,
+                  width: 470,
+                  color: '#BCBEC0',
+                  backgroundColor: '#BCBEC0',
+                  marginTop: 40,
+                  marginBottom: 20,
+                }}
+              />
               <Typography
                 variant='body2'
                 color='textSecondary'
@@ -420,38 +468,6 @@ export default class CertificateRenderer extends React.PureComponent<Props> {
                 ทั้งนี้
                 ส่วนราชการโปรดตรวจสอบหลักฐานการศึกษาของผู้สมัครประกอบการพิจารณาต่อไป
               </Typography>
-              <Typography
-                variant='body2'
-                color='textSecondary'
-                align='center'
-                style={{
-                  fontSize: 15,
-                  marginBottom: 0,
-                  lineHeight: '1.2',
-                  marginTop: 20,
-                }}
-              >
-                อนึ่ง หลักเกณฑ์การพิจารณาข้างต้น เป็นหลักเกณฑ์ที่ ก.พ.
-                กำหนดสำหรับพิจารณาข้าราชการพลเรือนสามัญ
-                <br />
-                กรณีที่ใช้พิจารณาสำหรับข้าราชการประเภทอื่น
-                เป็นอำนาจหน้าที่ของคณะกรรมการข้าราชการประเภทนั้น
-              </Typography>
-              {/* 
-              <Typography
-                variant='caption'
-                color='textSecondary'
-                align='center'
-                style={{
-                  fontSize: 12,
-                  marginBottom: 0,
-                  lineHeight: '1.2',
-                  marginTop: 40,
-                }}
-              >
-                https://accreditation.ocsc.go.th/accreditation/cert/
-                {get(this, 'props.certificate.id', '-')}
-              </Typography> */}
             </Grid>
           </Grid>
         </Container>
