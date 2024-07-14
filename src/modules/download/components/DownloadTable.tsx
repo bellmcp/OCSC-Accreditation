@@ -1,4 +1,5 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import {
@@ -13,6 +14,8 @@ import {
 } from '@material-ui/core'
 import { GetApp as GetAppIcon } from '@material-ui/icons'
 
+import * as downloadActions from 'modules/download/actions'
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     table: {
@@ -21,8 +24,18 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 )
 
-export default function DownloadTable({ data }: any) {
+export default function DownloadTable({
+  data,
+  categoryId,
+  incrementCounterValue,
+}: any) {
   const classes = useStyles()
+  const dispatch = useDispatch()
+
+  const handleClickLink = (categoryId: number, letterId: number) => {
+    dispatch(downloadActions.incrementCounter(categoryId, letterId))
+    incrementCounterValue(categoryId, letterId)
+  }
 
   return (
     <TableContainer>
@@ -76,6 +89,17 @@ export default function DownloadTable({ data }: any) {
             >
               ดาวน์โหลด
             </TableCell>
+            <TableCell
+              width={120}
+              align='center'
+              style={{
+                lineHeight: '1.3',
+                verticalAlign: 'top',
+                fontWeight: 600,
+              }}
+            >
+              จำนวนครั้งที่เข้าชม
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -117,11 +141,20 @@ export default function DownloadTable({ data }: any) {
                   size='small'
                   component={Link}
                   href={data.url}
+                  onClick={() => handleClickLink(categoryId, data.id)}
                   target='_blank'
                   color='primary'
                 >
                   <GetAppIcon fontSize='small' />
                 </IconButton>
+              </TableCell>
+              <TableCell
+                align='center'
+                style={{
+                  verticalAlign: 'top',
+                }}
+              >
+                {data.counter ? data.counter.toLocaleString() : 0} ครั้ง
               </TableCell>
             </TableRow>
           ))}

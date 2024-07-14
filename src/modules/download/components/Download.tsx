@@ -74,16 +74,17 @@ function createData(
   date: string,
   no: string,
   subject: string,
-  url: string
+  url: string,
+  counter: number
 ) {
-  return { id, date, no, subject, url }
+  return { id, date, no, subject, url, counter }
 }
 
 export default function Download() {
   const classes = useStyles()
   const theme = useTheme()
   const dispatch = useDispatch()
-  const [value, setValue] = useState(0)
+  const [activeTabIndex, setActiveTabIndex] = useState(0)
   const [tableData, setTableData] = useState([])
   const matches = useMediaQuery(theme.breakpoints.up('sm'))
 
@@ -92,8 +93,8 @@ export default function Download() {
   )
 
   useEffect(() => {
-    dispatch(downloadActions.loadLetters(value + 1))
-  }, [dispatch, value]) //eslint-disable-line
+    dispatch(downloadActions.loadLetters(activeTabIndex + 1))
+  }, [dispatch, activeTabIndex]) //eslint-disable-line
 
   useEffect(() => {
     const parsedData = initialLetters.map((letter: any) =>
@@ -102,18 +103,34 @@ export default function Download() {
         get(letter, 'date'),
         get(letter, 'no'),
         get(letter, 'subject'),
-        get(letter, 'url')
+        get(letter, 'url'),
+        get(letter, 'counter')
       )
     )
     setTableData(parsedData)
   }, [initialLetters])
 
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-    setValue(newValue)
+    setActiveTabIndex(newValue)
   }
 
   const handleChangeIndex = (index: number) => {
-    setValue(index)
+    setActiveTabIndex(index)
+  }
+
+  const incrementCounterValue = (categoryId: number, letterId: number) => {
+    if (categoryId !== activeTabIndex + 1) {
+      return
+    }
+
+    const updatedData = tableData.map((letter: any) => {
+      if (letter.id === letterId) {
+        return { ...letter, counter: letter.counter + 1 }
+      } else {
+        return letter
+      }
+    })
+    setTableData(updatedData as any)
   }
 
   return (
@@ -147,7 +164,7 @@ export default function Download() {
             }}
           >
             <Tabs
-              value={value}
+              value={activeTabIndex}
               indicatorColor='primary'
               textColor='primary'
               onChange={handleChange}
@@ -194,18 +211,22 @@ export default function Download() {
             </Tabs>
             <SwipeableViews
               axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-              index={value}
+              index={activeTabIndex}
               onChangeIndex={handleChangeIndex}
             >
               {[0, 1, 2, 3].map((item) => (
                 <TabPanel
-                  value={value}
+                  value={activeTabIndex}
                   index={item}
                   dir={theme.direction}
                   style={{ minHeight: 300 }}
                 >
                   {!isLoading ? (
-                    <DownloadTable data={tableData} />
+                    <DownloadTable
+                      data={tableData}
+                      categoryId={activeTabIndex + 1}
+                      incrementCounterValue={incrementCounterValue}
+                    />
                   ) : (
                     <Loading height={200} />
                   )}
