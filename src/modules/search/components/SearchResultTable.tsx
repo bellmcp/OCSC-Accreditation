@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { get } from 'lodash'
+import { useDispatch } from 'react-redux'
+
+import * as searchActions from 'modules/search/actions'
 
 import {
   Box,
@@ -36,7 +39,8 @@ function createData(
   note: string,
   letterNo: string,
   letterDate: string,
-  cert: boolean
+  cert: boolean,
+  counter: number
 ) {
   return {
     id,
@@ -52,6 +56,7 @@ function createData(
     letterNo,
     letterDate,
     cert,
+    counter,
   }
 }
 
@@ -74,10 +79,24 @@ interface SearchResultTableType {
 
 export default function SearchResultTable({ data }: SearchResultTableType) {
   const [tableData, setTableData] = useState([])
+  const dispatch = useDispatch()
+
+  const incrementCounterValue = (curriculumId: number) => {
+    const updatedData = tableData.map((curriculum: any) => {
+      if (curriculum.id === curriculumId) {
+        return { ...curriculum, counter: curriculum.counter + 1 }
+      } else {
+        return curriculum
+      }
+    })
+    setTableData(updatedData as any)
+  }
 
   const goToCert = (id: number) => {
     if (id !== null) {
       window.open(`${PATH}/cert/${id}`, '_blank')
+      dispatch(searchActions.incrementCounter(id))
+      incrementCounterValue(id)
     }
   }
 
@@ -112,17 +131,36 @@ export default function SearchResultTable({ data }: SearchResultTableType) {
           <TableCell>{getLabel(row, 'category')}</TableCell>
           <TableCell>{getLabel(row, 'level')}</TableCell>
           <TableCell>{getLabel(row, 'faculty')}</TableCell>
-          <TableCell>
+          <TableCell width={130}>
             {get(row, 'cert', false) && (
-              <Tooltip title='พิมพ์ใบรับรอง'>
-                <IconButton
-                  aria-label='พิมพ์ใบรับรอง'
-                  size='small'
-                  onClick={() => goToCert(get(row, 'id', null))}
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                }}
+              >
+                <Tooltip title='พิมพ์ใบรับรอง'>
+                  <IconButton
+                    aria-label='พิมพ์ใบรับรอง'
+                    size='small'
+                    onClick={() => goToCert(get(row, 'id', null))}
+                  >
+                    <PrintIcon color='primary' fontSize='small' />
+                  </IconButton>
+                </Tooltip>
+                <Typography
+                  align='center'
+                  variant='caption'
+                  style={{ lineHeight: '1.2', fontSize: 11 }}
                 >
-                  <PrintIcon color='primary' fontSize='small' />
-                </IconButton>
-              </Tooltip>
+                  (พิมพ์{' '}
+                  {get(row, 'counter')
+                    ? get(row, 'counter').toLocaleString()
+                    : 0}{' '}
+                  ครั้ง)
+                </Typography>
+              </div>
             )}
           </TableCell>
         </TableRow>
@@ -243,7 +281,8 @@ export default function SearchResultTable({ data }: SearchResultTableType) {
         get(item, 'note'),
         get(item, 'letterNo'),
         get(item, 'letterDate'),
-        get(item, 'cert')
+        get(item, 'cert'),
+        get(item, 'counter')
       )
     )
     setTableData(parsedData)
@@ -320,6 +359,7 @@ export default function SearchResultTable({ data }: SearchResultTableType) {
               คณะ/หน่วยงาน
             </TableCell>
             <TableCell
+              align='center'
               style={{
                 verticalAlign: 'top',
                 lineHeight: '1.2',

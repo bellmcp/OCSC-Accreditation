@@ -35,6 +35,13 @@ const LOAD_ACCREDITATION_INFO_FAILURE =
 
 const CLEAR_SEARCH_RESULT = 'ocsc-e-accredit/search/CLEAR_SEARCH_RESULT'
 
+const INCREMENT_COUNTER_REQUEST =
+  'ocsc-e-accredit/search/INCREMENT_COUNTER_REQUEST'
+const INCREMENT_COUNTER_SUCCESS =
+  'ocsc-e-accredit/search/INCREMENT_COUNTER_SUCCESS'
+const INCREMENT_COUNTER_FAILURE =
+  'ocsc-e-accredit/search/INCREMENT_COUNTER_FAILURE'
+
 function loadEducationlevels() {
   return async (dispatch: any) => {
     dispatch({ type: LOAD_EDUCATION_LEVELS_REQUEST })
@@ -193,6 +200,36 @@ function clearSearchResult() {
   }
 }
 
+function incrementCounter(curriculumId: number) {
+  return async (dispatch: any) => {
+    dispatch({ type: INCREMENT_COUNTER_REQUEST })
+    try {
+      var { data } = await axios.patch(`/curriculums/${curriculumId}`)
+      if (data.length === 0) {
+        data = []
+      }
+      dispatch({
+        type: INCREMENT_COUNTER_SUCCESS,
+        payload: {
+          searchResults: data,
+        },
+      })
+    } catch (err) {
+      dispatch({ type: INCREMENT_COUNTER_FAILURE })
+      dispatch(
+        uiActions.setFlashMessage(
+          `เพิ่มจำนวนครั้งที่เข้าชมไม่สำเร็จ เกิดข้อผิดพลาด ${get(
+            err,
+            'response.status',
+            'บางอย่าง'
+          )}`,
+          'error'
+        )
+      )
+    }
+  }
+}
+
 export {
   LOAD_EDUCATION_LEVELS_REQUEST,
   LOAD_EDUCATION_LEVELS_SUCCESS,
@@ -207,9 +244,13 @@ export {
   LOAD_ACCREDITATION_INFO_SUCCESS,
   LOAD_ACCREDITATION_INFO_FAILURE,
   CLEAR_SEARCH_RESULT,
+  INCREMENT_COUNTER_REQUEST,
+  INCREMENT_COUNTER_SUCCESS,
+  INCREMENT_COUNTER_FAILURE,
   loadEducationlevels,
   searchCurriculums,
   incrementVisitor,
   loadAccredtitationInfo,
   clearSearchResult,
+  incrementCounter,
 }
