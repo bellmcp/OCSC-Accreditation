@@ -149,7 +149,19 @@ export default function Layout() {
         }}
       />
       <NavBar active={activePage} setActivePage={setActivePage} />
-      <Routes />
+      <div
+        style={{
+          display: 'flex',
+          height: '100vh',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+        }}
+      >
+        <div style={{ flex: 1 }}>
+          <Routes />
+        </div>
+        <Footer />
+      </div>
       <Snackbar
         open={isSnackbarOpen}
         onClose={closeFlashMessage}
@@ -175,7 +187,6 @@ export default function Layout() {
           {flashMessage}
         </Alert>
       </Snackbar>
-      <Footer />
       <Slide
         direction='up'
         in={isCookieBannerOpen}
