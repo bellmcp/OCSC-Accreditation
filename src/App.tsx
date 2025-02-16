@@ -8,7 +8,7 @@ import ScrollToTop from 'utils/ScrollToTop'
 import Layout from 'modules/ui/components/Layout'
 import META_IMAGE from './meta.jpg'
 
-const TITLE = 'OCSC e-Accredit'
+const TITLE = 'OCSC e-Accreditation'
 const URL = process.env.REACT_APP_PLATFORM_URL
 const DESCRIPTION = 'ระบบการพิจารณารับรองคุณวุฒิด้วยระบบอิเล็กทรอนิกส์'
 

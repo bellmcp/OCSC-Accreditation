@@ -149,7 +149,7 @@ export default function NavDrawer({
         <p className={classes.title}>
           OCSC
           <br />
-          e-Accredit
+          e-Accreditation
         </p>
         <List>
           {navigationItems.map((navigationItem, index) => (
