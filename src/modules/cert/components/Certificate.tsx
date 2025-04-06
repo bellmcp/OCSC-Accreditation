@@ -297,7 +297,7 @@ export default function Certficate() {
               className={classes.sectionTitle}
               align={matches ? 'left' : 'center'}
             >
-              พิมพ์ใบรับรอง
+              พิมพ์ผลการรับรอง
             </Typography>
           </Grid>
           {renderCertificateView()}

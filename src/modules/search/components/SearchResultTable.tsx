@@ -140,9 +140,9 @@ export default function SearchResultTable({ data }: SearchResultTableType) {
                   alignItems: 'center',
                 }}
               >
-                <Tooltip title='พิมพ์ใบรับรอง'>
+                <Tooltip title='พิมพ์ผลการรับรอง'>
                   <IconButton
-                    aria-label='พิมพ์ใบรับรอง'
+                    aria-label='พิมพ์ผลการรับรอง'
                     size='small'
                     onClick={() => goToCert(get(row, 'id', null))}
                   >
@@ -366,7 +366,7 @@ export default function SearchResultTable({ data }: SearchResultTableType) {
                 fontWeight: 600,
               }}
             >
-              พิมพ์ใบรับรอง
+              พิมพ์ผลการรับรอง
             </TableCell>
           </TableRow>
         </TableHead>

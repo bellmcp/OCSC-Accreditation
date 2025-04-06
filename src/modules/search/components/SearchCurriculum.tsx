@@ -375,8 +375,8 @@ export default function SearchCurriculum() {
                       </Select>
                       <FormHelperText>
                         <Typography variant='body2' color='textSecondary'>
-                          ระดับปวช./ปวส.
-                          ที่ใช้หลักสูตรกลางของอาชีวะไม่ต้องระบุสถานศึกษา
+                          ระดับ ปวช./ปวส. ที่ใช้หลักสูตรกลางของอาชีวะ
+                          ไม่ต้องระบุสถานศึกษา
                         </Typography>
                       </FormHelperText>
                     </FormControl>
@@ -441,12 +441,12 @@ export default function SearchCurriculum() {
                     </Typography>
                   </Grid>
                 </Grid>
-                <Grid container item direction='row' alignItems='center'>
+                <Grid container item direction='row' alignItems='start'>
                   <Grid xs={12} md={3}>
                     <Typography
                       variant='body1'
                       color='textPrimary'
-                      style={{ fontWeight: 600 }}
+                      style={{ fontWeight: 600, paddingTop: 8 }}
                       gutterBottom
                     >
                       มหาวิทยาลัย/สถาบันการศึกษา{note}
@@ -463,7 +463,24 @@ export default function SearchCurriculum() {
                       fullWidth
                       multiline={!matches}
                       rows={4}
+                      InputProps={{
+                        classes: { input: classes.input },
+                      }}
                     />
+                    <FormHelperText>
+                      <Typography variant='body2' color='textSecondary'>
+                        ระดับ ปวช./ปวส. ที่ใช้หลักสูตรกลางของกระทรวงศึกษาธิการ
+                        ให้ระบุ{' '}
+                        <span
+                          style={{
+                            color: theme.palette.success.main,
+                            fontWeight: 500,
+                          }}
+                        >
+                          สำนักงานคณะกรรมการอาชีวศึกษา
+                        </span>
+                      </Typography>
+                    </FormHelperText>
                   </Grid>
                 </Grid>
                 <Grid container item direction='row' alignItems='center'>
