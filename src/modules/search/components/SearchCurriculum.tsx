@@ -477,7 +477,7 @@ export default function SearchCurriculum() {
                             fontWeight: 500,
                           }}
                         >
-                          สำนักงานคณะกรรมการอาชีวศึกษา
+                          สำนักงานคณะกรรมการการอาชีวศึกษา
                         </span>
                       </Typography>
                     </FormHelperText>
