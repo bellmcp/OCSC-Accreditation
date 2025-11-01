@@ -7,6 +7,7 @@ import EduRoutes from 'modules/edu/Routes'
 import DownloadRoutes from 'modules/download/Routes'
 import FaqRoutes from 'modules/faq/Routes'
 import CertRoutes from 'modules/cert/Routes'
+import JobRoutes from 'modules/job/Routes'
 
 import NotFound from './NotFound'
 const PATH = process.env.REACT_APP_BASE_PATH
@@ -28,6 +29,9 @@ export default function Routes() {
       </Route>
       <Route path={`${PATH}/cert`}>
         <CertRoutes />
+      </Route>
+      <Route path={`${PATH}/job`}>
+        <JobRoutes />
       </Route>
       <Route path={`${PATH}/`}>
         <HomeRoutes />

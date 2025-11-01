@@ -101,6 +101,12 @@ export default function SearchResultTable({ data }: SearchResultTableType) {
     }
   }
 
+  const goToJob = (id: number) => {
+    if (id !== null) {
+      window.open(`${PATH}/job/${id}`, '_blank')
+    }
+  }
+
   function Row(props: any) {
     const { row, index } = props
     const [open, setOpen] = React.useState(false)
@@ -130,7 +136,12 @@ export default function SearchResultTable({ data }: SearchResultTableType) {
           <TableCell>{getLabel(row, 'degree')}</TableCell>
           <TableCell>{getLabel(row, 'branch')}</TableCell>
           <TableCell width={150}>
-            <Button size='small' variant='outlined' color='primary'>
+            <Button
+              onClick={() => goToJob(get(row, 'id', null))}
+              size='small'
+              variant='outlined'
+              color='primary'
+            >
               ตำแหน่งงาน
             </Button>
           </TableCell>
