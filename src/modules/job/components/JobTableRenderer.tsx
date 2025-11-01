@@ -2,7 +2,7 @@ import React from 'react'
 
 import Loading from 'modules/ui/components/Loading'
 
-import { Typography, Grid, Box } from '@material-ui/core'
+import { Typography, Grid, Box, Paper } from '@material-ui/core'
 
 import { Inbox as InboxIcon } from '@material-ui/icons'
 import JobTable from './JobTable'
@@ -42,6 +42,19 @@ export default function JobTableRenderer({
       </Box>
     )
   } else {
-    return <JobTable data={data} />
+    return (
+      <Paper
+        elevation={0}
+        style={{
+          borderRadius: 16,
+          padding: 24,
+          paddingTop: 8,
+          boxShadow: '0 0 20px 0 rgba(204,242,251,0.3)',
+          border: '1px solid rgb(204 242 251)',
+        }}
+      >
+        <JobTable data={data} />
+      </Paper>
+    )
   }
 }

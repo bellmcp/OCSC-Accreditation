@@ -6,11 +6,9 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Paper,
   IconButton,
   Chip,
   Box,
-  Typography,
   Grow,
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
@@ -35,23 +33,15 @@ type RowData = { position: string; ministries: MinistryBlock[] }
 
 const useStyles = makeStyles((theme) => ({
   tableContainer: {
-    maxWidth: 1200,
     margin: '0 auto',
-    marginTop: theme.spacing(4),
   },
   table: {
     tableLayout: 'fixed',
   },
-  headerRow: {
-    backgroundColor: '#1565c0',
-  },
-  headerCell: {
-    color: '#fff',
-    fontWeight: 'bold',
-  },
   positionCell: {
     width: 260,
     maxWidth: 260,
+    fontWeight: 500,
   },
   ministriesColumn: {
     display: 'flex',
@@ -122,30 +112,38 @@ export default function JobTable({ data }: JobTableProps) {
   const transformedData = transformData(data)
 
   return (
-    <TableContainer component={Paper} className={classes.tableContainer}>
+    <TableContainer className={classes.tableContainer}>
       <Table className={classes.table}>
         <TableHead>
-          <TableRow className={classes.headerRow}>
+          <TableRow>
             <TableCell
-              className={`${classes.headerCell} ${classes.positionCell}`}
+              className={classes.positionCell}
+              style={{
+                verticalAlign: 'top',
+                lineHeight: '1.2',
+                fontWeight: 600,
+              }}
             >
               ตำแหน่ง
             </TableCell>
-            <TableCell className={classes.headerCell}>
+            <TableCell
+              style={{
+                verticalAlign: 'top',
+                lineHeight: '1.2',
+                fontWeight: 600,
+              }}
+            >
               กระทรวง / ส่วนราชการ
             </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {transformedData.map((row, rowIndex) => (
-            <TableRow key={rowIndex}>
-              {/* คอลัมน์แรก fix width + ellipsis */}
+            <TableRow key={rowIndex} style={{ borderBottom: 'unset' }}>
               <TableCell className={classes.positionCell}>
-                <Typography noWrap title={row.position}>
-                  {row.position}
-                </Typography>
+                {row.position}
               </TableCell>
-              <TableCell style={{ padding: '16px 16px 8px' }}>
+              <TableCell>
                 <Box className={classes.ministriesColumn}>
                   {row.ministries.map((m) => {
                     const key = `${rowIndex}-${m.name}`

@@ -274,10 +274,10 @@ export default function Certficate() {
             <Typography
               gutterBottom
               component='h2'
-              variant='h6'
+              variant='h5'
               color='secondary'
               align={matches ? 'left' : 'center'}
-              style={{ fontWeight: 600 }}
+              style={{ fontWeight: 600, marginBottom: 16 }}
             >
               สายงานปิด
             </Typography>
@@ -289,10 +289,10 @@ export default function Certficate() {
             <Typography
               gutterBottom
               component='h2'
-              variant='h6'
+              variant='h5'
               color='secondary'
               align={matches ? 'left' : 'center'}
-              style={{ fontWeight: 600, marginTop: 32 }}
+              style={{ fontWeight: 600, marginTop: 48, marginBottom: 16 }}
             >
               สายงานกึ่งเปิด
             </Typography>
@@ -304,10 +304,10 @@ export default function Certficate() {
             <Typography
               gutterBottom
               component='h2'
-              variant='h6'
+              variant='h5'
               color='secondary'
               align={matches ? 'left' : 'center'}
-              style={{ fontWeight: 600, marginTop: 32 }}
+              style={{ fontWeight: 600, marginTop: 48, marginBottom: 16 }}
             >
               สายงานเปิด
             </Typography>
