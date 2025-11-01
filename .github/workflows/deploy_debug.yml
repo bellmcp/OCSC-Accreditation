@@ -1,17 +1,17 @@
-name: Deploy React App
+name: Deploy Debug
 
 on:
-  push:
-    branches:
-      - master
+  workflow_dispatch: # Manual trigger only
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout debug branch
         uses: actions/checkout@v2
+        with:
+          ref: debug # Force checkout of debug regardless of trigger branch
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
@@ -32,5 +32,5 @@ jobs:
           key: ${{ secrets.SFTP_KEY }}
           port: 22
           source: 'build/*'
-          target: '/var/www/html/accreditation/'
+          target: '/var/www/html/accreditation-debug/'
           strip_components: 1
