@@ -18,6 +18,7 @@ import {
   List,
   ListItem,
   Tooltip,
+  Button,
 } from '@material-ui/core'
 
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
@@ -128,7 +129,11 @@ export default function SearchResultTable({ data }: SearchResultTableType) {
           </TableCell>
           <TableCell>{getLabel(row, 'degree')}</TableCell>
           <TableCell>{getLabel(row, 'branch')}</TableCell>
-          <TableCell>{getLabel(row, 'category')}</TableCell>
+          <TableCell width={150}>
+            <Button size='small' variant='outlined' color='primary'>
+              ตำแหน่งงาน
+            </Button>
+          </TableCell>
           <TableCell>{getLabel(row, 'level')}</TableCell>
           <TableCell>{getLabel(row, 'faculty')}</TableCell>
           <TableCell width={130}>
@@ -230,7 +235,12 @@ export default function SearchResultTable({ data }: SearchResultTableType) {
                   </Box>
                   <Box>
                     <Typography variant='body2' color='secondary'>
-                      {getLabel(row, 'letterNo')}
+                      {getLabel(row, 'letterNo')}{' '}
+                      {getLabel(row, 'category') !== '' && (
+                        <span style={{ paddingLeft: 8 }}>
+                          ({getLabel(row, 'category')})
+                        </span>
+                      )}
                     </Typography>
                   </Box>
                 </ListItem>
@@ -337,9 +347,7 @@ export default function SearchResultTable({ data }: SearchResultTableType) {
                 lineHeight: '1.2',
                 fontWeight: 600,
               }}
-            >
-              รัฐ/เอกชน
-            </TableCell>
+            ></TableCell>
             <TableCell
               style={{
                 verticalAlign: 'top',
