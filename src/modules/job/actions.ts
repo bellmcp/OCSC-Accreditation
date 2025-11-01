@@ -2,87 +2,143 @@ import axios from 'axios'
 import { get } from 'lodash'
 import * as uiActions from 'modules/ui/actions'
 
-const LOAD_CERTIFICATE_REQUEST = 'ocsc-e-accredit/cert/LOAD_CERTIFICATE_REQUEST'
-const LOAD_CERTIFICATE_SUCCESS = 'ocsc-e-accredit/cert/LOAD_CERTIFICATE_SUCCESS'
-const LOAD_CERTIFICATE_FAILURE = 'ocsc-e-accredit/cert/LOAD_CERTIFICATE_FAILURE'
+const LOAD_CLOSE_JOBS_REQUEST = 'ocsc-e-accredit/job/LOAD_CLOSE_JOBS_REQUEST'
+const LOAD_CLOSE_JOBS_SUCCESS = 'ocsc-e-accredit/job/LOAD_CLOSE_JOBS_SUCCESS'
+const LOAD_CLOSE_JOBS_FAILURE = 'ocsc-e-accredit/job/LOAD_CLOSE_JOBS_FAILURE'
 
-const LOAD_LOCAL_DATE_TIME_REQUEST =
-  'ocsc-e-accredit/cert/LOAD_LOCAL_DATE_TIME_REQUEST'
-const LOAD_LOCAL_DATE_TIME_SUCCESS =
-  'ocsc-e-accredit/cert/LOAD_LOCAL_DATE_TIME_SUCCESS'
-const LOAD_LOCAL_DATE_TIME_FAILURE =
-  'ocsc-e-accredit/cert/LOAD_LOCAL_DATE_TIME_FAILURE'
+const LOAD_OPEN_JOBS_REQUEST = 'ocsc-e-accredit/job/LOAD_OPEN_JOBS_REQUEST'
+const LOAD_OPEN_JOBS_SUCCESS = 'ocsc-e-accredit/job/LOAD_OPEN_JOBS_SUCCESS'
+const LOAD_OPEN_JOBS_FAILURE = 'ocsc-e-accredit/job/LOAD_OPEN_JOBS_FAILURE'
 
-function loadCertificate(certificateId: number) {
+const LOAD_SEMI_JOBS_REQUEST = 'ocsc-e-accredit/job/LOAD_SEMI_JOBS_REQUEST'
+const LOAD_SEMI_JOBS_SUCCESS = 'ocsc-e-accredit/job/LOAD_SEMI_JOBS_SUCCESS'
+const LOAD_SEMI_JOBS_FAILURE = 'ocsc-e-accredit/job/LOAD_SEMI_JOBS_FAILURE'
+
+function loadCloseJobs(certificateId: number) {
   return async (dispatch: any) => {
-    dispatch({ type: LOAD_CERTIFICATE_REQUEST })
+    dispatch({ type: LOAD_CLOSE_JOBS_REQUEST })
     try {
-      var { data } = await axios.get(`/curriculums/${certificateId}`)
+      var { data } = await axios.get(`/curriculums/${certificateId}/closejobs`)
       if (!data) {
         data = {}
       }
       dispatch({
-        type: LOAD_CERTIFICATE_SUCCESS,
+        type: LOAD_CLOSE_JOBS_SUCCESS,
         payload: {
-          certificate: data,
+          closeJobs: data,
         },
       })
     } catch (err) {
-      dispatch({ type: LOAD_CERTIFICATE_FAILURE })
-      dispatch(
-        uiActions.setFlashMessage(
-          `โหลดข้อมูลใบรับรองไม่สำเร็จ เกิดข้อผิดพลาด ${get(
-            err,
-            'response.status',
-            'บางอย่าง'
-          )}`,
-          'error'
+      if (err?.response?.status === 404 || err?.response?.status === 204) {
+        dispatch({
+          type: LOAD_CLOSE_JOBS_FAILURE,
+        })
+      } else {
+        dispatch({
+          type: LOAD_CLOSE_JOBS_FAILURE,
+        })
+        dispatch(
+          uiActions.setFlashMessage(
+            `โหลดข้อมูลสายงานปิดไม่สำเร็จ เกิดข้อผิดพลาด ${get(
+              err,
+              'response.status',
+              'บางอย่าง'
+            )}`,
+            'error'
+          )
         )
-      )
+      }
     }
   }
 }
 
-function loadLocalDateTime() {
+function loadOpenJobs(certificateId: number) {
   return async (dispatch: any) => {
-    dispatch({ type: LOAD_LOCAL_DATE_TIME_REQUEST })
+    dispatch({ type: LOAD_OPEN_JOBS_REQUEST })
     try {
-      var { data } = await axios.get('/localdatetime', {
-        baseURL: 'https://learningportal.ocsc.go.th/learningspaceapi',
-      })
-      if (data.length === 0) {
+      var { data } = await axios.get(`/curriculums/${certificateId}/openjobs`)
+      if (!data) {
         data = {}
       }
-      const { datetime } = data
       dispatch({
-        type: LOAD_LOCAL_DATE_TIME_SUCCESS,
+        type: LOAD_OPEN_JOBS_SUCCESS,
         payload: {
-          localDateTime: datetime,
+          openJobs: data,
         },
       })
     } catch (err) {
-      dispatch({ type: LOAD_LOCAL_DATE_TIME_FAILURE })
-      dispatch(
-        uiActions.setFlashMessage(
-          `โหลดข้อมูลวันและเวลาปัจจุบันไม่สำเร็จ เกิดข้อผิดพลาด ${get(
-            err,
-            'response.status',
-            'บางอย่าง'
-          )}`,
-          'error'
+      if (err?.response?.status === 404 || err?.response?.status === 204) {
+        dispatch({
+          type: LOAD_OPEN_JOBS_FAILURE,
+        })
+      } else {
+        dispatch({
+          type: LOAD_OPEN_JOBS_FAILURE,
+        })
+        dispatch(
+          uiActions.setFlashMessage(
+            `โหลดข้อมูลสายงานเปิดไม่สำเร็จ เกิดข้อผิดพลาด ${get(
+              err,
+              'response.status',
+              'บางอย่าง'
+            )}`,
+            'error'
+          )
         )
-      )
+      }
+    }
+  }
+}
+
+function loadSemiJobs(certificateId: number) {
+  return async (dispatch: any) => {
+    dispatch({ type: LOAD_SEMI_JOBS_REQUEST })
+    try {
+      var { data } = await axios.get(`/curriculums/${certificateId}/semijobs`)
+      if (!data) {
+        data = {}
+      }
+      dispatch({
+        type: LOAD_SEMI_JOBS_SUCCESS,
+        payload: {
+          semiJobs: data,
+        },
+      })
+    } catch (err) {
+      if (err?.response?.status === 404 || err?.response?.status === 204) {
+        dispatch({
+          type: LOAD_SEMI_JOBS_FAILURE,
+        })
+      } else {
+        dispatch({
+          type: LOAD_SEMI_JOBS_FAILURE,
+        })
+        dispatch(
+          uiActions.setFlashMessage(
+            `โหลดข้อมูลสายงานกึ่งเปิดไม่สำเร็จ เกิดข้อผิดพลาด ${get(
+              err,
+              'response.status',
+              'บางอย่าง'
+            )}`,
+            'error'
+          )
+        )
+      }
     }
   }
 }
 
 export {
-  LOAD_CERTIFICATE_REQUEST,
-  LOAD_CERTIFICATE_SUCCESS,
-  LOAD_CERTIFICATE_FAILURE,
-  LOAD_LOCAL_DATE_TIME_REQUEST,
-  LOAD_LOCAL_DATE_TIME_SUCCESS,
-  LOAD_LOCAL_DATE_TIME_FAILURE,
-  loadCertificate,
-  loadLocalDateTime,
+  LOAD_CLOSE_JOBS_REQUEST,
+  LOAD_CLOSE_JOBS_SUCCESS,
+  LOAD_CLOSE_JOBS_FAILURE,
+  LOAD_OPEN_JOBS_REQUEST,
+  LOAD_OPEN_JOBS_SUCCESS,
+  LOAD_OPEN_JOBS_FAILURE,
+  LOAD_SEMI_JOBS_REQUEST,
+  LOAD_SEMI_JOBS_SUCCESS,
+  LOAD_SEMI_JOBS_FAILURE,
+  loadCloseJobs,
+  loadOpenJobs,
+  loadSemiJobs,
 }

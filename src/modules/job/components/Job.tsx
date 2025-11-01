@@ -17,9 +17,11 @@ import useMediaQuery from '@material-ui/core/useMediaQuery'
 import { Print as PrintIcon, Inbox as InboxIcon } from '@material-ui/icons'
 
 import Header from 'modules/ui/components/Header'
-import Loading from 'modules/ui/components/Loading'
 import JobTable from './JobTable'
-import * as certActions from '../actions'
+import * as jobActions from '../actions'
+import * as certActions from 'modules/cert/actions'
+import JobTableRenderer from './JobTableRenderer'
+import Loading from 'modules/ui/components/Loading'
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -41,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: '1.3',
     zIndex: 3,
     color: theme.palette.secondary.main,
+    marginBottom: 16,
   },
 }))
 
@@ -65,109 +68,28 @@ export default function Certficate() {
   const { id: certificateId }: any = useParams()
   const matches = useMediaQuery(theme.breakpoints.up('sm'))
 
+  const { certificate, isLoading } = useSelector((state: any) => state.cert)
+
   const {
-    isLoading,
-    certificate,
-    localDateTime = new Date(),
-  } = useSelector((state: any) => state.cert)
+    isCloseJobsLoading,
+    isCloseJobsError,
+    closeJobs,
+    isOpenJobsLoading,
+    isOpenJobsError,
+    openJobs,
+    isSemiJobsLoading,
+    isSemiJobsError,
+    semiJobs,
+  } = useSelector((state: any) => state.job)
 
   useEffect(() => {
     dispatch(certActions.loadCertificate(certificateId))
-    dispatch(certActions.loadLocalDateTime())
+    dispatch(jobActions.loadCloseJobs(certificateId))
+    dispatch(jobActions.loadOpenJobs(certificateId))
+    dispatch(jobActions.loadSemiJobs(certificateId))
   }, [dispatch, certificateId]) //eslint-disable-line
 
-  //PRINT
-  const componentRef = useRef(null)
-  const onBeforeGetContentResolve = useRef<(() => void) | null>(null)
-  const [loading, setLoading] = useState(false)
-  const [text, setText] = useState('old boring text')
-  const handleAfterPrint = useCallback(() => {}, [])
-  const handleBeforePrint = useCallback(() => {}, [])
-  const handleOnBeforeGetContent = useCallback(() => {
-    setLoading(true)
-    setText('Loading new text...')
-
-    return new Promise<void>((resolve) => {
-      onBeforeGetContentResolve.current = resolve
-
-      setTimeout(() => {
-        setLoading(false)
-        setText('New, Updated Text!')
-        resolve()
-      }, 2000)
-    })
-  }, [setLoading, setText])
-
-  const reactToPrintContent = useCallback(() => {
-    return componentRef.current
-  }, [componentRef.current]) //eslint-disable-line
-
-  const handlePrint = useReactToPrint({
-    content: reactToPrintContent,
-    documentTitle: `ใบรับรอง_${certificateId}_${get(
-      certificate,
-      'degree',
-      '-'
-    ).substring(0, 30)}_${get(certificate, 'university', '-').substring(
-      0,
-      30
-    )}_${new Date(new Date()).toLocaleDateString('th-TH', {
-      day: 'numeric',
-      month: '2-digit',
-      year: 'numeric',
-    })}`,
-    onBeforeGetContent: handleOnBeforeGetContent,
-    onBeforePrint: handleBeforePrint,
-    onAfterPrint: handleAfterPrint,
-    removeAfterPrint: true,
-    pageStyle:
-      '@page { size: 210mm 297mm; margin: 0mm; } @media print { body { -webkit-print-color-adjust: exact; } }',
-  })
-
-  useEffect(() => {
-    if (
-      text === 'New, Updated Text!' &&
-      typeof onBeforeGetContentResolve.current === 'function'
-    ) {
-      onBeforeGetContentResolve.current()
-    }
-  }, [onBeforeGetContentResolve.current, text]) //eslint-disable-line
-
-  const mockJobs = [
-    {
-      job: 'นักทรัพยากรบุคคล',
-      workPlace: [
-        {
-          ministry: 'กระทรวงเกษตรและสหกรณ์',
-          departments: [
-            'กรมการข้าว',
-            'กรมชลประทาน',
-            'กรมตรวจบัญชีสหกรณ์',
-            'กรมประมง',
-          ],
-        },
-      ],
-    },
-    {
-      job: 'นักวิชาการแรงงาน ',
-      workPlace: [
-        {
-          ministry: 'กระทรวงแรงงาน',
-          departments: [
-            'กรมการจัดหางาน',
-            'กรมพัฒนาฝีมือแรงงาน',
-            'กรมสวัสดิการและคุ้มครองแรงงาน',
-          ],
-        },
-        {
-          ministry: 'กระทรวงยุติธรรม',
-          departments: null,
-        },
-      ],
-    },
-  ]
-
-  function renderCertificateView() {
+  function renderCertificateDetails() {
     if (isLoading) {
       return <Loading height={307} />
     } else if (
@@ -359,39 +281,41 @@ export default function Certficate() {
             >
               สายงานปิด
             </Typography>
+            <JobTableRenderer
+              isLoading={isCloseJobsLoading}
+              isError={isCloseJobsError}
+              data={closeJobs}
+            />
             <Typography
               gutterBottom
               component='h2'
               variant='h6'
               color='secondary'
               align={matches ? 'left' : 'center'}
-              style={{ fontWeight: 600 }}
+              style={{ fontWeight: 600, marginTop: 32 }}
             >
-              สายงานกึ่งปิด
+              สายงานกึ่งเปิด
             </Typography>
+            <JobTableRenderer
+              isLoading={isSemiJobsLoading}
+              isError={isSemiJobsError}
+              data={semiJobs}
+            />
             <Typography
               gutterBottom
               component='h2'
               variant='h6'
               color='secondary'
               align={matches ? 'left' : 'center'}
-              style={{ fontWeight: 600 }}
+              style={{ fontWeight: 600, marginTop: 32 }}
             >
               สายงานเปิด
             </Typography>
-            <JobTable data={mockJobs} />
-          </Box>
-          <Box my={3}>
-            <Button
-              variant='contained'
-              color='secondary'
-              startIcon={<PrintIcon />}
-              onClick={handlePrint}
-              size='large'
-              fullWidth
-            >
-              {loading ? 'กำลังโหลด...' : 'สั่งพิมพ์'}
-            </Button>
+            <JobTableRenderer
+              isLoading={isOpenJobsLoading}
+              isError={isOpenJobsError}
+              data={openJobs}
+            />
           </Box>
         </>
       )
@@ -420,7 +344,7 @@ export default function Certficate() {
               ตำแหน่งงานสำหรับผู้สำเร็จการศึกษาหลักสูตรนี้
             </Typography>
           </Grid>
-          {renderCertificateView()}
+          {renderCertificateDetails()}
         </Box>
       </Container>
     </>

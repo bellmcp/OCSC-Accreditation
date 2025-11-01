@@ -10,6 +10,7 @@ import international from 'modules/edu/international/reducer'
 import faq from 'modules/faq/reducer'
 import press from 'modules/press/reducer'
 import cert from 'modules/cert/reducer'
+import job from 'modules/job/reducer'
 
 export default (history: any) =>
   combineReducers({
@@ -23,4 +24,5 @@ export default (history: any) =>
     international,
     press,
     cert,
+    job,
   })

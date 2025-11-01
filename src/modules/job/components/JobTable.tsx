@@ -16,7 +16,6 @@ import {
 import { makeStyles } from '@material-ui/core/styles'
 import { Add, Remove } from '@material-ui/icons'
 
-// API Data Types
 type WorkPlace = {
   ministry: string
   departments: string[] | null
@@ -31,7 +30,6 @@ type JobTableProps = {
   data: JobData[]
 }
 
-// Transform API data to component format
 type MinistryBlock = { name: string; departments: string[] }
 type RowData = { position: string; ministries: MinistryBlock[] }
 
