@@ -24,6 +24,7 @@ import {
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 import PrintIcon from '@material-ui/icons/Print'
+import SearchIcon from '@material-ui/icons/Search'
 
 const PATH = process.env.REACT_APP_BASE_PATH
 
@@ -135,14 +136,15 @@ export default function SearchResultTable({ data }: SearchResultTableType) {
           </TableCell>
           <TableCell>{getLabel(row, 'degree')}</TableCell>
           <TableCell>{getLabel(row, 'branch')}</TableCell>
-          <TableCell width={150}>
+          <TableCell width={160}>
             <Button
               onClick={() => goToJob(get(row, 'id', null))}
               size='small'
               variant='outlined'
               color='primary'
+              startIcon={<SearchIcon />}
             >
-              ตำแหน่งงาน
+              ดูตำแหน่งงาน
             </Button>
           </TableCell>
           <TableCell>{getLabel(row, 'level')}</TableCell>
