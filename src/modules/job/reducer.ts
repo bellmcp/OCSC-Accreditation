@@ -1,59 +1,47 @@
 import {
-  LOAD_CLOSE_JOBS_REQUEST,
-  LOAD_CLOSE_JOBS_SUCCESS,
-  LOAD_CLOSE_JOBS_FAILURE,
-  LOAD_OPEN_JOBS_REQUEST,
-  LOAD_OPEN_JOBS_SUCCESS,
-  LOAD_OPEN_JOBS_FAILURE,
-  LOAD_SEMI_JOBS_REQUEST,
-  LOAD_SEMI_JOBS_SUCCESS,
-  LOAD_SEMI_JOBS_FAILURE,
+  LOAD_JOB_POSITIONS_REQUEST,
+  LOAD_JOB_POSITIONS_SUCCESS,
+  LOAD_JOB_POSITIONS_FAILURE,
 } from './actions'
 
 const initialState = {
-  isCloseJobsLoading: false,
-  isCloseJobsError: false,
-  closeJobs: {},
-  isOpenJobsLoading: false,
-  isOpenJobsError: false,
-  openJobs: {},
-  isSemiJobsLoading: false,
-  isSemiJobsError: false,
-  semiJobs: {},
+  isLoading: false,
+  isError: false,
+  jobDesc1: '',
+  jobDesc2: '',
+  jobDesc3: '',
+  closeJobs: [],
+  semiJobs: [],
+  openJobs: [],
 }
 
 export default function (state = initialState, action: any) {
   switch (action.type) {
-    case LOAD_CLOSE_JOBS_REQUEST:
-      return { ...state, isCloseJobsLoading: true, closeJobs: {} }
-    case LOAD_CLOSE_JOBS_SUCCESS:
+    case LOAD_JOB_POSITIONS_REQUEST:
       return {
         ...state,
-        isCloseJobsLoading: false,
-        closeJobs: action.payload.closeJobs,
+        isLoading: true,
+        isError: false,
+        jobDesc1: '',
+        jobDesc2: '',
+        jobDesc3: '',
+        closeJobs: [],
+        semiJobs: [],
+        openJobs: [],
       }
-    case LOAD_CLOSE_JOBS_FAILURE:
-      return { ...state, isCloseJobsLoading: false, isCloseJobsError: true }
-    case LOAD_OPEN_JOBS_REQUEST:
-      return { ...state, isOpenJobsLoading: true, openJobs: {} }
-    case LOAD_OPEN_JOBS_SUCCESS:
+    case LOAD_JOB_POSITIONS_SUCCESS:
       return {
         ...state,
-        isOpenJobsLoading: false,
+        isLoading: false,
+        jobDesc1: action.payload.jobDesc1,
+        jobDesc2: action.payload.jobDesc2,
+        jobDesc3: action.payload.jobDesc3,
+        closeJobs: action.payload.closeJobs,
+        semiJobs: action.payload.semiJobs,
         openJobs: action.payload.openJobs,
       }
-    case LOAD_OPEN_JOBS_FAILURE:
-      return { ...state, isOpenJobsLoading: false, isOpenJobsError: true }
-    case LOAD_SEMI_JOBS_REQUEST:
-      return { ...state, isSemiJobsLoading: true, semiJobs: {} }
-    case LOAD_SEMI_JOBS_SUCCESS:
-      return {
-        ...state,
-        isSemiJobsLoading: false,
-        semiJobs: action.payload.semiJobs,
-      }
-    case LOAD_SEMI_JOBS_FAILURE:
-      return { ...state, isSemiJobsLoading: false, isSemiJobsError: true }
+    case LOAD_JOB_POSITIONS_FAILURE:
+      return { ...state, isLoading: false, isError: true }
     default:
       return state
   }
