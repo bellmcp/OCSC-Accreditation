@@ -15,6 +15,8 @@ interface JobTableRendererProps {
   isError: boolean
   data: any
   colorScheme?: JobColorScheme
+  expandAll?: boolean | null
+  onResetExpandAll?: () => void
 }
 
 export default function JobTableRenderer({
@@ -22,6 +24,8 @@ export default function JobTableRenderer({
   isError,
   data,
   colorScheme = 'close',
+  expandAll = null,
+  onResetExpandAll,
 }: JobTableRendererProps) {
   if (isLoading) {
     return <Loading height={307} />
@@ -57,7 +61,12 @@ export default function JobTableRenderer({
           border: '1px solid rgb(204 242 251)',
         }}
       >
-        <JobTable data={data} colorScheme={colorScheme} />
+        <JobTable
+          data={data}
+          colorScheme={colorScheme}
+          expandAll={expandAll}
+          onResetExpandAll={onResetExpandAll}
+        />
       </Paper>
     )
   }

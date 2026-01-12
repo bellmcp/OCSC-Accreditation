@@ -93,6 +93,7 @@ const useStyles = makeStyles((theme) => ({
   accordionSummary: {
     padding: 0,
     paddingLeft: 24,
+    paddingRight: 24,
     minHeight: 'unset',
     '&.Mui-expanded': {
       minHeight: 'unset',
@@ -109,6 +110,7 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: 8,
     paddingBottom: 16,
     paddingLeft: 24,
+    paddingRight: 24,
     flexDirection: 'column',
   },
   closeAccordion: {
@@ -125,6 +127,10 @@ const useStyles = makeStyles((theme) => ({
     borderLeft: `4px solid ${green[500]}`,
     paddingLeft: 16,
     marginBottom: 24,
+  },
+  expandAllButton: {
+    marginBottom: 16,
+    textTransform: 'none',
   },
 }))
 
@@ -161,6 +167,10 @@ export default function Certficate() {
     semiJobs,
     openJobs,
   } = useSelector((state: any) => state.job)
+
+  const [expandAllClose, setExpandAllClose] = useState<boolean | null>(null)
+  const [expandAllSemi, setExpandAllSemi] = useState<boolean | null>(null)
+  const [expandAllOpen, setExpandAllOpen] = useState<boolean | null>(null)
 
   useEffect(() => {
     dispatch(certActions.loadCertificate(certificateId))
@@ -376,11 +386,25 @@ export default function Certficate() {
                     dangerouslySetInnerHTML={{ __html: jobDesc1 }}
                   />
                 )}
+                {closeJobs && closeJobs.length > 0 && (
+                  <Button
+                    variant='outlined'
+                    className={classes.expandAllButton}
+                    onClick={() =>
+                      setExpandAllClose(expandAllClose === true ? false : true)
+                    }
+                    style={{ borderColor: red[500], color: red[500] }}
+                  >
+                    {expandAllClose === true ? 'ย่อทั้งหมด' : 'ขยายทั้งหมด'}
+                  </Button>
+                )}
                 <JobTableRenderer
                   isLoading={isJobsLoading}
                   isError={isJobsError}
                   data={closeJobs}
                   colorScheme='close'
+                  expandAll={expandAllClose}
+                  onResetExpandAll={() => setExpandAllClose(null)}
                 />
               </AccordionDetails>
             </Accordion>
@@ -412,11 +436,25 @@ export default function Certficate() {
                     dangerouslySetInnerHTML={{ __html: jobDesc2 }}
                   />
                 )}
+                {semiJobs && semiJobs.length > 0 && (
+                  <Button
+                    variant='outlined'
+                    className={classes.expandAllButton}
+                    onClick={() =>
+                      setExpandAllSemi(expandAllSemi === true ? false : true)
+                    }
+                    style={{ borderColor: amber[700], color: amber[700] }}
+                  >
+                    {expandAllSemi === true ? 'ย่อทั้งหมด' : 'ขยายทั้งหมด'}
+                  </Button>
+                )}
                 <JobTableRenderer
                   isLoading={isJobsLoading}
                   isError={isJobsError}
                   data={semiJobs}
                   colorScheme='semi'
+                  expandAll={expandAllSemi}
+                  onResetExpandAll={() => setExpandAllSemi(null)}
                 />
               </AccordionDetails>
             </Accordion>
@@ -448,11 +486,25 @@ export default function Certficate() {
                     dangerouslySetInnerHTML={{ __html: jobDesc3 }}
                   />
                 )}
+                {openJobs && openJobs.length > 0 && (
+                  <Button
+                    variant='outlined'
+                    className={classes.expandAllButton}
+                    onClick={() =>
+                      setExpandAllOpen(expandAllOpen === true ? false : true)
+                    }
+                    style={{ borderColor: green[500], color: green[500] }}
+                  >
+                    {expandAllOpen === true ? 'ย่อทั้งหมด' : 'ขยายทั้งหมด'}
+                  </Button>
+                )}
                 <JobTableRenderer
                   isLoading={isJobsLoading}
                   isError={isJobsError}
                   data={openJobs}
                   colorScheme='open'
+                  expandAll={expandAllOpen}
+                  onResetExpandAll={() => setExpandAllOpen(null)}
                 />
               </AccordionDetails>
             </Accordion>
