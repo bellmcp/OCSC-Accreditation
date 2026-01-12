@@ -23,6 +23,18 @@ import * as certActions from 'modules/cert/actions'
 import JobTableRenderer from './JobTableRenderer'
 import Loading from 'modules/ui/components/Loading'
 
+import {
+  purple,
+  indigo,
+  amber,
+  deepOrange,
+  green,
+  blue,
+  brown,
+  grey,
+  red,
+} from '@material-ui/core/colors'
+
 const useStyles = makeStyles((theme) => ({
   main: {
     display: 'flex',
@@ -42,8 +54,17 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 600,
     lineHeight: '1.3',
     zIndex: 3,
-    color: theme.palette.secondary.main,
+    color: '#FF3281',
     marginBottom: 16,
+  },
+  closeJobsTitle: {
+    color: red[500],
+  },
+  semiJobsTitle: {
+    color: amber[600],
+  },
+  openJobsTitle: {
+    color: green[500],
   },
 }))
 
@@ -277,6 +298,7 @@ export default function Certficate() {
               variant='h5'
               color='secondary'
               align={matches ? 'left' : 'center'}
+              className={classes.closeJobsTitle}
               style={{ fontWeight: 600, marginBottom: 16 }}
             >
               สายงานปิด
@@ -285,6 +307,7 @@ export default function Certficate() {
               isLoading={isCloseJobsLoading}
               isError={isCloseJobsError}
               data={closeJobs}
+              colorScheme='close'
             />
             <Typography
               gutterBottom
@@ -292,6 +315,7 @@ export default function Certficate() {
               variant='h5'
               color='secondary'
               align={matches ? 'left' : 'center'}
+              className={classes.semiJobsTitle}
               style={{ fontWeight: 600, marginTop: 48, marginBottom: 16 }}
             >
               สายงานกึ่งเปิด
@@ -300,6 +324,7 @@ export default function Certficate() {
               isLoading={isSemiJobsLoading}
               isError={isSemiJobsError}
               data={semiJobs}
+              colorScheme='semi'
             />
             <Typography
               gutterBottom
@@ -307,6 +332,7 @@ export default function Certficate() {
               variant='h5'
               color='secondary'
               align={matches ? 'left' : 'center'}
+              className={classes.openJobsTitle}
               style={{ fontWeight: 600, marginTop: 48, marginBottom: 16 }}
             >
               สายงานเปิด
@@ -315,6 +341,7 @@ export default function Certficate() {
               isLoading={isOpenJobsLoading}
               isError={isOpenJobsError}
               data={openJobs}
+              colorScheme='open'
             />
           </Box>
         </>
@@ -341,7 +368,7 @@ export default function Certficate() {
               className={classes.sectionTitle}
               align={matches ? 'left' : 'center'}
             >
-              ตำแหน่งงานสำหรับผู้สำเร็จการศึกษาหลักสูตรนี้
+              ตำแหน่งงานราชการพลเรือนสำหรับผู้สำเร็จการศึกษาหลักสูตรนี้
             </Typography>
           </Grid>
           {renderCertificateDetails()}

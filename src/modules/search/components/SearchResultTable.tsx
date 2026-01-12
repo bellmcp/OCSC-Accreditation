@@ -360,7 +360,11 @@ export default function SearchResultTable({ data }: SearchResultTableType) {
                 lineHeight: '1.2',
                 fontWeight: 600,
               }}
-            ></TableCell>
+            >
+              ตำแหน่ง
+              <br />
+              ราชการพลเรือน
+            </TableCell>
             <TableCell
               style={{
                 verticalAlign: 'top',
@@ -368,7 +372,9 @@ export default function SearchResultTable({ data }: SearchResultTableType) {
                 fontWeight: 600,
               }}
             >
-              ระดับการศึกษา
+              ระดับ
+              <br />
+              การศึกษา
             </TableCell>
             <TableCell
               style={{

@@ -13,6 +13,8 @@ import {
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { Add, Remove } from '@material-ui/icons'
+import { red, amber, green } from '@material-ui/core/colors'
+import { JobColorScheme } from './JobTableRenderer'
 
 type WorkPlace = {
   ministry: string
@@ -26,6 +28,22 @@ type JobData = {
 
 type JobTableProps = {
   data: JobData[]
+  colorScheme?: JobColorScheme
+}
+
+const colorSchemeConfig = {
+  close: {
+    main: red[500],
+    light: red[50],
+  },
+  semi: {
+    main: amber[700],
+    light: amber[50],
+  },
+  open: {
+    main: green[500],
+    light: green[50],
+  },
 }
 
 type MinistryBlock = { name: string; departments: string[] }
@@ -100,9 +118,13 @@ const transformData = (apiData: JobData[]): RowData[] => {
   }))
 }
 
-export default function JobTable({ data }: JobTableProps) {
+export default function JobTable({
+  data,
+  colorScheme = 'close',
+}: JobTableProps) {
   const classes = useStyles()
   const [openMap, setOpenMap] = React.useState<Record<string, boolean>>({})
+  const colors = colorSchemeConfig[colorScheme]
 
   const toggle = (rowIndex: number, ministryName: string) => {
     const key = `${rowIndex}-${ministryName}`
@@ -139,8 +161,11 @@ export default function JobTable({ data }: JobTableProps) {
         </TableHead>
         <TableBody>
           {transformedData.map((row, rowIndex) => (
-            <TableRow key={rowIndex} style={{ borderBottom: 'unset' }}>
-              <TableCell className={classes.positionCell}>
+            <TableRow key={rowIndex} style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.12)' }}>
+              <TableCell
+                className={classes.positionCell}
+                style={{ verticalAlign: 'top', paddingTop: 21 }}
+              >
                 {row.position}
               </TableCell>
               <TableCell>
@@ -158,7 +183,11 @@ export default function JobTable({ data }: JobTableProps) {
                               departmentCount > 0 ? ` (${departmentCount})` : ''
                             }`}
                             variant='outlined'
-                            color='primary'
+                            style={{
+                              borderColor: colors.main,
+                              color: colors.main,
+                              fontWeight: 500,
+                            }}
                           />
                           {departmentCount > 0 && (
                             <IconButton
@@ -185,7 +214,15 @@ export default function JobTable({ data }: JobTableProps) {
                               unmountOnExit
                             >
                               <Box>
-                                <Chip label={d} size='small' />
+                                <Chip
+                                  label={d}
+                                  size='small'
+                                  style={{
+                                    backgroundColor: colors.light,
+                                    color: colors.main,
+                                    fontWeight: 500,
+                                  }}
+                                />
                               </Box>
                             </Grow>
                           </Box>
