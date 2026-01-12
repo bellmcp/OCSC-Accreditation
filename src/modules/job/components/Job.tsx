@@ -11,10 +11,17 @@ import {
   Button,
   List,
   ListItem,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
 } from '@material-ui/core'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
-import { Print as PrintIcon, Inbox as InboxIcon } from '@material-ui/icons'
+import {
+  Print as PrintIcon,
+  Inbox as InboxIcon,
+  ExpandMore as ExpandMoreIcon,
+} from '@material-ui/icons'
 
 import Header from 'modules/ui/components/Header'
 import JobTable from './JobTable'
@@ -22,6 +29,18 @@ import * as jobActions from '../actions'
 import * as certActions from 'modules/cert/actions'
 import JobTableRenderer from './JobTableRenderer'
 import Loading from 'modules/ui/components/Loading'
+
+import {
+  purple,
+  indigo,
+  amber,
+  deepOrange,
+  green,
+  blue,
+  brown,
+  grey,
+  red,
+} from '@material-ui/core/colors'
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -42,8 +61,76 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 600,
     lineHeight: '1.3',
     zIndex: 3,
-    color: theme.palette.secondary.main,
+    color: '#FF3281',
     marginBottom: 16,
+  },
+  closeJobsTitle: {
+    color: red[500],
+  },
+  semiJobsTitle: {
+    color: amber[600],
+  },
+  openJobsTitle: {
+    color: green[500],
+  },
+  jobDescription: {
+    marginBottom: 16,
+    lineHeight: 1.6,
+    '& b': {
+      fontWeight: 600,
+    },
+  },
+  accordion: {
+    boxShadow: 'none',
+    backgroundColor: 'transparent',
+    '&:before': {
+      display: 'none',
+    },
+    '&.Mui-expanded': {
+      margin: 0,
+    },
+  },
+  accordionSummary: {
+    padding: 0,
+    paddingLeft: 24,
+    paddingRight: 24,
+    minHeight: 'unset',
+    '&.Mui-expanded': {
+      minHeight: 'unset',
+    },
+    '& .MuiAccordionSummary-content': {
+      margin: 0,
+      '&.Mui-expanded': {
+        margin: 0,
+      },
+    },
+  },
+  accordionDetails: {
+    padding: 0,
+    paddingTop: 8,
+    paddingBottom: 16,
+    paddingLeft: 24,
+    paddingRight: 24,
+    flexDirection: 'column',
+  },
+  closeAccordion: {
+    borderLeft: `4px solid ${red[500]}`,
+    paddingLeft: 16,
+    marginBottom: 24,
+  },
+  semiAccordion: {
+    borderLeft: `4px solid ${amber[700]}`,
+    paddingLeft: 16,
+    marginBottom: 24,
+  },
+  openAccordion: {
+    borderLeft: `4px solid ${green[500]}`,
+    paddingLeft: 16,
+    marginBottom: 24,
+  },
+  expandAllButton: {
+    marginBottom: 16,
+    textTransform: 'none',
   },
 }))
 
@@ -71,22 +158,23 @@ export default function Certficate() {
   const { certificate, isLoading } = useSelector((state: any) => state.cert)
 
   const {
-    isCloseJobsLoading,
-    isCloseJobsError,
+    isLoading: isJobsLoading,
+    isError: isJobsError,
+    jobDesc1,
+    jobDesc2,
+    jobDesc3,
     closeJobs,
-    isOpenJobsLoading,
-    isOpenJobsError,
-    openJobs,
-    isSemiJobsLoading,
-    isSemiJobsError,
     semiJobs,
+    openJobs,
   } = useSelector((state: any) => state.job)
+
+  const [expandAllClose, setExpandAllClose] = useState<boolean | null>(null)
+  const [expandAllSemi, setExpandAllSemi] = useState<boolean | null>(null)
+  const [expandAllOpen, setExpandAllOpen] = useState<boolean | null>(null)
 
   useEffect(() => {
     dispatch(certActions.loadCertificate(certificateId))
-    dispatch(jobActions.loadCloseJobs(certificateId))
-    dispatch(jobActions.loadOpenJobs(certificateId))
-    dispatch(jobActions.loadSemiJobs(certificateId))
+    dispatch(jobActions.loadJobPositions(certificateId))
   }, [dispatch, certificateId]) //eslint-disable-line
 
   function renderCertificateDetails() {
@@ -271,51 +359,155 @@ export default function Certficate() {
             </List>
           </Box>
           <Box my={6} style={{ overflow: 'auto' }}>
-            <Typography
-              gutterBottom
-              component='h2'
-              variant='h5'
-              color='secondary'
-              align={matches ? 'left' : 'center'}
-              style={{ fontWeight: 600, marginBottom: 16 }}
+            {/* สายงานปิด */}
+            <Accordion
+              defaultExpanded
+              className={`${classes.accordion} ${classes.closeAccordion}`}
             >
-              สายงานปิด
-            </Typography>
-            <JobTableRenderer
-              isLoading={isCloseJobsLoading}
-              isError={isCloseJobsError}
-              data={closeJobs}
-            />
-            <Typography
-              gutterBottom
-              component='h2'
-              variant='h5'
-              color='secondary'
-              align={matches ? 'left' : 'center'}
-              style={{ fontWeight: 600, marginTop: 48, marginBottom: 16 }}
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon style={{ color: red[500] }} />}
+                className={classes.accordionSummary}
+              >
+                <Typography
+                  component='h2'
+                  variant='h5'
+                  className={classes.closeJobsTitle}
+                  style={{ fontWeight: 600 }}
+                >
+                  สายงานปิด
+                </Typography>
+              </AccordionSummary>
+              <AccordionDetails className={classes.accordionDetails}>
+                {jobDesc1 && (
+                  <Typography
+                    variant='body2'
+                    color='textSecondary'
+                    className={classes.jobDescription}
+                    dangerouslySetInnerHTML={{ __html: jobDesc1 }}
+                  />
+                )}
+                {closeJobs && closeJobs.length > 0 && (
+                  <Button
+                    variant='outlined'
+                    className={classes.expandAllButton}
+                    onClick={() =>
+                      setExpandAllClose(expandAllClose === true ? false : true)
+                    }
+                    style={{ borderColor: red[500], color: red[500] }}
+                  >
+                    {expandAllClose === true ? 'ย่อทั้งหมด' : 'ขยายทั้งหมด'}
+                  </Button>
+                )}
+                <JobTableRenderer
+                  isLoading={isJobsLoading}
+                  isError={isJobsError}
+                  data={closeJobs}
+                  colorScheme='close'
+                  expandAll={expandAllClose}
+                  onResetExpandAll={() => setExpandAllClose(null)}
+                />
+              </AccordionDetails>
+            </Accordion>
+
+            {/* สายงานกึ่งปิด */}
+            <Accordion
+              defaultExpanded
+              className={`${classes.accordion} ${classes.semiAccordion}`}
             >
-              สายงานกึ่งเปิด
-            </Typography>
-            <JobTableRenderer
-              isLoading={isSemiJobsLoading}
-              isError={isSemiJobsError}
-              data={semiJobs}
-            />
-            <Typography
-              gutterBottom
-              component='h2'
-              variant='h5'
-              color='secondary'
-              align={matches ? 'left' : 'center'}
-              style={{ fontWeight: 600, marginTop: 48, marginBottom: 16 }}
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon style={{ color: amber[700] }} />}
+                className={classes.accordionSummary}
+              >
+                <Typography
+                  component='h2'
+                  variant='h5'
+                  className={classes.semiJobsTitle}
+                  style={{ fontWeight: 600 }}
+                >
+                  สายงานกึ่งปิด
+                </Typography>
+              </AccordionSummary>
+              <AccordionDetails className={classes.accordionDetails}>
+                {jobDesc2 && (
+                  <Typography
+                    variant='body2'
+                    color='textSecondary'
+                    className={classes.jobDescription}
+                    dangerouslySetInnerHTML={{ __html: jobDesc2 }}
+                  />
+                )}
+                {semiJobs && semiJobs.length > 0 && (
+                  <Button
+                    variant='outlined'
+                    className={classes.expandAllButton}
+                    onClick={() =>
+                      setExpandAllSemi(expandAllSemi === true ? false : true)
+                    }
+                    style={{ borderColor: amber[700], color: amber[700] }}
+                  >
+                    {expandAllSemi === true ? 'ย่อทั้งหมด' : 'ขยายทั้งหมด'}
+                  </Button>
+                )}
+                <JobTableRenderer
+                  isLoading={isJobsLoading}
+                  isError={isJobsError}
+                  data={semiJobs}
+                  colorScheme='semi'
+                  expandAll={expandAllSemi}
+                  onResetExpandAll={() => setExpandAllSemi(null)}
+                />
+              </AccordionDetails>
+            </Accordion>
+
+            {/* สายงานเปิด */}
+            <Accordion
+              defaultExpanded
+              className={`${classes.accordion} ${classes.openAccordion}`}
             >
-              สายงานเปิด
-            </Typography>
-            <JobTableRenderer
-              isLoading={isOpenJobsLoading}
-              isError={isOpenJobsError}
-              data={openJobs}
-            />
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon style={{ color: green[500] }} />}
+                className={classes.accordionSummary}
+              >
+                <Typography
+                  component='h2'
+                  variant='h5'
+                  className={classes.openJobsTitle}
+                  style={{ fontWeight: 600 }}
+                >
+                  สายงานเปิด
+                </Typography>
+              </AccordionSummary>
+              <AccordionDetails className={classes.accordionDetails}>
+                {jobDesc3 && (
+                  <Typography
+                    variant='body2'
+                    color='textSecondary'
+                    className={classes.jobDescription}
+                    dangerouslySetInnerHTML={{ __html: jobDesc3 }}
+                  />
+                )}
+                {openJobs && openJobs.length > 0 && (
+                  <Button
+                    variant='outlined'
+                    className={classes.expandAllButton}
+                    onClick={() =>
+                      setExpandAllOpen(expandAllOpen === true ? false : true)
+                    }
+                    style={{ borderColor: green[500], color: green[500] }}
+                  >
+                    {expandAllOpen === true ? 'ย่อทั้งหมด' : 'ขยายทั้งหมด'}
+                  </Button>
+                )}
+                <JobTableRenderer
+                  isLoading={isJobsLoading}
+                  isError={isJobsError}
+                  data={openJobs}
+                  colorScheme='open'
+                  expandAll={expandAllOpen}
+                  onResetExpandAll={() => setExpandAllOpen(null)}
+                />
+              </AccordionDetails>
+            </Accordion>
           </Box>
         </>
       )
@@ -341,7 +533,7 @@ export default function Certficate() {
               className={classes.sectionTitle}
               align={matches ? 'left' : 'center'}
             >
-              ตำแหน่งงานสำหรับผู้สำเร็จการศึกษาหลักสูตรนี้
+              ตำแหน่งงานราชการพลเรือนสำหรับผู้สำเร็จการศึกษาหลักสูตรนี้
             </Typography>
           </Grid>
           {renderCertificateDetails()}

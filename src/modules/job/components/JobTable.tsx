@@ -13,6 +13,8 @@ import {
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { Add, Remove } from '@material-ui/icons'
+import { red, amber, green } from '@material-ui/core/colors'
+import { JobColorScheme } from './JobTableRenderer'
 
 type WorkPlace = {
   ministry: string
@@ -26,6 +28,24 @@ type JobData = {
 
 type JobTableProps = {
   data: JobData[]
+  colorScheme?: JobColorScheme
+  expandAll?: boolean | null // true = expand all, false = collapse all, null = use individual state
+  onResetExpandAll?: () => void
+}
+
+const colorSchemeConfig = {
+  close: {
+    main: red[500],
+    light: red[50],
+  },
+  semi: {
+    main: amber[700],
+    light: amber[50],
+  },
+  open: {
+    main: green[500],
+    light: green[50],
+  },
 }
 
 type MinistryBlock = { name: string; departments: string[] }
@@ -100,22 +120,59 @@ const transformData = (apiData: JobData[]): RowData[] => {
   }))
 }
 
-export default function JobTable({ data }: JobTableProps) {
+export default function JobTable({
+  data,
+  colorScheme = 'close',
+  expandAll = null,
+  onResetExpandAll,
+}: JobTableProps) {
   const classes = useStyles()
   const [openMap, setOpenMap] = React.useState<Record<string, boolean>>({})
+  const colors = colorSchemeConfig[colorScheme]
+
+  const transformedData = transformData(data)
 
   const toggle = (rowIndex: number, ministryName: string) => {
     const key = `${rowIndex}-${ministryName}`
-    setOpenMap((prev) => ({ ...prev, [key]: !prev[key] }))
+
+    // When transitioning from expandAll state, populate openMap with current visible state first
+    if (expandAll !== null) {
+      const newOpenMap: Record<string, boolean> = {}
+      transformedData.forEach((row, rIdx) => {
+        row.ministries.forEach((m) => {
+          if (m.departments.length > 0) {
+            const k = `${rIdx}-${m.name}`
+            newOpenMap[k] = expandAll // true if expanded, false if collapsed
+          }
+        })
+      })
+      // Toggle the clicked item
+      newOpenMap[key] = !expandAll
+      setOpenMap(newOpenMap)
+
+      // Reset expandAll state
+      if (onResetExpandAll) {
+        onResetExpandAll()
+      }
+    } else {
+      setOpenMap((prev) => ({ ...prev, [key]: !prev[key] }))
+    }
   }
 
-  const transformedData = transformData(data)
+  // Determine if a ministry should be open
+  // expandAll: true = expand all, false = collapse all, null = use individual state
+  const isMinistryOpen = (rowIndex: number, ministryName: string) => {
+    if (expandAll === true) return true
+    if (expandAll === false) return false
+    const key = `${rowIndex}-${ministryName}`
+    return !!openMap[key]
+  }
 
   return (
     <TableContainer className={classes.tableContainer}>
       <Table className={classes.table}>
         <TableHead>
-          <TableRow>
+          <TableRow style={{ borderBottom: '1.5px solid rgba(0, 0, 0, 0.3)' }}>
             <TableCell
               className={classes.positionCell}
               style={{
@@ -139,15 +196,20 @@ export default function JobTable({ data }: JobTableProps) {
         </TableHead>
         <TableBody>
           {transformedData.map((row, rowIndex) => (
-            <TableRow key={rowIndex} style={{ borderBottom: 'unset' }}>
-              <TableCell className={classes.positionCell}>
+            <TableRow
+              key={rowIndex}
+              style={{ borderBottom: '1.5px solid rgba(0, 0, 0, 0.15)' }}
+            >
+              <TableCell
+                className={classes.positionCell}
+                style={{ verticalAlign: 'top', paddingTop: 21 }}
+              >
                 {row.position}
               </TableCell>
               <TableCell>
                 <Box className={classes.ministriesColumn}>
                   {row.ministries.map((m) => {
-                    const key = `${rowIndex}-${m.name}`
-                    const isOpen = !!openMap[key]
+                    const isOpen = isMinistryOpen(rowIndex, m.name)
                     const departmentCount = m.departments.length
 
                     return (
@@ -158,7 +220,11 @@ export default function JobTable({ data }: JobTableProps) {
                               departmentCount > 0 ? ` (${departmentCount})` : ''
                             }`}
                             variant='outlined'
-                            color='primary'
+                            style={{
+                              borderColor: colors.main,
+                              color: colors.main,
+                              fontWeight: 500,
+                            }}
                           />
                           {departmentCount > 0 && (
                             <IconButton
@@ -185,7 +251,15 @@ export default function JobTable({ data }: JobTableProps) {
                               unmountOnExit
                             >
                               <Box>
-                                <Chip label={d} size='small' />
+                                <Chip
+                                  label={d}
+                                  size='small'
+                                  style={{
+                                    backgroundColor: colors.light,
+                                    color: colors.main,
+                                    fontWeight: 500,
+                                  }}
+                                />
                               </Box>
                             </Grow>
                           </Box>

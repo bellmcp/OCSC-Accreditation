@@ -8,16 +8,24 @@ import { Inbox as InboxIcon } from '@material-ui/icons'
 import JobTable from './JobTable'
 import { isEmpty } from 'lodash'
 
+export type JobColorScheme = 'close' | 'semi' | 'open'
+
 interface JobTableRendererProps {
   isLoading: boolean
   isError: boolean
   data: any
+  colorScheme?: JobColorScheme
+  expandAll?: boolean | null
+  onResetExpandAll?: () => void
 }
 
 export default function JobTableRenderer({
   isLoading,
   isError,
   data,
+  colorScheme = 'close',
+  expandAll = null,
+  onResetExpandAll,
 }: JobTableRendererProps) {
   if (isLoading) {
     return <Loading height={307} />
@@ -53,7 +61,12 @@ export default function JobTableRenderer({
           border: '1px solid rgb(204 242 251)',
         }}
       >
-        <JobTable data={data} />
+        <JobTable
+          data={data}
+          colorScheme={colorScheme}
+          expandAll={expandAll}
+          onResetExpandAll={onResetExpandAll}
+        />
       </Paper>
     )
   }
