@@ -409,7 +409,7 @@ export default function Certficate() {
               </AccordionDetails>
             </Accordion>
 
-            {/* สายงานกึ่งเปิด */}
+            {/* สายงานกึ่งปิด */}
             <Accordion
               defaultExpanded
               className={`${classes.accordion} ${classes.semiAccordion}`}
@@ -424,7 +424,7 @@ export default function Certficate() {
                   className={classes.semiJobsTitle}
                   style={{ fontWeight: 600 }}
                 >
-                  สายงานกึ่งเปิด
+                  สายงานกึ่งปิด
                 </Typography>
               </AccordionSummary>
               <AccordionDetails className={classes.accordionDetails}>
