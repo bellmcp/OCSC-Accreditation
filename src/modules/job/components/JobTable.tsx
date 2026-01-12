@@ -137,7 +137,7 @@ export default function JobTable({
     <TableContainer className={classes.tableContainer}>
       <Table className={classes.table}>
         <TableHead>
-          <TableRow>
+          <TableRow style={{ borderBottom: '1.5px solid rgba(0, 0, 0, 0.3)' }}>
             <TableCell
               className={classes.positionCell}
               style={{
@@ -161,7 +161,10 @@ export default function JobTable({
         </TableHead>
         <TableBody>
           {transformedData.map((row, rowIndex) => (
-            <TableRow key={rowIndex} style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.12)' }}>
+            <TableRow
+              key={rowIndex}
+              style={{ borderBottom: '1.5px solid rgba(0, 0, 0, 0.15)' }}
+            >
               <TableCell
                 className={classes.positionCell}
                 style={{ verticalAlign: 'top', paddingTop: 21 }}
