@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 600,
     lineHeight: '1.3',
     zIndex: 3,
-    color: '#FF3281',
+    color: theme.palette.secondary.main,
     marginBottom: 16,
   },
   closeJobsTitle: {
@@ -533,6 +533,7 @@ export default function Certficate() {
               className={classes.sectionTitle}
               align={matches ? 'left' : 'center'}
             >
+              <span style={{ color: '#FF3281' }}>ตัวอย่าง</span>
               ตำแหน่งงานราชการพลเรือนสำหรับผู้สำเร็จการศึกษาหลักสูตรนี้
             </Typography>
           </Grid>
