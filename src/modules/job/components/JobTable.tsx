@@ -13,7 +13,6 @@ import {
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { Add, Remove } from '@material-ui/icons'
-import { red, amber, green } from '@material-ui/core/colors'
 import { JobColorScheme } from './JobTableRenderer'
 
 type WorkPlace = {
@@ -35,16 +34,16 @@ type JobTableProps = {
 
 const colorSchemeConfig = {
   close: {
-    main: red[500],
-    light: red[50],
+    main: '#FD327F',
+    bg: 'rgba(241, 161, 181, 0.35)',
   },
   semi: {
-    main: amber[700],
-    light: amber[50],
+    main: '#ED7D31',
+    bg: 'rgba(255, 168, 0, 0.35)',
   },
   open: {
-    main: green[500],
-    light: green[50],
+    main: '#00B050',
+    bg: 'rgba(192, 227, 194, 0.35)',
   },
 }
 
@@ -202,9 +201,19 @@ export default function JobTable({
             >
               <TableCell
                 className={classes.positionCell}
-                style={{ verticalAlign: 'top', paddingTop: 21 }}
+                style={{ verticalAlign: 'top', paddingTop: 16 }}
               >
-                {row.position}
+                <Chip
+                  label={row.position}
+                  variant='outlined'
+                  style={{
+                    backgroundColor: colors.bg,
+                    color: colors.main,
+                    borderColor: colors.main,
+                    fontWeight: 500,
+                    borderRadius: 16,
+                  }}
+                />
               </TableCell>
               <TableCell>
                 <Box className={classes.ministriesColumn}>
@@ -220,9 +229,8 @@ export default function JobTable({
                               departmentCount > 0 ? ` (${departmentCount})` : ''
                             }`}
                             variant='outlined'
+                            color='primary'
                             style={{
-                              borderColor: colors.main,
-                              color: colors.main,
                               fontWeight: 500,
                             }}
                           />
@@ -255,8 +263,8 @@ export default function JobTable({
                                   label={d}
                                   size='small'
                                   style={{
-                                    backgroundColor: colors.light,
-                                    color: colors.main,
+                                    backgroundColor: '#e3f2fd',
+                                    color: '#1976d2',
                                     fontWeight: 500,
                                   }}
                                 />
