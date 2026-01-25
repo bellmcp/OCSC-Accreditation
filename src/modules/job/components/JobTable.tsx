@@ -262,9 +262,10 @@ export default function JobTable({
                                 <Chip
                                   label={d}
                                   size='small'
+                                  color='primary'
                                   style={{
+                                    color: '#17aacf',
                                     backgroundColor: '#e3f2fd',
-                                    color: '#1976d2',
                                     fontWeight: 500,
                                   }}
                                 />
