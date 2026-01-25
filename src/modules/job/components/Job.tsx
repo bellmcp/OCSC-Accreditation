@@ -533,8 +533,8 @@ export default function Certficate() {
               className={classes.sectionTitle}
               align={matches ? 'left' : 'center'}
             >
-              <span style={{ color: '#FF3281' }}>ตัวอย่าง</span>
-              ตำแหน่งงานราชการพลเรือนสำหรับผู้สำเร็จการศึกษาหลักสูตรนี้
+              <span style={{ color: '#FF3281' }}>ตัวอย่าง </span>
+              ตำแหน่งงานราชการพลเรือนและส่วนราชการสำหรับผู้สำเร็จการศึกษาหลักสูตรที่ค้นหา
             </Typography>
           </Grid>
           {renderCertificateDetails()}
