@@ -30,18 +30,6 @@ import * as certActions from 'modules/cert/actions'
 import JobTableRenderer from './JobTableRenderer'
 import Loading from 'modules/ui/components/Loading'
 
-import {
-  purple,
-  indigo,
-  amber,
-  deepOrange,
-  green,
-  blue,
-  brown,
-  grey,
-  red,
-} from '@material-ui/core/colors'
-
 const useStyles = makeStyles((theme) => ({
   main: {
     display: 'flex',
@@ -65,13 +53,13 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 16,
   },
   closeJobsTitle: {
-    color: red[500],
+    color: '#FD327F',
   },
   semiJobsTitle: {
-    color: amber[600],
+    color: '#ED7D31',
   },
   openJobsTitle: {
-    color: green[500],
+    color: '#00B050',
   },
   jobDescription: {
     marginBottom: 16,
@@ -114,23 +102,26 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
   },
   closeAccordion: {
-    borderLeft: `4px solid ${red[500]}`,
+    borderLeft: '4px solid #FD327F',
     paddingLeft: 16,
     marginBottom: 24,
   },
   semiAccordion: {
-    borderLeft: `4px solid ${amber[700]}`,
+    borderLeft: '4px solid #ED7D31',
     paddingLeft: 16,
     marginBottom: 24,
   },
   openAccordion: {
-    borderLeft: `4px solid ${green[500]}`,
+    borderLeft: '4px solid #00B050',
     paddingLeft: 16,
     marginBottom: 24,
   },
   expandAllButton: {
     marginBottom: 16,
     textTransform: 'none',
+    width: '100%',
+    borderRadius: 24,
+    fontWeight: 500,
   },
 }))
 
@@ -365,7 +356,7 @@ export default function Certficate() {
               className={`${classes.accordion} ${classes.closeAccordion}`}
             >
               <AccordionSummary
-                expandIcon={<ExpandMoreIcon style={{ color: red[500] }} />}
+                expandIcon={<ExpandMoreIcon style={{ color: '#FD327F' }} />}
                 className={classes.accordionSummary}
               >
                 <Typography
@@ -393,7 +384,11 @@ export default function Certficate() {
                     onClick={() =>
                       setExpandAllClose(expandAllClose === true ? false : true)
                     }
-                    style={{ borderColor: red[500], color: red[500] }}
+                    style={{
+                      borderColor: '#FD327F',
+                      color: '#FD327F',
+                      backgroundColor: 'rgba(241, 161, 181, 0.35)',
+                    }}
                   >
                     {expandAllClose === true ? 'ย่อทั้งหมด' : 'ขยายทั้งหมด'}
                   </Button>
@@ -415,7 +410,7 @@ export default function Certficate() {
               className={`${classes.accordion} ${classes.semiAccordion}`}
             >
               <AccordionSummary
-                expandIcon={<ExpandMoreIcon style={{ color: amber[700] }} />}
+                expandIcon={<ExpandMoreIcon style={{ color: '#ED7D31' }} />}
                 className={classes.accordionSummary}
               >
                 <Typography
@@ -443,7 +438,11 @@ export default function Certficate() {
                     onClick={() =>
                       setExpandAllSemi(expandAllSemi === true ? false : true)
                     }
-                    style={{ borderColor: amber[700], color: amber[700] }}
+                    style={{
+                      borderColor: '#ED7D31',
+                      color: '#ED7D31',
+                      backgroundColor: 'rgba(255, 168, 0, 0.35)',
+                    }}
                   >
                     {expandAllSemi === true ? 'ย่อทั้งหมด' : 'ขยายทั้งหมด'}
                   </Button>
@@ -465,7 +464,7 @@ export default function Certficate() {
               className={`${classes.accordion} ${classes.openAccordion}`}
             >
               <AccordionSummary
-                expandIcon={<ExpandMoreIcon style={{ color: green[500] }} />}
+                expandIcon={<ExpandMoreIcon style={{ color: '#00B050' }} />}
                 className={classes.accordionSummary}
               >
                 <Typography
@@ -493,7 +492,11 @@ export default function Certficate() {
                     onClick={() =>
                       setExpandAllOpen(expandAllOpen === true ? false : true)
                     }
-                    style={{ borderColor: green[500], color: green[500] }}
+                    style={{
+                      borderColor: '#00B050',
+                      color: '#00B050',
+                      backgroundColor: 'rgba(192, 227, 194, 0.35)',
+                    }}
                   >
                     {expandAllOpen === true ? 'ย่อทั้งหมด' : 'ขยายทั้งหมด'}
                   </Button>
@@ -533,8 +536,8 @@ export default function Certficate() {
               className={classes.sectionTitle}
               align={matches ? 'left' : 'center'}
             >
-              <span style={{ color: '#FF3281' }}>ตัวอย่าง</span>
-              ตำแหน่งงานราชการพลเรือนสำหรับผู้สำเร็จการศึกษาหลักสูตรนี้
+              <span style={{ color: '#FF3281' }}>ตัวอย่าง </span>
+              ตำแหน่งงานราชการพลเรือนและส่วนราชการสำหรับผู้สำเร็จการศึกษาหลักสูตรที่ค้นหา
             </Typography>
           </Grid>
           {renderCertificateDetails()}
