@@ -43,7 +43,8 @@ function createData(
   letterDate: string,
   cert: boolean,
   counter: number,
-  counter2: number
+  counter2: number,
+  isJobMatched: boolean
 ) {
   return {
     id,
@@ -61,6 +62,7 @@ function createData(
     cert,
     counter,
     counter2,
+    isJobMatched,
   }
 }
 
@@ -152,34 +154,36 @@ export default function SearchResultTable({ data }: SearchResultTableType) {
           <TableCell>{getLabel(row, 'degree')}</TableCell>
           <TableCell>{getLabel(row, 'branch')}</TableCell>
           <TableCell width={160}>
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-              }}
-            >
-              <Button
-                onClick={() => goToJob(get(row, 'id', null))}
-                size='small'
-                variant='outlined'
-                color='primary'
-                startIcon={<SearchIcon />}
+            {get(row, 'isJobMatched', false) && (
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                }}
               >
-                ดูตำแหน่งงาน
-              </Button>
-              <Typography
-                align='center'
-                variant='caption'
-                style={{ lineHeight: '1.2', fontSize: 11, marginTop: 4 }}
-              >
-                (ดู{' '}
-                {get(row, 'counter2')
-                  ? get(row, 'counter2').toLocaleString()
-                  : 0}{' '}
-                ครั้ง)
-              </Typography>
-            </div>
+                <Button
+                  onClick={() => goToJob(get(row, 'id', null))}
+                  size='small'
+                  variant='outlined'
+                  color='primary'
+                  startIcon={<SearchIcon />}
+                >
+                  ดูตำแหน่งงาน
+                </Button>
+                <Typography
+                  align='center'
+                  variant='caption'
+                  style={{ lineHeight: '1.2', fontSize: 11, marginTop: 4 }}
+                >
+                  (ดู{' '}
+                  {get(row, 'counter2')
+                    ? get(row, 'counter2').toLocaleString()
+                    : 0}{' '}
+                  ครั้ง)
+                </Typography>
+              </div>
+            )}
           </TableCell>
           <TableCell>{getLabel(row, 'level')}</TableCell>
           <TableCell>{getLabel(row, 'faculty')}</TableCell>
@@ -340,7 +344,8 @@ export default function SearchResultTable({ data }: SearchResultTableType) {
         get(item, 'letterDate'),
         get(item, 'cert'),
         get(item, 'counter'),
-        get(item, 'counter2')
+        get(item, 'counter2'),
+        get(item, 'isJobMatched', false)
       )
     )
     setTableData(parsedData)
