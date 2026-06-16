@@ -230,7 +230,7 @@ export default function SearchResultTable({ data }: SearchResultTableType) {
               )
             )}
           </TableCell>
-          <TableCell>{getLabel(row, 'level')}</TableCell>
+          <TableCell width={100}>{getLabel(row, 'level')}</TableCell>
           <TableCell>{getLabel(row, 'faculty')}</TableCell>
           <TableCell width={130}>
             {get(row, 'cert', false) && (
