@@ -19,6 +19,10 @@ import {
   ListItem,
   Tooltip,
   Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
 } from '@material-ui/core'
 
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
@@ -44,7 +48,9 @@ function createData(
   cert: boolean,
   counter: number,
   counter2: number,
-  isJobMatched: boolean
+  isJobMatched: boolean,
+  noJobMessage1: string,
+  noJobMessage2: string,
 ) {
   return {
     id,
@@ -63,6 +69,8 @@ function createData(
     counter,
     counter2,
     isJobMatched,
+    noJobMessage1,
+    noJobMessage2,
   }
 }
 
@@ -128,6 +136,14 @@ export default function SearchResultTable({ data }: SearchResultTableType) {
   function Row(props: any) {
     const { row, index } = props
     const [open, setOpen] = React.useState(false)
+    const [jobModalOpen, setJobModalOpen] = React.useState(false)
+
+    const noJobMessage1 = get(row, 'noJobMessage1', null)
+    const noJobMessage2 = get(row, 'noJobMessage2', null)
+    const hasJobModal =
+      noJobMessage2 !== null &&
+      noJobMessage2 !== undefined &&
+      noJobMessage2 !== ''
 
     return (
       <React.Fragment>
@@ -153,8 +169,8 @@ export default function SearchResultTable({ data }: SearchResultTableType) {
           </TableCell>
           <TableCell>{getLabel(row, 'degree')}</TableCell>
           <TableCell>{getLabel(row, 'branch')}</TableCell>
-          <TableCell width={160}>
-            {get(row, 'isJobMatched', false) && (
+          <TableCell width={170}>
+            {get(row, 'isJobMatched', false) ? (
               <div
                 style={{
                   display: 'flex',
@@ -183,6 +199,35 @@ export default function SearchResultTable({ data }: SearchResultTableType) {
                   ครั้ง)
                 </Typography>
               </div>
+            ) : (
+              noJobMessage1 && (
+                <div style={{ textAlign: 'center' }}>
+                  {hasJobModal ? (
+                    <Button
+                      onClick={() => setJobModalOpen(true)}
+                      size='small'
+                      variant='outlined'
+                      color='primary'
+                      style={{
+                        textTransform: 'none',
+                        lineHeight: '1.2',
+                        fontSize: 13,
+                      }}
+                    >
+                      {noJobMessage1}
+                    </Button>
+                  ) : (
+                    <Typography
+                      align='center'
+                      variant='body2'
+                      color='secondary'
+                      style={{ lineHeight: '1.2' }}
+                    >
+                      {noJobMessage1}
+                    </Typography>
+                  )}
+                </div>
+              )
             )}
           </TableCell>
           <TableCell>{getLabel(row, 'level')}</TableCell>
@@ -246,7 +291,7 @@ export default function SearchResultTable({ data }: SearchResultTableType) {
                       <div
                         dangerouslySetInnerHTML={{
                           __html: parseLinkToDefaultColor(
-                            getLabel(row, 'accreditation1')
+                            getLabel(row, 'accreditation1'),
                           ),
                         }}
                       ></div>
@@ -259,7 +304,7 @@ export default function SearchResultTable({ data }: SearchResultTableType) {
                       <div
                         dangerouslySetInnerHTML={{
                           __html: parseLinkToDefaultColor(
-                            getLabel(row, 'accreditation2')
+                            getLabel(row, 'accreditation2'),
                           ),
                         }}
                       ></div>
@@ -323,6 +368,37 @@ export default function SearchResultTable({ data }: SearchResultTableType) {
             </Collapse>
           </TableCell>
         </TableRow>
+        {hasJobModal && (
+          <Dialog
+            open={jobModalOpen}
+            onClose={() => setJobModalOpen(false)}
+            maxWidth='sm'
+            fullWidth
+          >
+            <DialogContent dividers>
+              <Typography
+                variant='body1'
+                color='textPrimary'
+                style={{ lineHeight: '1.6' }}
+              >
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: parseLinkToDefaultColor(noJobMessage2),
+                  }}
+                ></div>
+              </Typography>
+            </DialogContent>
+            <DialogActions>
+              <Button
+                onClick={() => setJobModalOpen(false)}
+                variant='outlined'
+                color='secondary'
+              >
+                ปิด
+              </Button>
+            </DialogActions>
+          </Dialog>
+        )}
       </React.Fragment>
     )
   }
@@ -345,8 +421,10 @@ export default function SearchResultTable({ data }: SearchResultTableType) {
         get(item, 'cert'),
         get(item, 'counter'),
         get(item, 'counter2'),
-        get(item, 'isJobMatched', false)
-      )
+        get(item, 'isJobMatched', false),
+        get(item, 'noJobMessage1'),
+        get(item, 'noJobMessage2'),
+      ),
     )
     setTableData(parsedData)
   }, [data])
@@ -403,7 +481,7 @@ export default function SearchResultTable({ data }: SearchResultTableType) {
             >
               ตำแหน่ง
               <br />
-              ราชการพลเรือน
+              ราชการพลเรือนสามัญ
             </TableCell>
             <TableCell
               style={{
