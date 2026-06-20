@@ -279,7 +279,7 @@ export default function Certficate() {
                     <div
                       dangerouslySetInnerHTML={{
                         __html: parseLinkToDefaultColor(
-                          getLabel(certificate, 'accreditation1')
+                          getLabel(certificate, 'accreditation1'),
                         ),
                       }}
                     ></div>
@@ -292,7 +292,7 @@ export default function Certficate() {
                     <div
                       dangerouslySetInnerHTML={{
                         __html: parseLinkToDefaultColor(
-                          getLabel(certificate, 'accreditation2')
+                          getLabel(certificate, 'accreditation2'),
                         ),
                       }}
                     ></div>
@@ -537,7 +537,7 @@ export default function Certficate() {
               align={matches ? 'left' : 'center'}
             >
               <span style={{ color: '#FF3281' }}>ตัวอย่าง </span>
-              ตำแหน่งงานราชการพลเรือนและส่วนราชการสำหรับผู้สำเร็จการศึกษาหลักสูตรที่ค้นหา
+              ตำแหน่งงานราชการพลเรือนสามัญและส่วนราชการสำหรับผู้สำเร็จการศึกษาหลักสูตรที่ค้นหา
             </Typography>
           </Grid>
           {renderCertificateDetails()}

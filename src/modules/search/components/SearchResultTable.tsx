@@ -331,12 +331,12 @@ export default function SearchResultTable({ data }: SearchResultTableType) {
                   </Box>
                   <Box>
                     <Typography variant='body2' color='secondary'>
-                      {getLabel(row, 'letterNo')}{' '}
-                      {getLabel(row, 'category') !== '' && (
+                      {getLabel(row, 'letterNo')}
+                      {/* {getLabel(row, 'category') !== '' && (
                         <span style={{ paddingLeft: 8 }}>
                           ({getLabel(row, 'category')})
                         </span>
-                      )}
+                      )} */}
                     </Typography>
                   </Box>
                 </ListItem>
@@ -479,7 +479,7 @@ export default function SearchResultTable({ data }: SearchResultTableType) {
                 fontWeight: 600,
               }}
             >
-              ตำแหน่ง
+              ตำแหน่งงาน
               <br />
               ราชการพลเรือนสามัญ
             </TableCell>
